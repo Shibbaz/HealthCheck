@@ -36,6 +36,14 @@ gem "standard"
 
 gem 'simplecov', require: false, group: :test
 
+gem "batch-loader"
+
+gem 'search_object_graphql'
+
+gem 'pg_search'
+
+
+
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 
