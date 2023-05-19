@@ -1,24 +1,11 @@
-# README
+# Readme
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+HealthCheck is an API of application to post about health mentaly and physicaly. Users can follow users and congratulate on the progress that was made or encourage to do better through comment section and likes.
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Application features :
+* Authentication
+* Posting, deleting editing posts and messages under certain post, like/unlike feature.
+* Posting images
+* Following users, Recent Following users activities/individual user activities wall
+* Filtering posts by cattegories
+* Searching users
