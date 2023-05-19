@@ -66,6 +66,10 @@ GEM
       i18n (>= 1.6, < 2)
       minitest (>= 5.1)
       tzinfo (~> 2.0)
+    aggregate_root (2.9.1)
+      ruby_event_store (= 2.9.1)
+    arkency-command_bus (0.4.1)
+      concurrent-ruby
     ast (2.4.2)
     batch-loader (2.0.1)
     bootsnap (1.16.0)
@@ -151,6 +155,17 @@ GEM
       nokogiri (>= 1.6)
     rails-html-sanitizer (1.5.0)
       loofah (~> 2.19, >= 2.19.1)
+    rails_event_store (2.9.1)
+      activejob (>= 6.0)
+      activemodel (>= 6.0)
+      activesupport (>= 6.0)
+      aggregate_root (= 2.9.1)
+      arkency-command_bus (>= 0.4)
+      rails_event_store_active_record (= 2.9.1)
+      ruby_event_store (= 2.9.1)
+      ruby_event_store-browser (= 2.9.1)
+    rails_event_store_active_record (2.9.1)
+      ruby_event_store-active_record (= 2.9.1)
     railties (7.0.4.3)
       actionpack (= 7.0.4.3)
       activesupport (= 7.0.4.3)
@@ -197,6 +212,14 @@ GEM
       rubocop (>= 1.7.0, < 2.0)
       rubocop-ast (>= 0.4.0)
     ruby-progressbar (1.13.0)
+    ruby_event_store (2.9.1)
+      concurrent-ruby (~> 1.0, >= 1.1.6)
+    ruby_event_store-active_record (2.9.1)
+      activerecord (>= 6.0)
+      ruby_event_store (= 2.9.1)
+    ruby_event_store-browser (2.9.1)
+      rack
+      ruby_event_store (= 2.9.1)
     search_object (1.2.5)
     search_object_graphql (1.0.4)
       graphql (> 1.8)
@@ -242,6 +265,7 @@ DEPENDENCIES
   pg_search
   puma (~> 5.0)
   rails (~> 7.0.4, >= 7.0.4.3)
+  rails_event_store
   rspec-rails (~> 6.0.0)
   search_object_graphql
   simplecov
