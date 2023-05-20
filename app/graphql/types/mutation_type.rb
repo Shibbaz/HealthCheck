@@ -2,5 +2,8 @@ module Types
   class MutationType < Types::BaseObject
     field :create_user, mutation: Mutations::CreateUserMutation
     field :signin_user, mutation: Mutations::SignInUserMutation
+    field :add_like_to_post, mutation: Mutations::AddLikeToPostMutation
+    field :unlike_to_post, mutation: Mutations::UnlikePostMutation
+
   end
 end

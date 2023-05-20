@@ -16,6 +16,24 @@ module Contexts
         })
         $event_store.publish(event, stream_name: SecureRandom.uuid)
       end
+
+      def add_like(args:, current_user_id:)
+        event = PostWasLiked.new(data: {
+                                     id: args[:id],
+                                     current_user_id: current_user_id,
+                                     adapter: @adapter
+                                   })
+        $event_store.publish(event, stream_name: SecureRandom.uuid)
+      end
+
+      def unlike(args:, current_user_id:)
+        event = PostWasUnliked.new(data: {
+                                       adapter: @adapter,
+                                       id: args[:id],
+                                       current_user_id: current_user_id
+                                     })
+        $event_store.publish(event, stream_name: SecureRandom.uuid)
+      end
     end
   end
 end
