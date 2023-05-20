@@ -1,3 +1,4 @@
 Rails.configuration.to_prepare do
-    Rails.configuration.event_store = RailsEventStore::Client.new
-  end
+  $event_store = RailsEventStore::Client.new
+  $event_store.subscribe(Contexts::Users::Commands::CreateSingleUser.new, to: [UserWasCreated])
+end

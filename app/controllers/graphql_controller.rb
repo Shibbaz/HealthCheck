@@ -9,13 +9,14 @@ class GraphqlController < ApplicationController
     query = params[:query]
     operation_name = params[:operationName]
     context = {
-      # Query context goes here, for example:
-      # current_user: current_user,
+      session: session,
+      current_user: current_user
     }
     result = HealthSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
     render json: result
-  rescue StandardError => e
+  rescue => e
     raise e unless Rails.env.development?
+
     handle_error_in_development(e)
   end
 
@@ -45,6 +46,28 @@ class GraphqlController < ApplicationController
     logger.error e.message
     logger.error e.backtrace.join("\n")
 
-    render json: { errors: [{ message: e.message, backtrace: e.backtrace }], data: {} }, status: 500
+    render json: {errors: [{message: e.message, backtrace: e.backtrace}], data: {}}, status: 500
+  end
+
+  def current_user
+    # if we want to change the sign-in strategy, this is the place to do it
+    return unless request.headers["Authorization"]
+
+    crypt = ActiveSupport::MessageEncryptor.new(Rails.application.credentials.secret_key_base.byteslice(0..31))
+    tk = request.headers["Authorization"]
+    token = crypt.decrypt_and_verify tk
+    user_id = token.gsub("user-id:", "")
+    user ||= User.find user_id
+  rescue ActiveSupport::MessageVerifier::InvalidSignature
+    nil
+  end
+
+  # Handle form data, JSON body, or a blank value
+  def ensure_hash(ambiguous_param)
+    # ...code
+  end
+
+  def handle_error_in_development(e)
+    # ...code
   end
 end
