@@ -42,7 +42,7 @@ ActiveRecord::Schema[7.0].define(version: 202305201003000) do
     t.text "insights"
     t.string "question", default: "How do you feel today?"
     t.integer "feeling", default: 0
-    t.integer "likes", default: 0
+    t.uuid "likes", default: [], array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
