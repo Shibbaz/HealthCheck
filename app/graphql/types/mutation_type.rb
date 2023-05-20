@@ -4,6 +4,6 @@ module Types
     field :signin_user, mutation: Mutations::SignInUserMutation
     field :add_like_to_post, mutation: Mutations::AddLikeToPostMutation
     field :unlike_to_post, mutation: Mutations::UnlikePostMutation
-
+    field :create_post, mutation: Mutations::CreatePostMutation
   end
 end
