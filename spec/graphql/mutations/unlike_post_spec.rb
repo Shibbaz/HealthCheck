@@ -1,7 +1,7 @@
 require "rails_helper"
 
 module Mutations
-  module Ascends
+  module Posts
     RSpec.describe UnlikePostMutation, type: :request do
       let(:user) {
         User.create!(
