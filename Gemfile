@@ -48,6 +48,8 @@ gem "rails_event_store"
 
 gem "faker"
 
+gem "obscenity"
+
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 
