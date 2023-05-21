@@ -43,6 +43,14 @@ module Contexts
         })
         $event_store.publish(event, stream_name: SecureRandom.uuid)
       end
+
+      def delete(args:)
+        event = PostWasDeleted.new(data: {
+          adapter: @adapter,
+          id: args[:id]
+        })
+        $event_store.publish(event, stream_name: SecureRandom.uuid)
+      end
     end
   end
 end
