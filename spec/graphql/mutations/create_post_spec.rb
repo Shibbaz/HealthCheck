@@ -3,7 +3,6 @@ require "rails_helper"
 module Mutations
   module Posts
     RSpec.describe CreatePostMutation, type: :request do
-
       let(:user) {
         User.create!(
           name: Faker::Name.name,
@@ -15,7 +14,6 @@ module Mutations
 
       let(:variables) do
         {
-          userId: user.id,
           feeling: 1,
           question: "What's up?",
           likes: [],
@@ -25,7 +23,6 @@ module Mutations
 
       let(:not_valid_variables) do
         {
-          userId: SecureRandom.uuid,
           feeling: 1,
           question: "What's up?",
           likes: [],
@@ -34,7 +31,7 @@ module Mutations
       end
 
       let(:token) {
-        result = Mutations::SignInUserMutation.new(object: nil, field: nil, context: { session: {} }).resolve(credentials: { email: user.email, password: user.password })
+        result = Mutations::SignInUserMutation.new(object: nil, field: nil, context: {session: {}}).resolve(credentials: {email: user.email, password: user.password})
         result[:token]
       }
 
@@ -48,14 +45,14 @@ module Mutations
 
       describe ".mutation passes" do
         it "returns a true" do
-          result = HealthSchema.execute(query, variables: variables, context: { current_user: user })
+          result = HealthSchema.execute(query, variables: variables, context: {current_user: user})
         end
       end
 
       def query
         <<~GQL
-            mutation($userId: ID!, $feeling: Int!, $question: String!, $likes: ID!, $insigths: String!){
-            createPost(input: {userId: $userId, feeling: $feeling, question: $question, likes: $likes, insigths: $insigths}){
+            mutation($feeling: Int!, $question: String!, $likes: ID!, $insigths: String!){
+            createPost(input: {feeling: $feeling, question: $question, likes: $likes, insigths: $insigths}){
               clientMutationId
               status
             }

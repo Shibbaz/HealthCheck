@@ -2,9 +2,10 @@ require "rails_helper"
 
 module Mutations
   module Posts
-    RSpec.describe AddLikeToPostMutation, type: :request do
+    RSpec.describe UpdatePostInsightsMutation, type: :request do
       let(:user) {
         User.create!(
+          id: SecureRandom.uuid,
           name: Faker::Name.name,
           email: "test@test.com",
           password: "test",
@@ -17,11 +18,17 @@ module Mutations
       end
 
       let(:variables) do
-        {id: post.id}
+        {
+          id: post.id,
+          insights: "Hahaha"
+        }
       end
 
       let(:not_valid_variables) do
-        {id: SecureRandom.uuid}
+        {
+          id: SecureRandom.uuid,
+          insights: "Hahaha"
+        }
       end
 
       let(:token) {
@@ -41,20 +48,20 @@ module Mutations
         it "returns a true" do
           result = HealthSchema.execute(query, variables: variables, context: {current_user: user})
           post.reload
-          expect(post[:likes]).to eq [user.id]
+          expect(post[:insights]).to eq "Hahaha"
         end
       end
 
-      describe ".mutation does not pass" do
-        it "not valid" do
+      describe ".mutation fails" do
+        it "returns a false" do
           expect { HealthSchema.execute(query, variables: not_valid_variables, context: {current_user: user}) }.to raise_error(ActiveRecord::RecordNotFound)
         end
       end
 
       def query
         <<~GQL
-          mutation($id: ID!){
-            addLikeToPost(input: {id: $id}){
+          mutation($id: ID!, $insights: String!){
+            updatePostInsights(input: {id: $id, insights: $insights}){
               clientMutationId
               status
             }

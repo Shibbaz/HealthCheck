@@ -4,4 +4,5 @@ Rails.configuration.to_prepare do
   $event_store.subscribe(Contexts::Posts::Commands::CreateSinglePost.new, to: [PostWasCreated])
   $event_store.subscribe(Contexts::Posts::Commands::AddLikeToPost.new, to: [PostWasLiked])
   $event_store.subscribe(Contexts::Posts::Commands::UnlikePost.new, to: [PostWasUnliked])
+  $event_store.subscribe(Contexts::Posts::Commands::UpdatePost.new, to: [PostWasUpdated])
 end
