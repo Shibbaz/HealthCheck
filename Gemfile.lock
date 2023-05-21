@@ -93,6 +93,9 @@ GEM
     globalid (1.1.0)
       activesupport (>= 5.0)
     graphql (2.0.22)
+    httparty (0.21.0)
+      mini_mime (>= 1.0.0)
+      multi_xml (>= 0.5.2)
     i18n (1.13.0)
       concurrent-ruby (~> 1.0)
     io-console (0.6.0)
@@ -114,6 +117,7 @@ GEM
     mini_mime (1.1.2)
     minitest (5.18.0)
     msgpack (1.7.0)
+    multi_xml (0.6.0)
     net-imap (0.3.4)
       date
       net-protocol
@@ -275,6 +279,7 @@ DEPENDENCIES
   factory_bot
   faker
   graphql
+  httparty
   obscenity
   pg (~> 1.1)
   pg_search
