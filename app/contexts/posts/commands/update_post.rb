@@ -5,7 +5,9 @@ module Contexts
         def call(event)
           stream = event.data
           post = stream[:adapter].find(stream[:id])
-          update(post: post, insights: stream[:insights])
+          post.with_lock do
+            update(post: post, insights: stream[:insights])
+          end
         end
 
         private

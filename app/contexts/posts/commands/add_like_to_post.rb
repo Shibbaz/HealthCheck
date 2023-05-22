@@ -6,7 +6,9 @@ module Contexts
           data = stream_data(event)
           post = data[:adapter].find data[:id]
           array = (post.likes.uniq + [data[:current_user_id]].uniq)
-          post.update(likes: array)
+          post.with_lock do
+            post.update(likes: array)
+          end
         end
 
         private
