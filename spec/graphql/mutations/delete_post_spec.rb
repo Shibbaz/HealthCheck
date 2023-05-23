@@ -51,19 +51,18 @@ module Mutations
           expect {
             post.reload
           }.to raise_error(ActiveRecord::RecordNotFound)
-
         end
 
         it "not valid" do
-          expect { 
+          expect {
             HealthSchema.execute(
               query,
               variables: not_valid_variables,
               context: {
                 current_user: user
               }
-              ) 
-            }.to raise_error(ActiveRecord::RecordNotFound)
+            )
+          }.to raise_error(ActiveRecord::RecordNotFound)
         end
       end
 
