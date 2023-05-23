@@ -6,7 +6,7 @@ module Contexts
           stream = event.data
           post = stream[:adapter].find(stream[:id])
           post.with_lock do
-            post.destroy()
+            post.destroy
           end
         end
       end
