@@ -58,17 +58,17 @@ module Contexts
         created_at ||= args[:filters][:created_at]
 
         if !feeling.nil?
-          post.filter_by_feeling(feeling)
+          return post.filter_by_feeling(feeling)
         end
 
         if !likes.nil?
-          post = post.filter_by_likes
+          return post.filter_by_likes
         end
 
         if !created_at.nil?
-          post = post.filter_by_created_at
+          return post.filter_by_created_at
         end
-        post
+        return post
       end
     end
   end
