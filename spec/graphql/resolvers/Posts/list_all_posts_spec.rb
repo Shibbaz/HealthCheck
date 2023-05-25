@@ -84,9 +84,7 @@ module Resolvers
           followers = [user.id, extra_user.id]
           user.update(followers: followers)
           user.reload
-          result = HealthSchema.execute(query, variables: {filters: {
-            followers: true
-          }}, context: context)
+          result = HealthSchema.execute(query_followers, variables: {}, context: context)
           size = result["data"]["allposts"].size
           expect(size).to eq(2)
         end
@@ -112,6 +110,23 @@ module Resolvers
                 likesCounter
                 createdAt
               }
+          }
+        GQL
+      end
+
+      def query_followers
+        <<~GQL
+          query {
+            allposts(filters: {followers: true}) {
+              createdAt
+              feeling
+              id
+              likes{
+                id
+              }
+              question
+              updatedAt
+            }
           }
         GQL
       end
