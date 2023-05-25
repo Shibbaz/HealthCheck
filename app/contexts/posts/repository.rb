@@ -52,23 +52,23 @@ module Contexts
         $event_store.publish(event, stream_name: SecureRandom.uuid)
       end
 
-      def apply_filtering(post:, args:)
+      def apply_filtering(posts:, args:)
         feeling ||= args[:filters][:feeling]
         likes ||= args[:filters][:likes]
         created_at ||= args[:filters][:created_at]
-
+        
         if !feeling.nil?
-          return post.filter_by_feeling(feeling)
+          return posts.filter_by_feeling(feeling)
         end
 
         if !likes.nil?
-          return post.filter_by_likes
+          return posts.filter_by_likes
         end
 
         if !created_at.nil?
-          return post.filter_by_created_at
+          return posts.filter_by_created_at
         end
-        return post
+        return posts
       end
     end
   end
