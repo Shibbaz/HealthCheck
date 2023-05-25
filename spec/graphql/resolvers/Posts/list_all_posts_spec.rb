@@ -13,6 +13,16 @@ module Resolvers
             phone_number: 667089810
           )
         }
+        let(:extra_user) {
+          User.create!(
+            id: SecureRandom.uuid,
+            name: "test2",
+            email: "test2@test.com",
+            password: "test2",
+            phone_number: 667089810
+          )
+        }
+
         let(:context) {
           ctx = {
             current_user: user
@@ -20,15 +30,16 @@ module Resolvers
         }
         before do
           Post.create(id: SecureRandom.uuid, user_id: user.id, likes: [user.id], insights: "Ah", feeling: 1)
-          Post.create(id: SecureRandom.uuid, user_id: user.id, likes: [], insights: "Ah", feeling: 0)
-          Post.create(id: SecureRandom.uuid, user_id: user.id, likes: [], insights: "Ah", feeling: 0)
+          Post.create(id: SecureRandom.uuid, user_id: extra_user.id, likes: [], insights: "Ah", feeling: 0)
+          Post.create(id: SecureRandom.uuid, user_id: SecureRandom.uuid, likes: [], insights: "Ah", feeling: 0)
         end
 
         it "returns Posts" do
           result = HealthSchema.execute(query, variables: {
             feeling: nil,
             created_at: nil,
-            likes: nil
+            likes: nil,
+            followers: nil
           }, context: context)
           size = result["data"]["allposts"].size
           expect(size).to eq(3)
@@ -38,7 +49,8 @@ module Resolvers
           result = HealthSchema.execute(query, variables: {
             feeling: 1,
             created_at: nil,
-            likes: nil
+            likes: nil,
+            followers: nil
           }, context: context)
           size = result["data"]["allposts"].size
           expect(size).to eq(1)
@@ -48,7 +60,8 @@ module Resolvers
           result = HealthSchema.execute(query, variables: {filters: {
             likes: true,
             feeling: nil,
-            created_at: nil
+            created_at: nil,
+            followers: nil
           }}, context: context)
           size = result["data"]["allposts"].size
           likes_counter = result["data"]["allposts"].pluck("likesCounter")
@@ -60,7 +73,8 @@ module Resolvers
           result = HealthSchema.execute(query, variables: {filters: {
             created_at: true,
             feeling: nil,
-            likes: nil
+            likes: nil,
+            followers: nil
           }}, context: context)
           size = result["data"]["allposts"].size
           dates = result["data"]["allposts"].pluck("createdAt")
@@ -68,11 +82,26 @@ module Resolvers
           expect(size).to eq(3)
         end
 
+        it "shows posts of user and its followers" do
+          followers = [extra_user.id] + user.followers
+          user.update(followers: followers)
+          user.reload
+          result = HealthSchema.execute(query, variables: {filters: {
+            created_at: nil,
+            feeling: nil,
+            likes: nil,
+            followers: true
+          }}, context: context)
+          size = result["data"]["allposts"].size
+          expect(size).to eq(2)
+        end
+
         it "none found in filtering by posts" do
           result = HealthSchema.execute(query, variables: {
             feeling: 99,
             created_at: nil,
-            likes: nil
+            likes: nil,
+            followers: nil
           }, context: context)
           size = result["data"]["allposts"].size
           expect(size).to eq(0)
@@ -81,8 +110,8 @@ module Resolvers
 
       def query
         <<~GQL
-          query($feeling: Int, $likes: Boolean, $createdAt: Boolean) {
-              allposts(filters: {feeling: $feeling, likes: $likes, createdAt: $createdAt}) {
+          query($feeling: Int, $likes: Boolean, $createdAt: Boolean, $followers: Boolean) {
+              allposts(filters: {feeling: $feeling, likes: $likes, createdAt: $createdAt, followers: $followers}) {
                 id
                 feeling
                 likesCounter
