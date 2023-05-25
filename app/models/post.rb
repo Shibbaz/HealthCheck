@@ -10,4 +10,20 @@ class Post < ApplicationRecord
       maximum: 1000,
       message: "The review must not exceed 1000 characters"
     }
+
+  scope :filter_by_feeling, ->(value) {
+    where(feeling: value).order(arel_table["feeling"].asc)
+  }
+
+  scope :filter_by_likes, -> {
+    sort { |x, y| x.likes.length <=> y.likes.length }
+  }
+
+  scope :filter_by_created_at, -> {
+    order(arel_table["created_at"].asc)
+  }
+
+  scope :apply_filtering, ->(args) {
+    Contexts::Posts::Repository.new.apply_filtering(args: args)
+  }
 end
