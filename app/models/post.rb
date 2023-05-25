@@ -20,7 +20,7 @@ class Post < ApplicationRecord
   }
 
   scope :filter_by_created_at, -> {
-    order(arel_table["created_at"].low.asc)
+    order(arel_table["created_at"].asc)
   }
 
   scope :apply_filtering, ->(args) {

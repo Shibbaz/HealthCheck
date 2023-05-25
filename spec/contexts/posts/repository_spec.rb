@@ -103,4 +103,90 @@ RSpec.describe Contexts::Posts::Repository, type: :model do
       expect(event_store).to have_published(an_event(PostWasUpdated))
     end
   end
+
+  context "apply_filtering method" do
+    let(:user) {
+      User.create!(
+        id: SecureRandom.uuid,
+        name: Faker::Name.name,
+        email: Faker::Internet.email,
+        password_digest: "123456",
+        phone_number: 667089810
+      )
+    }
+
+    before do
+      Post.create(
+        id: SecureRandom.uuid,
+        user_id: user.id,
+        likes: [user.id],
+        feeling: 1
+      )
+      Post.create(
+        id: SecureRandom.uuid,
+        user_id: user.id,
+        likes: []
+      )
+    end
+
+    it "it has no filters" do
+      data = Contexts::Posts::Repository.new.apply_filtering(
+        args: {
+          filters: {
+            feeling: nil,
+            likes: nil,
+            created_at: nil
+          }
+        }
+      )
+      expect(data.size).to eq(2)
+    end
+
+    it "it has feeling filters" do
+      data = Contexts::Posts::Repository.new.apply_filtering(
+        args: {
+          filters: {
+            feeling: 1,
+            likes: nil,
+            created_at: nil
+          }
+        }
+      )
+      expect(data.size).to eq(1)
+    end
+
+    it "it has likes filters" do
+      data = Contexts::Posts::Repository.new.apply_filtering(
+        args: {
+          filters: {
+            feeling: nil,
+            likes: true,
+            created_at: nil
+          }
+        }
+      )
+      size = data.size
+      likes_counter = data.pluck(:likes).map{|likes|
+        likes.size
+      }
+      expect(likes_counter.first < likes_counter.last).to eq(true)
+      expect(size).to eq(2)
+    end
+
+    it "it has created_at filters" do
+      data = Contexts::Posts::Repository.new.apply_filtering(
+        args: {
+          filters: {
+            feeling: nil,
+            likes: nil,
+            created_at: true
+          }
+        }
+      )
+      size = data.size
+      dates = data.pluck(:created_at)
+      expect(Date.parse(dates.first.to_s) <= Date.parse(dates.last.to_s)).to eq(true)
+      expect(size).to eq(2)
+    end
+  end
 end
