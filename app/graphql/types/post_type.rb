@@ -20,7 +20,7 @@ module Types
     end
 
     def likes_counter
-      likes.as_json["batch_loader"].size
+      object.likes.size
     end
   end
 end

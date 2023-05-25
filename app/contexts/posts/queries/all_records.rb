@@ -2,10 +2,14 @@ module Contexts
   module Posts
     module Queries
       class AllRecords
+        attr_reader :adapter
+
+        def initialize(adapter: Post)
+          @adapter = adapter
+        end
+
         def call(args:)
-          posts = Post.all
-          raise Contexts::Posts::Errors::PostNotFoundError if posts == []
-          Contexts::Posts::Repository.new.apply_filtering(posts: posts, args: args)
+          @adapter.apply_filtering(args)
         end
       end
     end

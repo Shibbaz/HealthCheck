@@ -52,23 +52,25 @@ module Contexts
         $event_store.publish(event, stream_name: SecureRandom.uuid)
       end
 
-      def apply_filtering(posts:, args:)
+      def apply_filtering(args:)
+        posts = @adapter.all
+        raise Contexts::Posts::Errors::PostNotFoundError if posts == []
+
         feeling ||= args[:filters][:feeling]
         likes ||= args[:filters][:likes]
         created_at ||= args[:filters][:created_at]
-        
         if !feeling.nil?
-          return posts.filter_by_feeling(feeling)
+          return @adapter.filter_by_feeling(feeling)
         end
 
         if !likes.nil?
-          return posts.filter_by_likes
+          return @adapter.filter_by_likes
         end
 
         if !created_at.nil?
-          return posts.filter_by_created_at
+          return @adapter.filter_by_created_at
         end
-        return posts
+        posts
       end
     end
   end
