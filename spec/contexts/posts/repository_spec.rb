@@ -166,7 +166,7 @@ RSpec.describe Contexts::Posts::Repository, type: :model do
         }
       )
       size = data.size
-      likes_counter = data.pluck(:likes).map{|likes|
+      likes_counter = data.pluck(:likes).map { |likes|
         likes.size
       }
       expect(likes_counter.first < likes_counter.last).to eq(true)
