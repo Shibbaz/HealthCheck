@@ -9,7 +9,7 @@ module Contexts
         end
 
         def call(args:)
-          @adapter.apply_filtering(args)
+          Contexts::Posts::Repository.new.apply_filtering(args: args)
         end
       end
     end

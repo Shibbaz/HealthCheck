@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   has_secure_password
+  after_create :set_followers_attribute
 
   validates :name, presence: true
   validates :email, presence: true, uniqueness: true
@@ -9,4 +10,8 @@ class User < ApplicationRecord
   VALID_PHONE_NUMBER_REGEX = /\d{9}/
   validates :phone_number, presence: true, length: {maximum: 15},
     format: {with: VALID_PHONE_NUMBER_REGEX}
+
+  def set_followers_attribute
+    update(followers: [id])
+  end
 end
