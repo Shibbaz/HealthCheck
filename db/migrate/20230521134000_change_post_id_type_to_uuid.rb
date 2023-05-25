@@ -1,4 +1,4 @@
-class ChangePostIdTypeToUuid < ActiveRecord::Migration[5.2]
+class ChangePostIdTypeToUuid < ActiveRecord::Migration[7.0]
   def change
     add_column :posts, :uuid, :uuid, default: "gen_random_uuid()", null: false
 
