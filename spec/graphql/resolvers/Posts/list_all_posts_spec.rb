@@ -22,12 +22,10 @@ module Resolvers
             phone_number: 667089810
           )
         }
-
         let(:context) {
-          ctx = {
-            current_user: user
-          }
+          GraphQL::Query::Context.new(query: OpenStruct.new(schema: HealthSchema), values: {current_user: user}, object: nil)
         }
+
         before do
           Post.create(id: SecureRandom.uuid, user_id: user.id, likes: [user.id], insights: "Ah", feeling: 1)
           Post.create(id: SecureRandom.uuid, user_id: extra_user.id, likes: [], insights: "Ah", feeling: 0)
@@ -83,13 +81,10 @@ module Resolvers
         end
 
         it "shows posts of user and its followers" do
-          followers = [extra_user.id] + user.followers
+          followers = [user.id, extra_user.id]
           user.update(followers: followers)
           user.reload
           result = HealthSchema.execute(query, variables: {filters: {
-            created_at: nil,
-            feeling: nil,
-            likes: nil,
             followers: true
           }}, context: context)
           size = result["data"]["allposts"].size
