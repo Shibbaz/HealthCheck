@@ -104,6 +104,39 @@ RSpec.describe Contexts::Posts::Repository, type: :model do
     end
   end
 
+  context "apply_filtering method, no records" do
+    it "checks if no user exists" do
+      user = User.create!(
+        id: SecureRandom.uuid,
+        name: Faker::Name.name,
+        email: Faker::Internet.email,
+        password_digest: "123456",
+        phone_number: 667081810
+      )
+
+      Post.create(
+        id: SecureRandom.uuid,
+        user_id: user.id,
+        likes: [user.id],
+        feeling: 1
+      )
+
+      expect {
+        Contexts::Posts::Repository.new.apply_filtering(
+          args: {
+            user_id: SecureRandom.uuid,
+            filters: {
+              feeling: nil,
+              likes: nil,
+              created_at: nil,
+              followers: true
+            }
+          }
+        )
+      }.to raise_error(Contexts::Users::Errors::UserNotFoundError)
+    end
+  end
+
   context "apply_filtering method" do
     let(:user) {
       User.create!(
@@ -112,6 +145,16 @@ RSpec.describe Contexts::Posts::Repository, type: :model do
         email: Faker::Internet.email,
         password_digest: "123456",
         phone_number: 667089810
+      )
+    }
+
+    let(:extra_user) {
+      User.create!(
+        id: SecureRandom.uuid,
+        name: Faker::Name.name,
+        email: Faker::Internet.email,
+        password_digest: "123456",
+        phone_number: 667081810
       )
     }
 
@@ -124,7 +167,7 @@ RSpec.describe Contexts::Posts::Repository, type: :model do
       )
       Post.create(
         id: SecureRandom.uuid,
-        user_id: user.id,
+        user_id: extra_user.id,
         likes: []
       )
     end
@@ -135,7 +178,8 @@ RSpec.describe Contexts::Posts::Repository, type: :model do
           filters: {
             feeling: nil,
             likes: nil,
-            created_at: nil
+            created_at: nil,
+            followers: nil
           }
         }
       )
@@ -148,7 +192,8 @@ RSpec.describe Contexts::Posts::Repository, type: :model do
           filters: {
             feeling: 1,
             likes: nil,
-            created_at: nil
+            created_at: nil,
+            followers: nil
           }
         }
       )
@@ -161,7 +206,8 @@ RSpec.describe Contexts::Posts::Repository, type: :model do
           filters: {
             feeling: nil,
             likes: true,
-            created_at: nil
+            created_at: nil,
+            followers: nil
           }
         }
       )
@@ -179,13 +225,33 @@ RSpec.describe Contexts::Posts::Repository, type: :model do
           filters: {
             feeling: nil,
             likes: nil,
-            created_at: true
+            created_at: true,
+            followers: nil
           }
         }
       )
       size = data.size
       dates = data.pluck(:created_at)
       expect(Date.parse(dates.first.to_s) <= Date.parse(dates.last.to_s)).to eq(true)
+      expect(size).to eq(2)
+    end
+
+    it "it has followers filters" do
+      followers = [extra_user.id] + user.followers
+      user.update(followers: followers)
+      user.reload
+      data = Contexts::Posts::Repository.new.apply_filtering(
+        args: {
+          user_id: user.id,
+          filters: {
+            feeling: nil,
+            likes: nil,
+            created_at: nil,
+            followers: true
+          }
+        }
+      )
+      size = data.size
       expect(size).to eq(2)
     end
   end
