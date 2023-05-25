@@ -8,8 +8,11 @@ module Contexts
           @adapter = adapter
         end
 
-        def call(args:)
-          @adapter.apply_filtering(args)
+        def call(user_id, args:)
+          params = args.merge!({
+            user_id: user_id
+          })
+          @adapter.apply_filtering(params)
         end
       end
     end

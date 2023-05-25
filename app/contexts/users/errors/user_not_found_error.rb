@@ -1,4 +1,4 @@
-module Context
+module Contexts
   module Users
     module Errors
       class UserNotFoundError < ActiveRecord::RecordNotFound
