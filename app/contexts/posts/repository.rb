@@ -60,7 +60,6 @@ module Contexts
         likes ||= args[:filters][:likes]
         created_at ||= args[:filters][:created_at]
         followers ||= args[:filters][:followers]
-
         if !feeling.nil?
           return @adapter.filter_by_feeling(feeling)
         end

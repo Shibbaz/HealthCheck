@@ -7,6 +7,9 @@ module Resolvers
 
     def resolve(**args)
       Helpers::Authenticate.new.call(context: context)
+      args = args.merge({
+        user_id: context[:current_user].id
+      })
       Contexts::Posts::Queries::AllRecords.new.call(args: args)
     rescue ActiveRecord::RecordNotFound => error
       raise GraphQL::ExecutionError, error.message

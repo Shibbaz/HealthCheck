@@ -26,8 +26,4 @@ class Post < ApplicationRecord
   scope :show_users_content, ->(ids) {
     where(user_id: ids).order(arel_table["created_at"].desc)
   }
-
-  scope :apply_filtering, ->(args) {
-    Contexts::Posts::Repository.new.apply_filtering(args: args)
-  }
 end

@@ -8,11 +8,8 @@ module Contexts
           @adapter = adapter
         end
 
-        def call(user_id, args:)
-          params = args.merge!({
-            user_id: user_id
-          })
-          @adapter.apply_filtering(params)
+        def call(args:)
+          Contexts::Posts::Repository.new.apply_filtering(args: args)
         end
       end
     end
