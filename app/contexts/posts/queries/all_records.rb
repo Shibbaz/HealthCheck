@@ -4,7 +4,7 @@ module Contexts
       class AllRecords
         def call(args:)
           posts = Post.all
-          raise Contexts::Posts::Errors::PostsNotFoundError if posts == []
+          raise Contexts::Posts::Errors::PostNotFoundError if posts == []
           Contexts::Posts::Repository.new.apply_filtering(posts: posts, args: args)
         end
       end
