@@ -48,7 +48,7 @@ module Resolvers
           result = HealthSchema.execute(query, variables: {filters: {
             likes: true,
             feeling: nil,
-            likes: nil
+            created_at: nil
           }}, context: context)
           size = result["data"]["allposts"].size
           likes_counter = result["data"]["allposts"].pluck("likesCounter")
