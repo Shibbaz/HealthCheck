@@ -8,7 +8,8 @@ module Contexts
             name: stream[:name],
             email: stream[:email],
             password: stream[:password],
-            phone_number: stream[:phone_number]
+            phone_number: stream[:phone_number],
+            gender: stream[:gender]
           )
         end
       end
