@@ -77,8 +77,9 @@ module Resolvers
             data["id"] == post.id
           }
           size = item.first["versions"].size
+          expect(size).to eq(1)
           post.reload
-          
+
           post.update(question: "What is my purpose?")
           result = HealthSchema.execute(query, variables: {
             feeling: nil,
