@@ -2,10 +2,13 @@ require "rails_helper"
 require "faker"
 
 RSpec.describe Contexts::Posts::Repository, type: :model do
+  subject(:repository) {
+    Contexts::Posts::Repository.new
+  }
   context "create method" do
     it "it success" do
       expect {
-        event_store = Contexts::Posts::Repository.new.create_post(
+        event_store = repository.create_post(
           args: {
             user_id: SecureRandom.uuid,
             insights: "I'm amazing",
@@ -39,7 +42,7 @@ RSpec.describe Contexts::Posts::Repository, type: :model do
       args = {
         id: post.id
       }
-      event_store = Contexts::Posts::Repository.new.add_like(args: args, current_user_id: user.id)
+      event_store = repository.add_like(args: args, current_user_id: user.id)
       expect(event_store).to have_published(an_event(PostWasLiked))
       post.reload
       expect(post.likes).equal?([user.id])
@@ -66,7 +69,7 @@ RSpec.describe Contexts::Posts::Repository, type: :model do
     }
 
     it "it success" do
-      event_store = Contexts::Posts::Repository.new.unlike(
+      event_store = repository.unlike(
         args: {id: post.id},
         current_user_id: user.id
       )
@@ -100,7 +103,7 @@ RSpec.describe Contexts::Posts::Repository, type: :model do
         id: post.id,
         insights: "hahaha"
       }
-      event_store = Contexts::Posts::Repository.new.update(args: args)
+      event_store = repository.update(args: args)
       expect(event_store).to have_published(an_event(PostWasUpdated))
     end
   end
@@ -174,7 +177,7 @@ RSpec.describe Contexts::Posts::Repository, type: :model do
     end
 
     it "it has no filters" do
-      data = Contexts::Posts::Repository.new.apply_filtering(
+      data = repository.apply_filtering(
         args: {
           filters: {
             feeling: nil,
@@ -188,7 +191,7 @@ RSpec.describe Contexts::Posts::Repository, type: :model do
     end
 
     it "it has feeling filters" do
-      data = Contexts::Posts::Repository.new.apply_filtering(
+      data = repository.apply_filtering(
         args: {
           filters: {
             feeling: 1,
@@ -202,7 +205,7 @@ RSpec.describe Contexts::Posts::Repository, type: :model do
     end
 
     it "it has likes filters" do
-      data = Contexts::Posts::Repository.new.apply_filtering(
+      data = repository.apply_filtering(
         args: {
           filters: {
             feeling: nil,
@@ -221,7 +224,7 @@ RSpec.describe Contexts::Posts::Repository, type: :model do
     end
 
     it "it has created_at filters" do
-      data = Contexts::Posts::Repository.new.apply_filtering(
+      data = repository.apply_filtering(
         args: {
           filters: {
             feeling: nil,
@@ -241,7 +244,7 @@ RSpec.describe Contexts::Posts::Repository, type: :model do
       followers = [extra_user.id] + user.followers
       user.update(followers: followers)
       user.reload
-      data = Contexts::Posts::Repository.new.apply_filtering(
+      data = repository.apply_filtering(
         args: {
           user_id: user.id,
           filters: {

@@ -2,10 +2,13 @@ require "rails_helper"
 require "faker"
 
 RSpec.describe Contexts::Comments::Repository, type: :model do
+  subject(:repository) {
+    Contexts::Comments::Repository.new
+  }
   context "create method" do
     it "it success" do
       expect {
-        event_store = Contexts::Comments::Repository.new.create_comment(
+        event_store = repository.create_comment(
           args: {
             user_id: SecureRandom.uuid,
             post_id: SecureRandom.uuid,
@@ -49,7 +52,7 @@ RSpec.describe Contexts::Comments::Repository, type: :model do
       args = {
         id: comment.id
       }
-      event_store = Contexts::Comments::Repository.new.add_like(args: args, current_user_id: user.id)
+      event_store = repository.add_like(args: args, current_user_id: user.id)
       expect(event_store).to have_published(an_event(CommentWasLiked))
       comment.reload
       expect(comment.likes).equal?([user.id])
@@ -86,7 +89,7 @@ RSpec.describe Contexts::Comments::Repository, type: :model do
     }
 
     it "it success" do
-      event_store = Contexts::Comments::Repository.new.unlike(
+      event_store = repository.unlike(
         args: {id: comment.id},
         current_user_id: user.id
       )
@@ -132,7 +135,7 @@ RSpec.describe Contexts::Comments::Repository, type: :model do
         id: comment.id,
         text: "hahaha"
       }
-      event_store = Contexts::Comments::Repository.new.update(args: args)
+      event_store = repository.update(args: args)
       expect(event_store).to have_published(an_event(CommentWasUpdated))
     end
   end

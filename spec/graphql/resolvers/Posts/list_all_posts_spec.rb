@@ -38,16 +38,16 @@ module Resolvers
         }
 
         before do
-            posts = [
-              Post.create(id: SecureRandom.uuid, user_id: user.id, likes: [user.id], insights: "Ah", feeling: 1),
-              Post.create(id: SecureRandom.uuid, user_id: extra_user.id, likes: [], insights: "Ah", feeling: 0),
-              Post.create(id: SecureRandom.uuid, user_id: extra_new_user.id, likes: [], insights: "Ah", feeling: 0)
-            ]
-            comments = [
-              Comment.create(id: SecureRandom.uuid, user_id: user.id, post_id: posts[0].id, text: "test"),
-              Comment.create(id: SecureRandom.uuid, user_id: user.id, post_id: posts[0].id, text: "test"),
-              Comment.create(id: SecureRandom.uuid, user_id: user.id, post_id: posts[1].id, text: "test")
-            ]
+          posts = [
+            Post.create(id: SecureRandom.uuid, user_id: user.id, likes: [user.id], insights: "Ah", feeling: 1),
+            Post.create(id: SecureRandom.uuid, user_id: extra_user.id, likes: [], insights: "Ah", feeling: 0),
+            Post.create(id: SecureRandom.uuid, user_id: extra_new_user.id, likes: [], insights: "Ah", feeling: 0)
+          ]
+          comments = [
+            Comment.create(id: SecureRandom.uuid, user_id: user.id, post_id: posts[0].id, text: "test"),
+            Comment.create(id: SecureRandom.uuid, user_id: user.id, post_id: posts[0].id, text: "test"),
+            Comment.create(id: SecureRandom.uuid, user_id: user.id, post_id: posts[1].id, text: "test")
+          ]
         end
 
         it "returns Posts and check numbers of Comments in two posts" do
