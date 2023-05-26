@@ -76,15 +76,15 @@ module Resolvers
             followers: nil
           }, context: context)
 
-          item = result["data"]["allposts"].select{|data| 
+          item = result["data"]["allposts"].select { |data|
             data["id"] == post.id
           }
           size = item.first["versions"].size
           expect(size).to eq(1)
 
-          size = item.first["comments"].select{|data| 
+          size = item.first["comments"].count { |data|
             data["id"] == comment.id
-          }.size
+          }
           expect(size).to eq(1)
 
           post.update(question: "What is my purpose?")
@@ -97,16 +97,16 @@ module Resolvers
             followers: nil
           }, context: context)
 
-          item = result["data"]["allposts"].select{|data| 
+          item = result["data"]["allposts"].select { |data|
             data["id"] == post.id
           }
           size = item.first["versions"].size
-          expect(size).to eq(2)      
+          expect(size).to eq(2)
 
-          size = item.first["comments"].select{|data| 
+          size = item.first["comments"].find { |data|
             data["id"] == comment.id
-          }.first["versions"].size
-          expect(size).to eq(2)          
+          }["versions"].size
+          expect(size).to eq(2)
         end
 
         it "returns Posts" do
