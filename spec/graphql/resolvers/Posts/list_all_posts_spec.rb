@@ -22,14 +22,45 @@ module Resolvers
             phone_number: 667089810
           )
         }
+
+        let(:extra_new_user) {
+          User.create!(
+            id: SecureRandom.uuid,
+            name: "test3",
+            email: "test3@test.com",
+            password: "test3",
+            phone_number: 667089810
+          )
+        }
+
         let(:context) {
           GraphQL::Query::Context.new(query: OpenStruct.new(schema: HealthSchema), values: {current_user: user}, object: nil)
         }
 
         before do
-          Post.create(id: SecureRandom.uuid, user_id: user.id, likes: [user.id], insights: "Ah", feeling: 1)
-          Post.create(id: SecureRandom.uuid, user_id: extra_user.id, likes: [], insights: "Ah", feeling: 0)
-          Post.create(id: SecureRandom.uuid, user_id: SecureRandom.uuid, likes: [], insights: "Ah", feeling: 0)
+            posts = [
+              Post.create(id: SecureRandom.uuid, user_id: user.id, likes: [user.id], insights: "Ah", feeling: 1),
+              Post.create(id: SecureRandom.uuid, user_id: extra_user.id, likes: [], insights: "Ah", feeling: 0),
+              Post.create(id: SecureRandom.uuid, user_id: extra_new_user.id, likes: [], insights: "Ah", feeling: 0)
+            ]
+            comments = [
+              Comment.create(id: SecureRandom.uuid, user_id: user.id, post_id: posts[0].id, text: "test"),
+              Comment.create(id: SecureRandom.uuid, user_id: user.id, post_id: posts[0].id, text: "test"),
+              Comment.create(id: SecureRandom.uuid, user_id: user.id, post_id: posts[1].id, text: "test")
+            ]
+        end
+
+        it "returns Posts and check numbers of Comments in two posts" do
+          result = HealthSchema.execute(query, variables: {
+            feeling: nil,
+            created_at: nil,
+            likes: nil,
+            followers: nil
+          }, context: context)
+          first_post_comment_size = result["data"]["allposts"][0]["comments"].size
+          expect(first_post_comment_size).to eq(2)
+          second_post_comment_size = result["data"]["allposts"][1]["comments"].size
+          expect(second_post_comment_size).to eq(1)
         end
 
         it "returns Posts" do
@@ -109,6 +140,9 @@ module Resolvers
                 feeling
                 likesCounter
                 createdAt
+                comments{
+                  id
+                }
               }
           }
         GQL
