@@ -2,6 +2,7 @@ class User < ApplicationRecord
   has_secure_password
   after_create :set_followers_attribute
   has_many :posts
+  has_many :comments
 
   validates :name, presence: true
   validates :email, presence: true, uniqueness: true
