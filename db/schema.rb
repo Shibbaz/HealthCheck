@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_26_300003) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_26_300004) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
   enable_extension "plpgsql"
@@ -22,6 +22,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_26_300003) do
     t.uuid "likes", default: [], null: false, array: true
     t.uuid "user_id"
     t.uuid "post_id"
+    t.jsonb "log_data"
     t.index ["post_id"], name: "index_comments_on_post_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
@@ -448,5 +449,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_26_300003) do
 
   create_trigger :logidze_on_posts, sql_definition: <<-SQL
       CREATE TRIGGER logidze_on_posts BEFORE INSERT OR UPDATE ON public.posts FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
+  SQL
+  create_trigger :logidze_on_comments, sql_definition: <<-SQL
+      CREATE TRIGGER logidze_on_comments BEFORE INSERT OR UPDATE ON public.comments FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
   SQL
 end
