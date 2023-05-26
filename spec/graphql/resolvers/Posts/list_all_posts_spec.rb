@@ -166,6 +166,12 @@ module Resolvers
           expect(size).to eq(2)
         end
 
+        it "checks num DB queries if N+1 problem a true" do
+          expect {
+            HealthSchema.execute(query, variables: {}, context: {current_user: user})
+          }.not_to exceed_query_limit(4)
+        end
+
         it "none found in filtering by posts" do
           result = HealthSchema.execute(query, variables: {
             feeling: 99,
