@@ -7,5 +7,10 @@ module Types
     field :create_post, mutation: Mutations::CreatePostMutation
     field :update_post_insights, mutation: Mutations::UpdatePostInsightsMutation
     field :delete_post, mutation: Mutations::DeletePostMutation
+    field :add_like_to_comment, mutation: Mutations::AddLikeToCommentMutation
+    field :unlike_to_comment, mutation: Mutations::UnlikeCommentMutation
+    field :create_comment, mutation: Mutations::CreateCommentMutation
+    field :update_comment_text, mutation: Mutations::UpdateCommentTextMutation
+    field :delete_comment_text, mutation: Mutations::DeleteCommentMutation
   end
 end
