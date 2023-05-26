@@ -72,9 +72,13 @@ module Resolvers
             likes: nil,
             followers: nil
           }, context: context)
-          size = result["data"]["allposts"].last["versions"].size
 
+          item = result["data"]["allposts"].select{|data| 
+            data["id"] == post.id
+          }
+          size = item.first["versions"].size
           post.reload
+          
           post.update(question: "What is my purpose?")
           result = HealthSchema.execute(query, variables: {
             feeling: nil,
@@ -82,7 +86,11 @@ module Resolvers
             likes: nil,
             followers: nil
           }, context: context)
-          size = result["data"]["allposts"].last["versions"].size
+
+          item = result["data"]["allposts"].select{|data| 
+            data["id"] == post.id
+          }
+          size = item.first["versions"].size
           expect(size).to eq(2)
         end
 
