@@ -22,6 +22,17 @@ module Resolvers
             phone_number: 667089810
           )
         }
+
+        let(:extra_new_user) {
+          User.create!(
+            id: SecureRandom.uuid,
+            name: "test3",
+            email: "test3@test.com",
+            password: "test3",
+            phone_number: 667089810
+          )
+        }
+
         let(:context) {
           GraphQL::Query::Context.new(query: OpenStruct.new(schema: HealthSchema), values: {current_user: user}, object: nil)
         }
@@ -29,7 +40,7 @@ module Resolvers
         before do
           Post.create(id: SecureRandom.uuid, user_id: user.id, likes: [user.id], insights: "Ah", feeling: 1)
           Post.create(id: SecureRandom.uuid, user_id: extra_user.id, likes: [], insights: "Ah", feeling: 0)
-          Post.create(id: SecureRandom.uuid, user_id: SecureRandom.uuid, likes: [], insights: "Ah", feeling: 0)
+          Post.create(id: SecureRandom.uuid, user_id: extra_new_user.id, likes: [], insights: "Ah", feeling: 0)
         end
 
         it "returns Posts" do
