@@ -30,7 +30,11 @@ module Types
     end
 
     def versions
-      Contexts::Helpers::Versioning.versions(object.log_data)
+      begin
+        Contexts::Helpers::Versioning.versions(object.log_data)
+      rescue Contexts::Helpers::Errors::VersionsNotFoundError
+        []
+      end
     end
   end
 end
