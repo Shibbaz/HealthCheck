@@ -12,7 +12,7 @@ RSpec.describe Contexts::Comments::Repository, type: :model do
             text: "I'm amazing"
           }
         )
-        }.to raise_error(ActiveRecord::RecordInvalid)
+      }.to raise_error(ActiveRecord::RecordInvalid)
     end
   end
 
@@ -126,7 +126,7 @@ RSpec.describe Contexts::Comments::Repository, type: :model do
         likes: []
       )
     }
-    
+
     it "it success" do
       args = {
         id: comment.id,
