@@ -1,85 +1,7 @@
-# This file is auto-generated from the current state of the database. Instead
-# of editing this file, please use the migrations feature of Active Record to
-# incrementally modify your database, and then regenerate this schema definition.
-#
-# This file is the source Rails uses to define your schema when running `bin/rails
-# db:schema:load`. When creating a new database, `bin/rails db:schema:load` tends to
-# be faster and is potentially less error prone than running all of your
-# migrations from scratch. Old migrations may fail to apply correctly if those
-# migrations use external dependencies or application code.
-#
-# It's strongly recommended that you check this file into your version control system.
-
-ActiveRecord::Schema[7.0].define(version: 2023_05_26_300003) do
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "hstore"
-  enable_extension "plpgsql"
-
-  create_table "comments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "text"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.uuid "likes", default: [], null: false, array: true
-    t.uuid "user_id"
-    t.uuid "post_id"
-    t.index ["post_id"], name: "index_comments_on_post_id"
-    t.index ["user_id"], name: "index_comments_on_user_id"
-  end
-
-  create_table "event_store_events", force: :cascade do |t|
-    t.uuid "event_id", null: false
-    t.string "event_type", null: false
-    t.jsonb "metadata"
-    t.jsonb "data", null: false
-    t.datetime "created_at", null: false
-    t.datetime "valid_at"
-    t.index ["created_at"], name: "index_event_store_events_on_created_at"
-    t.index ["event_id"], name: "index_event_store_events_on_event_id", unique: true
-    t.index ["event_type"], name: "index_event_store_events_on_event_type"
-    t.index ["valid_at"], name: "index_event_store_events_on_valid_at"
-  end
-
-  create_table "event_store_events_in_streams", force: :cascade do |t|
-    t.string "stream", null: false
-    t.integer "position"
-    t.uuid "event_id", null: false
-    t.datetime "created_at", null: false
-    t.index ["created_at"], name: "index_event_store_events_in_streams_on_created_at"
-    t.index ["stream", "event_id"], name: "index_event_store_events_in_streams_on_stream_and_event_id", unique: true
-    t.index ["stream", "position"], name: "index_event_store_events_in_streams_on_stream_and_position", unique: true
-  end
-
-  create_table "posts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "user_id"
-    t.text "insights"
-    t.string "question", default: "How do you feel today?"
-    t.integer "feeling", default: 0
-    t.uuid "likes", default: [], array: true
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.jsonb "log_data"
-  end
-
-  create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "name"
-    t.string "email"
-    t.string "password_digest"
-    t.boolean "archive"
-    t.boolean "is_admin"
-    t.integer "phone_number"
-    t.integer "gender"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.uuid "followers", default: [], null: false, array: true
-  end
-
-  add_foreign_key "comments", "posts"
-  add_foreign_key "comments", "users"
-  create_function :logidze_capture_exception, sql_definition: <<-'SQL'
-      CREATE OR REPLACE FUNCTION public.logidze_capture_exception(error_data jsonb)
-       RETURNS boolean
-       LANGUAGE plpgsql
-      AS $function$
+class LogidzeInstall < ActiveRecord::Migration[7.0]
+  def up
+    execute <<~SQL
+      CREATE OR REPLACE FUNCTION logidze_capture_exception(error_data jsonb) RETURNS boolean AS $body$
         -- version: 1
       BEGIN
         -- Feel free to change this function to change Logidze behavior on exception.
@@ -100,13 +22,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_26_300003) do
 
         return false;
       END;
-      $function$
-  SQL
-  create_function :logidze_compact_history, sql_definition: <<-'SQL'
-      CREATE OR REPLACE FUNCTION public.logidze_compact_history(log_data jsonb, cutoff integer DEFAULT 1)
-       RETURNS jsonb
-       LANGUAGE plpgsql
-      AS $function$
+      $body$
+      LANGUAGE plpgsql;
+
+      CREATE OR REPLACE FUNCTION logidze_compact_history(log_data jsonb, cutoff integer DEFAULT 1) RETURNS jsonb AS $body$
         -- version: 1
         DECLARE
           merged jsonb;
@@ -142,13 +61,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_26_300003) do
 
           return log_data;
         END;
-      $function$
-  SQL
-  create_function :logidze_filter_keys, sql_definition: <<-'SQL'
-      CREATE OR REPLACE FUNCTION public.logidze_filter_keys(obj jsonb, keys text[], include_columns boolean DEFAULT false)
-       RETURNS jsonb
-       LANGUAGE plpgsql
-      AS $function$
+      $body$
+      LANGUAGE plpgsql;
+
+      CREATE OR REPLACE FUNCTION logidze_filter_keys(obj jsonb, keys text[], include_columns boolean DEFAULT false) RETURNS jsonb AS $body$
         -- version: 1
         DECLARE
           res jsonb;
@@ -173,13 +89,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_26_300003) do
 
           RETURN res;
         END;
-      $function$
-  SQL
-  create_function :logidze_logger, sql_definition: <<-'SQL'
-      CREATE OR REPLACE FUNCTION public.logidze_logger()
-       RETURNS trigger
-       LANGUAGE plpgsql
-      AS $function$
+      $body$
+      LANGUAGE plpgsql;
+
+      CREATE OR REPLACE FUNCTION logidze_logger() RETURNS TRIGGER AS $body$
         -- version: 3
         DECLARE
           changes jsonb;
@@ -380,13 +293,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_26_300003) do
               RAISE;
             END IF;
         END;
-      $function$
-  SQL
-  create_function :logidze_snapshot, sql_definition: <<-'SQL'
-      CREATE OR REPLACE FUNCTION public.logidze_snapshot(item jsonb, ts_column text DEFAULT NULL::text, columns text[] DEFAULT NULL::text[], include_columns boolean DEFAULT false)
-       RETURNS jsonb
-       LANGUAGE plpgsql
-      AS $function$
+      $body$
+      LANGUAGE plpgsql;
+
+      CREATE OR REPLACE FUNCTION logidze_snapshot(item jsonb, ts_column text DEFAULT NULL, columns text[] DEFAULT NULL, include_columns boolean DEFAULT false) RETURNS jsonb AS $body$
         -- version: 3
         DECLARE
           ts timestamp with time zone;
@@ -417,13 +327,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_26_300003) do
                   )
             );
         END;
-      $function$
-  SQL
-  create_function :logidze_version, sql_definition: <<-'SQL'
-      CREATE OR REPLACE FUNCTION public.logidze_version(v bigint, data jsonb, ts timestamp with time zone)
-       RETURNS jsonb
-       LANGUAGE plpgsql
-      AS $function$
+      $body$
+      LANGUAGE plpgsql;
+
+      CREATE OR REPLACE FUNCTION logidze_version(v bigint, data jsonb, ts timestamp with time zone) RETURNS jsonb AS $body$
         -- version: 2
         DECLARE
           buf jsonb;
@@ -442,11 +349,20 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_26_300003) do
           END IF;
           RETURN buf;
         END;
-      $function$
-  SQL
+      $body$
+      LANGUAGE plpgsql;
 
+    SQL
+  end
 
-  create_trigger :logidze_on_posts, sql_definition: <<-SQL
-      CREATE TRIGGER logidze_on_posts BEFORE INSERT OR UPDATE ON public.posts FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
-  SQL
+  def down
+    execute <<~SQL
+      DROP FUNCTION IF EXISTS logidze_capture_exception(jsonb) CASCADE;
+      DROP FUNCTION IF EXISTS logidze_compact_history(jsonb, integer) CASCADE;
+      DROP FUNCTION IF EXISTS logidze_filter_keys(jsonb, text[], boolean) CASCADE;
+      DROP FUNCTION IF EXISTS logidze_logger() CASCADE;
+      DROP FUNCTION IF EXISTS logidze_snapshot(jsonb, text, text[], boolean) CASCADE;
+      DROP FUNCTION IF EXISTS logidze_version(bigint, jsonb, timestamp with time zone) CASCADE;
+    SQL
+  end
 end

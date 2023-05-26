@@ -63,6 +63,38 @@ module Resolvers
           expect(second_post_comment_size).to eq(1)
         end
 
+        it "returns updated versions size" do
+          post = Post.last
+          post.update(insights: "Test")
+          result = HealthSchema.execute(query, variables: {
+            feeling: nil,
+            created_at: nil,
+            likes: nil,
+            followers: nil
+          }, context: context)
+
+          item = result["data"]["allposts"].select{|data| 
+            data["id"] == post.id
+          }
+          size = item.first["versions"].size
+          expect(size).to eq(1)
+          post.reload
+
+          post.update(question: "What is my purpose?")
+          result = HealthSchema.execute(query, variables: {
+            feeling: nil,
+            created_at: nil,
+            likes: nil,
+            followers: nil
+          }, context: context)
+
+          item = result["data"]["allposts"].select{|data| 
+            data["id"] == post.id
+          }
+          size = item.first["versions"].size
+          expect(size).to eq(2)
+        end
+
         it "returns Posts" do
           result = HealthSchema.execute(query, variables: {
             feeling: nil,
@@ -143,6 +175,7 @@ module Resolvers
                 comments{
                   id
                 }
+                versions
               }
           }
         GQL
