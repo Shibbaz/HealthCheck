@@ -10,9 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_25_162100) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_26_300000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "comments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "text"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.uuid "likes", default: [], null: false, array: true
+    t.uuid "user_id"
+    t.uuid "post_id"
+    t.index ["post_id"], name: "index_comments_on_post_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
+  end
 
   create_table "event_store_events", force: :cascade do |t|
     t.uuid "event_id", null: false
@@ -60,4 +71,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_25_162100) do
     t.uuid "followers", default: [], null: false, array: true
   end
 
+  add_foreign_key "comments", "posts"
+  add_foreign_key "comments", "users"
 end
