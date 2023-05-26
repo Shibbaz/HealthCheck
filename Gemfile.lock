@@ -212,6 +212,9 @@ GEM
       rspec-expectations (~> 3.12)
       rspec-mocks (~> 3.12)
       rspec-support (~> 3.12)
+    rspec-sqlimit (0.0.5)
+      activerecord (> 4.2, < 7.1)
+      rspec (~> 3.0)
     rspec-support (3.12.0)
     rubocop (1.50.2)
       json (~> 2.3)
@@ -293,6 +296,7 @@ DEPENDENCIES
   rails (~> 7.0.4, >= 7.0.4.3)
   rails_event_store
   rspec-rails (~> 6.0.0)
+  rspec-sqlimit
   ruby_event_store-rspec
   search_object_graphql
   simplecov
