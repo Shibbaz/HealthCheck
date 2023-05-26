@@ -65,7 +65,10 @@ module Resolvers
 
         it "returns updated versions size" do
           post = Post.last
+          comment = Comment.create(id: SecureRandom.uuid, user_id: user.id, post_id: post.id, text: "test")
           post.update(insights: "Test")
+          comment.update(text: "Test")
+
           result = HealthSchema.execute(query, variables: {
             feeling: nil,
             created_at: nil,
@@ -78,9 +81,15 @@ module Resolvers
           }
           size = item.first["versions"].size
           expect(size).to eq(1)
-          post.reload
+
+          size = item.first["comments"].select{|data| 
+            data["id"] == comment.id
+          }.size
+          expect(size).to eq(1)
 
           post.update(question: "What is my purpose?")
+          comment.update(text: "Test2")
+
           result = HealthSchema.execute(query, variables: {
             feeling: nil,
             created_at: nil,
@@ -92,7 +101,12 @@ module Resolvers
             data["id"] == post.id
           }
           size = item.first["versions"].size
-          expect(size).to eq(2)
+          expect(size).to eq(2)      
+
+          size = item.first["comments"].select{|data| 
+            data["id"] == comment.id
+          }.first["versions"].size
+          expect(size).to eq(2)          
         end
 
         it "returns Posts" do
@@ -174,6 +188,7 @@ module Resolvers
                 createdAt
                 comments{
                   id
+                  versions
                 }
                 versions
               }
