@@ -90,6 +90,9 @@ GEM
       activesupport (>= 5.0.0)
     faker (3.2.0)
       i18n (>= 1.8.11, < 2)
+    fx (0.8.0)
+      activerecord (>= 6.0.0)
+      railties (>= 6.0.0)
     globalid (1.1.0)
       activesupport (>= 5.0)
     graphql (2.0.22)
@@ -104,6 +107,10 @@ GEM
     json (2.6.3)
     language_server-protocol (3.17.0.3)
     lint_roller (1.0.0)
+    logidze (1.2.3)
+      activerecord (>= 5.0)
+      railties (>= 5.0)
+      ruby-next-core (~> 0.9)
     loofah (2.21.3)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
@@ -225,6 +232,7 @@ GEM
     rubocop-performance (1.16.0)
       rubocop (>= 1.7.0, < 2.0)
       rubocop-ast (>= 0.4.0)
+    ruby-next-core (0.15.3)
     ruby-progressbar (1.13.0)
     ruby_event_store (2.9.1)
       concurrent-ruby (~> 1.0, >= 1.1.6)
@@ -278,8 +286,10 @@ DEPENDENCIES
   debug
   factory_bot
   faker
+  fx
   graphql
   httparty
+  logidze (~> 1.1)
   obscenity
   pg (~> 1.1)
   pg_search

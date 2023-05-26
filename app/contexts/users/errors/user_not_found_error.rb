@@ -1,5 +1,5 @@
-module Context
-  module Routes
+module Contexts
+  module Users
     module Errors
       class UserNotFoundError < ActiveRecord::RecordNotFound
         def message

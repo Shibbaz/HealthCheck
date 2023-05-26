@@ -6,6 +6,8 @@ require "rails/all"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+require_relative "../lib/ip_filtering"
+
 module Health
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
@@ -25,13 +27,9 @@ module Health
     config.session_store :cookie_store, key: "_interslice_session"
     config.middleware.use ActionDispatch::Cookies
     config.middleware.use config.session_store, config.session_options
-
+    config.middleware.use BatchLoader::Middleware
     config.api_only = true
-    config.autoloader = :classic
-    # config.eager_load_paths += %W(#{Rails.root}/app/contexts/**)
-    # config.add_autoload_paths_to_load_path = false
     config.eager_load_paths += Dir[Rails.root.join("app/contexts/**/*.rb")].each { |rb| require rb }
-    # config.eager_load_paths += Dir[Rails.root.join('app/contexts/**/events/*.rb')].each { |rb| require rb }
-    # config.eager_load_paths += Dir[Rails.root.join('app/contexts/**/notifiers/*.rb')].each { |rb| require rb }
+    config.middleware.use IpFiltering
   end
 end

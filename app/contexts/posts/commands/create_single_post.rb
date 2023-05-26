@@ -4,7 +4,7 @@ module Contexts
       class CreateSinglePost
         def call(event)
           stream = event.data
-          user = stream[:adapter].create!(
+          stream[:adapter].create!(
             user_id: stream[:user_id],
             insights: stream[:insights],
             feeling: stream[:feeling]

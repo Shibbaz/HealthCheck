@@ -1,4 +1,4 @@
-module Context
+module Contexts
   module Posts
     module Errors
       class PostNotFoundError < ActiveRecord::RecordNotFound
