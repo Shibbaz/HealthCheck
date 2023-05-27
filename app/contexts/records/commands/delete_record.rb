@@ -6,13 +6,13 @@ module Contexts
           stream = event.data
           error_type = Contexts::Helpers::Records.build_error(adapter: stream[:adapter])
 
-          comment = Contexts::Helpers::Records.load(
+          record = Contexts::Helpers::Records.load(
             adapter: stream[:adapter],
             id: stream[:id]
           )
-          comment.nil? ? (raise error_type.new) : nil
-          comment.with_lock do
-            comment.destroy
+          record.nil? ? (raise error_type.new) : nil
+          record.with_lock do
+            record.destroy
           end
         end
       end
