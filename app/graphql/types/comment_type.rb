@@ -2,18 +2,14 @@ module Types
   class CommentType < Types::BaseObject
     field :id, ID, null: false
     field :text, String, null: false
-    field :likes, [Types::UserType], null: false
+    field :likes, [Types::UserType], null: false, scope: false
     field :likes_counter, Int, null: false
     field :versions, [GraphQL::Types::JSON], null: false
     field :created_at, GraphQL::Types::ISO8601DateTime, null: false
     field :updated_at, GraphQL::Types::ISO8601DateTime, null: false
 
     def likes
-      data = Contexts::Helpers::Records.load_array(
-        adapter: User,
-        array: object.likes.uniq
-      )
-      BatchLoader::GraphQL.wrap(data)
+      Contexts::Helpers::Records.for(User).load_many(object.likes)
     end
 
     def likes_counter

@@ -1,6 +1,6 @@
 module Contexts
   module Helpers
-    class Records
+    class Records < GraphQL::Batch::Loader
       def self.build_error(adapter:)
         error_name = "Contexts::#{adapter}s::Errors::#{adapter}NotFoundError"
         error_type = error_name.constantize
@@ -12,17 +12,16 @@ module Contexts
       end
 
       def self.load(adapter:, id:)
-        BatchLoader.for(id).batch do |ids, loader|
-          adapter.where(id: ids).each { |object| loader.call(object.id, object) }
-        end
+        adapter.find(id)
       end
 
-      def self.load_array(adapter:, array:)
-        BatchLoader.for(array).batch(default_value: []) do |object_ids, loader|
-          adapter.where(id: object_ids).each { |object|
-            loader.call(array) { |memo| memo << object }
-          }
-        end
+      def initialize(model)
+        @model = model
+      end
+
+      def perform(ids)
+        @model.where(id: ids).each { |record| fulfill(record.id, record) }
+        ids.each { |id| fulfill(id, nil) unless fulfilled?(id) }
       end
     end
   end
