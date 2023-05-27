@@ -1,2 +1,2 @@
-class UserWasCreated < RailsEventStore::Event
+class UserAvatarWasUploaded < RailsEventStore::Event
 end
