@@ -4,7 +4,11 @@ module Contexts
       class UpdatePost
         def call(event)
           stream = event.data
-          post = stream[:adapter].find(stream[:id])
+          post = Contexts::Helpers::Records.load(
+            adapter: stream[:adapter], 
+            id: stream[:id]
+          )
+          post.nil? ? (raise Contexts::Posts::Errors::PostNotFoundError.new) : nil
           post.with_lock do
             update(post: post, insights: stream[:insights])
           end

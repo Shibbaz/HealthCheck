@@ -4,7 +4,11 @@ module Contexts
       class AddLikeToPost
         def call(event)
           data = stream_data(event)
-          post = data[:adapter].find data[:id]
+          post = Contexts::Helpers::Records.load(
+            adapter: data[:adapter],
+            id: data[:id]
+          )
+          post.nil? ? (raise ActiveRecord::RecordNotFound, "Post not found Error") : nil
           array = (post.likes.uniq + [data[:current_user_id]].uniq)
           post.with_lock do
             post.update(likes: array)
