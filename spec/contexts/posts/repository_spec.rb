@@ -7,11 +7,12 @@ RSpec.describe Contexts::Posts::Repository, type: :model do
   }
   context "create method" do
     it "it success" do
+      byebug
       expect {
         event_store = repository.create(
           args: {
             user_id: SecureRandom.uuid,
-            insights: "I'm amazing",
+            text: "I'm amazing",
             feeling: 5
           }
         )

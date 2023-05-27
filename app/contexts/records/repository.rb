@@ -9,13 +9,8 @@ module Contexts
 
       def create(args:)
         event_type = Contexts::Helpers::Records.build_event(adapter: adapter, event_type: "Created")
-
         event = event_type.new(data: {
-          params: {
-            text: args[:text]
-          },
-          user_id: args[:user_id],
-          post_id: args[:post_id],
+          args: args,
           adapter: @adapter
         })
         $event_store.publish(event, stream_name: SecureRandom.uuid)

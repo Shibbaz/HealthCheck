@@ -5,7 +5,7 @@ module Contexts
         def call(event)
           stream = event.data
           stream[:adapter].create!(
-            stream[:params]
+            stream[:args]
           )
         end
       end
