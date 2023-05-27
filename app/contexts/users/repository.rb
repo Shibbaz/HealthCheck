@@ -18,6 +18,15 @@ module Contexts
         })
         $event_store.publish(event, stream_name: SecureRandom.uuid)
       end
+
+      def image_upload(id:, file:)
+        event = UserAvatarWasUploaded.new(data: {
+          id: id,
+          file: file,
+          adapter: @adapter
+        })
+        $event_store.publish(event, stream_name: SecureRandom.uuid)
+      end
     end
   end
 end

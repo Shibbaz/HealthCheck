@@ -11,4 +11,6 @@ Rails.configuration.to_prepare do
   $event_store.subscribe(Contexts::Comments::Commands::UnlikeComment.new, to: [CommentWasUnliked])
   $event_store.subscribe(Contexts::Comments::Commands::UpdateComment.new, to: [CommentWasUpdated])
   $event_store.subscribe(Contexts::Comments::Commands::DeleteComment.new, to: [CommentWasDeleted])
+  $event_store.subscribe(Contexts::Users::Commands::AddUserAvatar.new, to: [UserAvatarWasUploaded])
+
 end
