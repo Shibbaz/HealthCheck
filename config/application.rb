@@ -31,7 +31,8 @@ module Health
     config.api_only = true
     config.eager_load_paths += Dir[Rails.root.join("app/contexts/**/*.rb")].each { |rb| require rb }
     config.middleware.use IpFiltering
-    
+    ApolloUploadServer::Middleware.strict_mode = true
+
     Bundler.require(*Rails.groups)
 
     if ['development', 'test'].include? ENV['RAILS_ENV']
