@@ -5,3 +5,14 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
+    name = Faker::Name.name
+    user = User.create!(
+      name: name,
+      email: Faker::Internet.email(name: name),
+      password: "test",
+      phone_number: 667089810
+    )
+
+    post = Post.create(id: SecureRandom.uuid, user_id: user.id, likes: [user.id])
+
+    Comment.create(id: SecureRandom.uuid, user_id: user.id, likes: [], text: "Ah", post_id: post.id)
