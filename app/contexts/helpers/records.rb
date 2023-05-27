@@ -10,7 +10,7 @@ module Contexts
 
             def self.load_array(adapter:, array:)
                 BatchLoader::GraphQL.for(array).batch(default_value: []) do |ids, loader|
-                    User.where(id: ids).each { |container|
+                    adapter.where(id: ids).each { |container|
                       loader.call(array) { |data|
                         data << container
                       }
