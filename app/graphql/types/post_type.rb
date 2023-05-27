@@ -1,7 +1,7 @@
 module Types
   class PostType < Types::BaseObject
     field :id, ID, null: false
-    field :insights, String, null: false
+    field :text, String, null: false
     field :question, String, null: false
     field :feeling, Int, null: false
     field :likes, [Types::UserType], null: false
