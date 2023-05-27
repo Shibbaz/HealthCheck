@@ -38,7 +38,7 @@ gem "standard"
 
 gem "simplecov", require: false, group: :test
 
-gem 'graphql-batch'
+gem "graphql-batch"
 
 gem "search_object_graphql"
 

@@ -6,7 +6,7 @@ module Mutations
     field :status, Int, null: false
 
     def resolve(**args)
-      Helpers::Authenticate.new.call(context: context)
+      Contexts::Helpers::Authenticate.new.call(context: context)
       args = args.merge({user_id: context[:current_user].id})
       Contexts::Comments::Repository.new.create(args: args)
 
