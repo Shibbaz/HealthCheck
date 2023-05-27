@@ -12,10 +12,11 @@ module Types
     field :updated_at, GraphQL::Types::ISO8601DateTime, null: false
 
     def likes
-      Contexts::Helpers::Records.load_array(
+      data = Contexts::Helpers::Records.load_array(
         adapter: User,
         array: object.likes.uniq
       )
+      return BatchLoader::GraphQL.wrap(data)
     end
 
     def likes_counter
