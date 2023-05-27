@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_26_300004) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_27_132100) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
   enable_extension "plpgsql"
@@ -72,6 +72,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_26_300004) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "followers", default: [], null: false, array: true
+    t.uuid "avatar_id", default: -> { "gen_random_uuid()" }, null: false
   end
 
   add_foreign_key "comments", "posts"

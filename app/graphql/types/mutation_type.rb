@@ -12,5 +12,6 @@ module Types
     field :create_comment, mutation: Mutations::CreateCommentMutation
     field :update_comment_text, mutation: Mutations::UpdateCommentTextMutation
     field :delete_comment_text, mutation: Mutations::DeleteCommentMutation
+    field :upload_profile_image, mutation: Mutations::UpdateUserProfileImageMutation
   end
 end
