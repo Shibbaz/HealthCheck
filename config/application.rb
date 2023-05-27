@@ -27,7 +27,6 @@ module Health
     config.session_store :cookie_store, key: "_interslice_session"
     config.middleware.use ActionDispatch::Cookies
     config.middleware.use config.session_store, config.session_options
-    config.middleware.use BatchLoader::Middleware
     config.api_only = true
     config.eager_load_paths += Dir[Rails.root.join("app/contexts/**/*.rb")].each { |rb| require rb }
     config.middleware.use IpFiltering
