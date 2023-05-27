@@ -5,7 +5,7 @@ module Contexts
         def call(event)
           stream = event.data
           post = Contexts::Helpers::Records.load(
-            adapter: stream[:adapter], 
+            adapter: stream[:adapter],
             id: stream[:id]
           )
           post.nil? ? (raise Contexts::Posts::Errors::PostNotFoundError.new) : nil

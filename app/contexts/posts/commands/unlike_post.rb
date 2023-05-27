@@ -11,7 +11,7 @@ module Contexts
             adapter: stream[:adapter],
             id: post_id
           )
-          post.nil? ? (raise  Contexts::Posts::Errors::PostNotFoundError.new) : nil
+          post.nil? ? (raise Contexts::Posts::Errors::PostNotFoundError.new) : nil
           post.with_lock do
             post.likes.include? current_user_id ? post.update(likes: (post.likes.uniq - [current_user_id].uniq).uniq) : (raise GraphQL::ExecutionError, "User not exists in like array")
           end

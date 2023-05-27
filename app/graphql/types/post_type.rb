@@ -16,7 +16,7 @@ module Types
         adapter: User,
         array: object.likes.uniq
       )
-      return BatchLoader::GraphQL.wrap(data)
+      BatchLoader::GraphQL.wrap(data)
     end
 
     def likes_counter

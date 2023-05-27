@@ -5,7 +5,7 @@ module Contexts
         def call(event)
           data = stream_data(event)
           comment = Contexts::Helpers::Records.load(
-            adapter: data[:adapter], 
+            adapter: data[:adapter],
             id: data[:id]
           )
           comment.nil? ? (raise Contexts::Comments::Errors::CommentNotFoundError.new) : nil
