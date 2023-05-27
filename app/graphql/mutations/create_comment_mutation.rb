@@ -8,7 +8,7 @@ module Mutations
     def resolve(**args)
       Helpers::Authenticate.new.call(context: context)
       args = args.merge({user_id: context[:current_user].id})
-      Contexts::Comments::Repository.new.create_comment(args: args)
+      Contexts::Comments::Repository.new.create(args: args)
 
       {status: 200}
     end
