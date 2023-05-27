@@ -1,7 +1,7 @@
 module Mutations
   class UpdatePostInsightsMutation < BaseMutation
     argument :id, ID, required: true
-    argument :insights, String, required: true
+    argument :text, String, required: true
     field :status, Int, null: false
 
     def resolve(**args)

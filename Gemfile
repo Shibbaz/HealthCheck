@@ -58,9 +58,9 @@ gem "rspec-sqlimit"
 
 gem "aws-sdk"
 
-gem 'dotenv-rails', groups: [:development, :test]
+gem "dotenv-rails", groups: [:development, :test]
 
-gem 'apollo_upload_server', '2.1'
+gem "apollo_upload_server", "2.1"
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"

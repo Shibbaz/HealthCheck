@@ -39,9 +39,9 @@ module Resolvers
 
         before do
           posts = [
-            Post.create(id: SecureRandom.uuid, user_id: user.id, likes: [user.id], insights: "Ah", feeling: 1),
-            Post.create(id: SecureRandom.uuid, user_id: extra_user.id, likes: [], insights: "Ah", feeling: 0),
-            Post.create(id: SecureRandom.uuid, user_id: extra_new_user.id, likes: [], insights: "Ah", feeling: 0)
+            Post.create(id: SecureRandom.uuid, user_id: user.id, likes: [user.id], text: "Ah", feeling: 1),
+            Post.create(id: SecureRandom.uuid, user_id: extra_user.id, likes: [], text: "Ah", feeling: 0),
+            Post.create(id: SecureRandom.uuid, user_id: extra_new_user.id, likes: [], text: "Ah", feeling: 0)
           ]
           comments = [
             Comment.create(id: SecureRandom.uuid, user_id: user.id, post_id: posts[0].id, text: "test"),
@@ -66,7 +66,7 @@ module Resolvers
         it "returns updated versions size" do
           post = Post.last
           comment = Comment.create(id: SecureRandom.uuid, user_id: user.id, post_id: post.id, text: "test")
-          post.update(insights: "Test")
+          post.update(text: "Test")
           comment.update(text: "Test")
 
           result = HealthSchema.execute(query, variables: {

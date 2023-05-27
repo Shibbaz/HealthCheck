@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_27_132100) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_27_141050) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
   enable_extension "plpgsql"
@@ -52,7 +52,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_27_132100) do
 
   create_table "posts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "user_id"
-    t.text "insights"
+    t.text "text"
     t.string "question", default: "How do you feel today?"
     t.integer "feeling", default: 0
     t.uuid "likes", default: [], array: true

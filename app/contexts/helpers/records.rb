@@ -1,6 +1,16 @@
 module Contexts
   module Helpers
     class Records
+      def self.build_error(adapter:)
+        error_name = "Contexts::#{adapter}s::Errors::#{adapter}NotFoundError"
+        error_type = error_name.constantize
+      end
+
+      def self.build_event(adapter:, event_type:)
+        event_name = "#{adapter}Was#{event_type}"
+        event_type = event_name.constantize
+      end
+
       def self.load(adapter:, id:)
         BatchLoader.for(id).batch do |ids, loader|
           adapter.where(id: ids).each { |object| loader.call(object.id, object) }

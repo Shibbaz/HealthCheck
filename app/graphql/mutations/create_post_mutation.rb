@@ -2,7 +2,7 @@ module Mutations
   class CreatePostMutation < BaseMutation
     argument :feeling, Int, required: true
     argument :question, String, required: true
-    argument :insights, String, required: true
+    argument :text, String, required: true
 
     field :status, Int, null: false
 

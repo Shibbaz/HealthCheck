@@ -14,7 +14,7 @@ module Mutations
       }
 
       let(:post) do
-        Post.create(id: SecureRandom.uuid, user_id: user.id, likes: [], insights: "Ah")
+        Post.create(id: SecureRandom.uuid, user_id: user.id, likes: [], text: "Ah")
       end
 
       let(:comment) do
@@ -24,7 +24,7 @@ module Mutations
       let(:variables) do
         {
           id: comment.id,
-          insights: "Hahaha"
+          text: "Hahaha"
         }
       end
 
@@ -52,7 +52,7 @@ module Mutations
         it "returns a true" do
           result = HealthSchema.execute(query, variables: variables, context: {current_user: user})
           comment.reload
-          expect(comment[:text]).to eq "Ah"
+          expect(comment[:text]).to eq "Hahaha"
         end
       end
 

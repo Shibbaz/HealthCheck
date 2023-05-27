@@ -1,15 +1,9 @@
+require "./app/contexts/records/commands/create_record"
+
 module Contexts
   module Comments
     module Commands
-      class CreateSingleComment
-        def call(event)
-          stream = event.data
-          stream[:adapter].create!(
-            user_id: stream[:user_id],
-            text: stream[:text],
-            post_id: stream[:post_id]
-          )
-        end
+      class CreateSingleComment < ::Contexts::Records::Commands::CreateRecord
       end
     end
   end

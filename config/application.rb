@@ -35,7 +35,7 @@ module Health
 
     Bundler.require(*Rails.groups)
 
-    if ['development', 'test'].include? ENV['RAILS_ENV']
+    if ["development", "test"].include? ENV["RAILS_ENV"]
       Dotenv::Railtie.load
     end
   end

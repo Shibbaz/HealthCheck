@@ -33,7 +33,7 @@ RSpec.describe Contexts::Helpers::Versioning, type: :model do
     }
 
     it "it success" do
-      post.update(insights: "Text")
+      post.update(text: "Text")
       post.reload
       expect(Contexts::Helpers::Versioning.versions(post.log_data).size).to eq(1)
 

@@ -8,7 +8,7 @@ RSpec.describe Contexts::Posts::Repository, type: :model do
   context "create method" do
     it "it success" do
       expect {
-        event_store = repository.create_post(
+        event_store = repository.create(
           args: {
             user_id: SecureRandom.uuid,
             insights: "I'm amazing",
@@ -94,7 +94,7 @@ RSpec.describe Contexts::Posts::Repository, type: :model do
       Post.create(
         id: SecureRandom.uuid,
         user_id: user.id,
-        insights: "ah",
+        text: "ah",
         likes: [user.id]
       )
     }

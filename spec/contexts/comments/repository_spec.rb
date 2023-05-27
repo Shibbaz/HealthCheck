@@ -8,7 +8,7 @@ RSpec.describe Contexts::Comments::Repository, type: :model do
   context "create method" do
     it "it success" do
       expect {
-        event_store = repository.create_comment(
+        event_store = repository.create(
           args: {
             user_id: SecureRandom.uuid,
             post_id: SecureRandom.uuid,
@@ -115,7 +115,7 @@ RSpec.describe Contexts::Comments::Repository, type: :model do
       Post.create(
         id: SecureRandom.uuid,
         user_id: user.id,
-        insights: "ah",
+        text: "ah",
         likes: [user.id]
       )
     }
