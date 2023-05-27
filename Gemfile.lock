@@ -68,6 +68,9 @@ GEM
       tzinfo (~> 2.0)
     aggregate_root (2.9.1)
       ruby_event_store (= 2.9.1)
+    apollo_upload_server (2.1.0)
+      actionpack (>= 4.2)
+      graphql (>= 1.8)
     arkency-command_bus (0.4.1)
       concurrent-ruby
     ast (2.4.2)
@@ -1672,6 +1675,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  apollo_upload_server (= 2.1)
   aws-sdk
   batch-loader
   bcrypt (~> 3.1.7)
