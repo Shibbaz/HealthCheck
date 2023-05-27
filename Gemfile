@@ -50,6 +50,8 @@ gem "faker"
 
 gem "obscenity"
 
+gem 'httparty'
+
 gem "logidze", "~> 1.1"
 
 gem "fx"
