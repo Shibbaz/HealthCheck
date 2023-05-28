@@ -1,7 +1,7 @@
 module Types
   class PostType < Types::BaseObject
     field :id, ID, null: false
-    field :insights, String, null: false
+    field :text, String, null: false
     field :question, String, null: false
     field :feeling, Int, null: false
     field :likes, [Types::UserType], null: false
@@ -12,19 +12,15 @@ module Types
     field :updated_at, GraphQL::Types::ISO8601DateTime, null: false
 
     def likes
-      data = Contexts::Helpers::Records.load_array(
-        adapter: User,
-        array: object.likes.uniq
-      )
-      BatchLoader::GraphQL.wrap(data)
-    end
-
-    def likes_counter
-      object.likes.size
+      Contexts::Helpers::Records.for(User).load_many(object.likes)
     end
 
     def comments
       object.comments
+    end
+
+    def likes_counter
+      object.likes.size
     end
 
     def versions

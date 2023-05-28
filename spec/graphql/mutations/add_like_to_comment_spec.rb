@@ -13,7 +13,7 @@ module Mutations
       }
 
       let(:post) do
-        Post.create(id: SecureRandom.uuid, user_id: user.id, likes: [], insights: "Ah")
+        Post.create(id: SecureRandom.uuid, user_id: user.id, likes: [], text: "Ah")
       end
 
       let(:comment) do
