@@ -9,3 +9,7 @@ Aws.config.update(
 )
 
 $s3 = Aws::S3::Client.new
+
+if ["test"].include? ENV["RAILS_ENV"]
+  $s3 = Aws::S3::Client.new(stub_responses: true)
+end
