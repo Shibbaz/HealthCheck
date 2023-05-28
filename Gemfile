@@ -62,6 +62,11 @@ gem "dotenv-rails", groups: [:development, :test]
 
 gem "apollo_upload_server", "2.1"
 
+gem 'acidic_job'
+
+gem 'redis'
+gem 'sidekiq'
+
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 
@@ -74,6 +79,12 @@ group :development, :test do
   gem "byebug", platforms: %i[mri mingw x64_mingw]
   gem "rspec-rails", "~> 6.0.0"
   gem "factory_bot"
+end
+
+group :test do
+  gem 'database_cleaner'
+  gem 'database_cleaner-active_record'
+  gem 'database_cleaner-redis'
 end
 
 group :development do

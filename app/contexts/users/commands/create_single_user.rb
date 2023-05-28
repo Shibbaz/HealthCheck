@@ -4,6 +4,7 @@ module Contexts
       class CreateSingleUser
         def call(event)
           stream = event.data
+          
           user = stream[:adapter].create!(
             name: stream[:name],
             email: stream[:email],
@@ -11,6 +12,7 @@ module Contexts
             phone_number: stream[:phone_number],
             gender: stream[:gender]
           )
+          MailerJob.with().perform(stream)
         end
       end
     end
