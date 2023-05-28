@@ -37,5 +37,6 @@ module Health
     if ["development", "test"].include? ENV["RAILS_ENV"]
       Dotenv::Railtie.load
     end
+    config.active_job.queue_adapter = :sidekiq
   end
 end
