@@ -14,20 +14,20 @@ module Mutations
       }
 
       let(:post) do
-        Post.create(id: SecureRandom.uuid, user_id: user.id, likes: [], insights: "Ah")
+        Post.create(id: SecureRandom.uuid, user_id: user.id, likes: [], text: "Ah")
       end
 
       let(:variables) do
         {
           id: post.id,
-          insights: "Hahaha"
+          text: "Hahaha"
         }
       end
 
       let(:not_valid_variables) do
         {
           id: SecureRandom.uuid,
-          insights: "Hahaha"
+          text: "Hahaha"
         }
       end
 
@@ -48,7 +48,7 @@ module Mutations
         it "returns a true" do
           result = HealthSchema.execute(query, variables: variables, context: {current_user: user})
           post.reload
-          expect(post[:insights]).to eq "Hahaha"
+          expect(post[:text]).to eq "Hahaha"
         end
       end
 
@@ -60,8 +60,8 @@ module Mutations
 
       def query
         <<~GQL
-          mutation($id: ID!, $insights: String!){
-            updatePostInsights(input: {id: $id, insights: $insights}){
+          mutation($id: ID!, $text: String!){
+            updatePostInsights(input: {id: $id, text: $text}){
               clientMutationId
               status
             }

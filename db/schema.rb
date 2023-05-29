@@ -10,10 +10,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_27_132100) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_28_101650) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
   enable_extension "plpgsql"
+
+  create_table "acidic_job_runs", force: :cascade do |t|
+    t.boolean "staged", default: false, null: false
+    t.string "idempotency_key", null: false
+    t.text "serialized_job", null: false
+    t.string "job_class", null: false
+    t.datetime "last_run_at", default: -> { "CURRENT_TIMESTAMP" }
+    t.datetime "locked_at"
+    t.string "recovery_point"
+    t.text "error_object"
+    t.text "attr_accessors"
+    t.text "workflow"
+    t.bigint "awaited_by_id"
+    t.text "returning_to"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["awaited_by_id"], name: "index_acidic_job_runs_on_awaited_by_id"
+    t.index ["idempotency_key"], name: "index_acidic_job_runs_on_idempotency_key", unique: true
+  end
 
   create_table "comments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "text"
@@ -52,7 +71,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_27_132100) do
 
   create_table "posts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "user_id"
-    t.text "insights"
+    t.text "text"
     t.string "question", default: "How do you feel today?"
     t.integer "feeling", default: 0
     t.uuid "likes", default: [], array: true

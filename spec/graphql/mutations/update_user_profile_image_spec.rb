@@ -13,22 +13,24 @@ RSpec.describe Mutations::UpdateUserProfileImageMutation, type: :request do
 
   describe ".mutation passes" do
     it "uploads new avatar" do
-      expect { Mutations::UpdateUserProfileImageMutation.new(object: nil, field: nil, context: { current_user: user }).resolve(
-        id: user.id,
-        file: image
-      ) }.to_not raise_error
+      expect {
+        Mutations::UpdateUserProfileImageMutation.new(object: nil, field: nil, context: {current_user: user}).resolve(
+          id: user.id,
+          file: image
+        )
+      }.to_not raise_error
       user.reload
       expect(user.avatar_id).to_not be(nil)
       expect { $s3.get_object(bucket: "files", key: user.avatar_id) }.to_not raise_error
     end
 
     it "cannot upload new avatar" do
-        expect {
-            Mutations::UpdateUserProfileImageMutation.new(object: nil, field: nil, context: { current_user: user }).resolve(
-                id: user.id,
-                file: txt
-            )
-        }.to raise_error(Contexts::Helpers::Errors::FileInvalidTypeError)
-      end
+      expect {
+        Mutations::UpdateUserProfileImageMutation.new(object: nil, field: nil, context: {current_user: user}).resolve(
+          id: user.id,
+          file: txt
+        )
+      }.to raise_error(Contexts::Helpers::Errors::FileInvalidTypeError)
+    end
   end
 end

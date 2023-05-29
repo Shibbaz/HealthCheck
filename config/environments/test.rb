@@ -57,4 +57,20 @@ Rails.application.configure do
 
   # Annotate rendered view with file names.
   # config.action_view.annotate_rendered_view_with_filenames = true
+  config.action_mailer.perform_caching = false
+
+  # Tell Action Mailer not to deliver emails to the real world.
+  # The :test delivery method accumulates sent emails in the
+  # ActionMailer::Base.deliveries array.
+  config.action_mailer.delivery_method = :test
+  config.active_job.queue_adapter = :test
+
+  config.action_mailer.smtp_settings = {
+    :address => "smtp.gmail.com",
+    :port => 587,
+    :user_name => ENV['GMAIL_MAIL'],
+    :password => ENV['GMAIL_PASSWORD'],
+    :authentication => "plain",
+    :enable_starttls_auto => true
+  }
 end

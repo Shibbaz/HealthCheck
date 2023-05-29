@@ -1,18 +1,27 @@
 module Contexts
   module Helpers
-    class Records
-      def self.load(adapter:, id:)
-        BatchLoader.for(id).batch do |ids, loader|
-          adapter.where(id: ids).each { |object| loader.call(object.id, object) }
-        end
+    class Records < GraphQL::Batch::Loader
+      def self.build_error(adapter:)
+        error_name = "Contexts::#{adapter}s::Errors::#{adapter}NotFoundError"
+        error_type = error_name.constantize
       end
 
-      def self.load_array(adapter:, array:)
-        BatchLoader.for(array).batch(default_value: []) do |object_ids, loader|
-          adapter.where(id: object_ids).each { |object|
-            loader.call(array) { |memo| memo << object }
-          }
-        end
+      def self.build_event(adapter:, event_type:)
+        event_name = "#{adapter}Was#{event_type}"
+        event_type = event_name.constantize
+      end
+
+      def self.load(adapter:, id:)
+        adapter.find(id)
+      end
+
+      def initialize(model)
+        @model = model
+      end
+
+      def perform(ids)
+        @model.where(id: ids).each { |record| fulfill(record.id, record) }
+        ids.each { |id| fulfill(id, nil) unless fulfilled?(id) }
       end
     end
   end

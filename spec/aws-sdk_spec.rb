@@ -1,4 +1,4 @@
-require 'rspec'
+require "rspec"
 
 describe "Enhanced Stubbing Example Tests" do
   let(:fake_s3) { {} }
@@ -8,7 +8,7 @@ describe "Enhanced Stubbing Example Tests" do
       :create_bucket, ->(context) {
         name = context.params[:bucket]
         if fake_s3[name]
-          'BucketAlreadyExists' # standalone strings are treated as exceptions
+          "BucketAlreadyExists" # standalone strings are treated as exceptions
         else
           fake_s3[name] = {}
           {}
@@ -23,12 +23,12 @@ describe "Enhanced Stubbing Example Tests" do
         if b_contents
           obj = b_contents[key]
           if obj
-            { body: obj }
+            {body: obj}
           else
-            'NoSuchKey'
+            "NoSuchKey"
           end
         else
-          'NoSuchBucket'
+          "NoSuchBucket"
         end
       }
     )
@@ -42,7 +42,7 @@ describe "Enhanced Stubbing Example Tests" do
           b_contents[key] = body
           {}
         else
-          'NoSuchBucket'
+          "NoSuchBucket"
         end
       }
     )
