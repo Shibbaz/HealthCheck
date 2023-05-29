@@ -1,10 +1,11 @@
+# frozen_string_literal: true
+
 class MailerJob < ApplicationJob
   queue_as :mailer
   acidic_by_job_arguments
   include AcidicJob::Mixin
 
-
-  def perform(params)    
+  def perform(_params)
     with_acidic_workflow persisting: { params: nil } do |workflow|
       workflow.step :send_email
     end

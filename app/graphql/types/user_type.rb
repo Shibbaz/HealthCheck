@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Types
   class UserType < Types::BaseObject
     field :id, ID, null: false
@@ -14,9 +16,9 @@ module Types
     def gender
       case object.gender
       when 0
-        "man"
+        'man'
       else
-        "woman"
+        'woman'
       end
     end
   end

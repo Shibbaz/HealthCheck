@@ -1,0 +1,6 @@
+require: rubocop-performance
+
+Metrics/LineLength:
+  Max: 200
+Metrics/MethodLength:
+  Max: 50

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Contexts
   module Users
     module Commands
@@ -7,8 +9,8 @@ module Contexts
           file_key = SecureRandom.uuid
           data = event.data
           Contexts::Helpers::Storage.upload(
-            storage: $s3,
-            bucket: ENV["S3_BUCKET"],
+            storage: Rails.configuration.s3,
+            bucket: ENV['S3_BUCKET'],
             key: file_key,
             file: data[:file]
           )

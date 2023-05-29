@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Contexts
   module Records
     module Commands
@@ -9,7 +11,7 @@ module Contexts
             adapter: data[:adapter],
             id: data[:id]
           )
-          record.nil? ? (raise error_type.new) : nil
+          record.nil? ? (raise error_type) : nil
 
           likes = record.likes.uniq
           array = (likes + [data[:current_user_id]].uniq)

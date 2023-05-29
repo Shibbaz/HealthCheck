@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Contexts
   module Records
     module Commands
@@ -10,7 +12,7 @@ module Contexts
             adapter: stream[:adapter],
             id: stream[:id]
           )
-          record.nil? ? (raise error_type.new) : nil
+          record.nil? ? (raise error_type) : nil
           record.with_lock do
             record.destroy
           end

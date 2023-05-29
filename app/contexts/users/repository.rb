@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Contexts
   module Users
     class Repository
@@ -9,23 +11,23 @@ module Contexts
 
       def create_user(auth_provider:, name:, phone_number:, gender:)
         event = UserWasCreated.new(data: {
-          name: name,
-          email: auth_provider&.[](:credentials)&.[](:email),
-          password: auth_provider&.[](:credentials)&.[](:password),
-          phone_number: phone_number,
-          gender: gender,
-          adapter: @adapter
-        })
-        $event_store.publish(event, stream_name: SecureRandom.uuid)
+                                     name:,
+                                     email: auth_provider&.[](:credentials)&.[](:email),
+                                     password: auth_provider&.[](:credentials)&.[](:password),
+                                     phone_number:,
+                                     gender:,
+                                     adapter: @adapter
+                                   })
+        Rails.configuration.event_store.publish(event, stream_name: SecureRandom.uuid)
       end
 
       def upload(id:, file:)
         event = UserAvatarWasUploaded.new(data: {
-          id: id,
-          file: file,
-          adapter: @adapter
-        })
-        $event_store.publish(event, stream_name: SecureRandom.uuid)
+                                            id:,
+                                            file:,
+                                            adapter: @adapter
+                                          })
+        Rails.configuration.event_store.publish(event, stream_name: SecureRandom.uuid)
       end
     end
   end

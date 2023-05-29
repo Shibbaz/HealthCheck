@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Mutations
   class SignInUserMutation < BaseMutation
     argument :credentials, Types::AuthProviderCredentialsInput, required: false
@@ -6,7 +8,7 @@ module Mutations
     field :token, String, null: true
 
     def resolve(credentials: nil)
-      Contexts::Users::Queries::SignInUser.new.call(credentials: credentials, context: context)
+      Contexts::Users::Queries::SignInUser.new.call(credentials:, context:)
     end
   end
 end

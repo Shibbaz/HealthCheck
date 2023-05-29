@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Mutations
   class CreatePostMutation < BaseMutation
     argument :feeling, Int, required: true
@@ -7,11 +9,11 @@ module Mutations
     field :status, Int, null: false
 
     def resolve(**args)
-      Contexts::Helpers::Authenticate.new.call(context: context)
-      args = args.merge({user_id: context[:current_user].id})
-      Contexts::Posts::Repository.new.create(args: args)
+      Contexts::Helpers::Authenticate.new.call(context:)
+      args = args.merge({ user_id: context[:current_user].id })
+      Contexts::Posts::Repository.new.create(args:)
 
-      {status: 200}
+      { status: 200 }
     end
   end
 end
