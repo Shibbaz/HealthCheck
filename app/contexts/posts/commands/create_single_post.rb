@@ -1,4 +1,6 @@
-require "./app/contexts/records/commands/create_record"
+# frozen_string_literal: true
+
+require './app/contexts/records/commands/create_record'
 module Contexts
   module Posts
     module Commands

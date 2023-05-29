@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -10,92 +12,92 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_28_101650) do
+ActiveRecord::Schema[7.0].define(version: 20_230_528_101_650) do
   # These are extensions that must be enabled in order to support this database
-  enable_extension "hstore"
-  enable_extension "plpgsql"
+  enable_extension 'hstore'
+  enable_extension 'plpgsql'
 
-  create_table "acidic_job_runs", force: :cascade do |t|
-    t.boolean "staged", default: false, null: false
-    t.string "idempotency_key", null: false
-    t.text "serialized_job", null: false
-    t.string "job_class", null: false
-    t.datetime "last_run_at", default: -> { "CURRENT_TIMESTAMP" }
-    t.datetime "locked_at"
-    t.string "recovery_point"
-    t.text "error_object"
-    t.text "attr_accessors"
-    t.text "workflow"
-    t.bigint "awaited_by_id"
-    t.text "returning_to"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["awaited_by_id"], name: "index_acidic_job_runs_on_awaited_by_id"
-    t.index ["idempotency_key"], name: "index_acidic_job_runs_on_idempotency_key", unique: true
+  create_table 'acidic_job_runs', force: :cascade do |t|
+    t.boolean 'staged', default: false, null: false
+    t.string 'idempotency_key', null: false
+    t.text 'serialized_job', null: false
+    t.string 'job_class', null: false
+    t.datetime 'last_run_at', default: -> { 'CURRENT_TIMESTAMP' }
+    t.datetime 'locked_at'
+    t.string 'recovery_point'
+    t.text 'error_object'
+    t.text 'attr_accessors'
+    t.text 'workflow'
+    t.bigint 'awaited_by_id'
+    t.text 'returning_to'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.index ['awaited_by_id'], name: 'index_acidic_job_runs_on_awaited_by_id'
+    t.index ['idempotency_key'], name: 'index_acidic_job_runs_on_idempotency_key', unique: true
   end
 
-  create_table "comments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "text"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.uuid "likes", default: [], null: false, array: true
-    t.uuid "user_id"
-    t.uuid "post_id"
-    t.jsonb "log_data"
-    t.index ["post_id"], name: "index_comments_on_post_id"
-    t.index ["user_id"], name: "index_comments_on_user_id"
+  create_table 'comments', id: :uuid, default: -> { 'gen_random_uuid()' }, force: :cascade do |t|
+    t.string 'text'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.uuid 'likes', default: [], null: false, array: true
+    t.uuid 'user_id'
+    t.uuid 'post_id'
+    t.jsonb 'log_data'
+    t.index ['post_id'], name: 'index_comments_on_post_id'
+    t.index ['user_id'], name: 'index_comments_on_user_id'
   end
 
-  create_table "event_store_events", force: :cascade do |t|
-    t.uuid "event_id", null: false
-    t.string "event_type", null: false
-    t.jsonb "metadata"
-    t.jsonb "data", null: false
-    t.datetime "created_at", null: false
-    t.datetime "valid_at"
-    t.index ["created_at"], name: "index_event_store_events_on_created_at"
-    t.index ["event_id"], name: "index_event_store_events_on_event_id", unique: true
-    t.index ["event_type"], name: "index_event_store_events_on_event_type"
-    t.index ["valid_at"], name: "index_event_store_events_on_valid_at"
+  create_table 'event_store_events', force: :cascade do |t|
+    t.uuid 'event_id', null: false
+    t.string 'event_type', null: false
+    t.jsonb 'metadata'
+    t.jsonb 'data', null: false
+    t.datetime 'created_at', null: false
+    t.datetime 'valid_at'
+    t.index ['created_at'], name: 'index_event_store_events_on_created_at'
+    t.index ['event_id'], name: 'index_event_store_events_on_event_id', unique: true
+    t.index ['event_type'], name: 'index_event_store_events_on_event_type'
+    t.index ['valid_at'], name: 'index_event_store_events_on_valid_at'
   end
 
-  create_table "event_store_events_in_streams", force: :cascade do |t|
-    t.string "stream", null: false
-    t.integer "position"
-    t.uuid "event_id", null: false
-    t.datetime "created_at", null: false
-    t.index ["created_at"], name: "index_event_store_events_in_streams_on_created_at"
-    t.index ["stream", "event_id"], name: "index_event_store_events_in_streams_on_stream_and_event_id", unique: true
-    t.index ["stream", "position"], name: "index_event_store_events_in_streams_on_stream_and_position", unique: true
+  create_table 'event_store_events_in_streams', force: :cascade do |t|
+    t.string 'stream', null: false
+    t.integer 'position'
+    t.uuid 'event_id', null: false
+    t.datetime 'created_at', null: false
+    t.index ['created_at'], name: 'index_event_store_events_in_streams_on_created_at'
+    t.index %w[stream event_id], name: 'index_event_store_events_in_streams_on_stream_and_event_id', unique: true
+    t.index %w[stream position], name: 'index_event_store_events_in_streams_on_stream_and_position', unique: true
   end
 
-  create_table "posts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "user_id"
-    t.text "text"
-    t.string "question", default: "How do you feel today?"
-    t.integer "feeling", default: 0
-    t.uuid "likes", default: [], array: true
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.jsonb "log_data"
+  create_table 'posts', id: :uuid, default: -> { 'gen_random_uuid()' }, force: :cascade do |t|
+    t.uuid 'user_id'
+    t.text 'text'
+    t.string 'question', default: 'How do you feel today?'
+    t.integer 'feeling', default: 0
+    t.uuid 'likes', default: [], array: true
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.jsonb 'log_data'
   end
 
-  create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "name"
-    t.string "email"
-    t.string "password_digest"
-    t.boolean "archive"
-    t.boolean "is_admin"
-    t.integer "phone_number"
-    t.integer "gender"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.uuid "followers", default: [], null: false, array: true
-    t.uuid "avatar_id", default: -> { "gen_random_uuid()" }, null: false
+  create_table 'users', id: :uuid, default: -> { 'gen_random_uuid()' }, force: :cascade do |t|
+    t.string 'name'
+    t.string 'email'
+    t.string 'password_digest'
+    t.boolean 'archive'
+    t.boolean 'is_admin'
+    t.integer 'phone_number'
+    t.integer 'gender'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.uuid 'followers', default: [], null: false, array: true
+    t.uuid 'avatar_id', default: -> { 'gen_random_uuid()' }, null: false
   end
 
-  add_foreign_key "comments", "posts"
-  add_foreign_key "comments", "users"
+  add_foreign_key 'comments', 'posts'
+  add_foreign_key 'comments', 'users'
   create_function :logidze_capture_exception, sql_definition: <<-'SQL'
       CREATE OR REPLACE FUNCTION public.logidze_capture_exception(error_data jsonb)
        RETURNS boolean

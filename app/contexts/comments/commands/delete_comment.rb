@@ -1,4 +1,6 @@
-require "./app/contexts/records/commands/delete_record"
+# frozen_string_literal: true
+
+require './app/contexts/records/commands/delete_record'
 module Contexts
   module Comments
     module Commands

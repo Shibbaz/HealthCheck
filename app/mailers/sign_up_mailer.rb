@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class SignUpMailer < ApplicationMailer
   def afterwards
     @mail = params[:receiver]
@@ -5,9 +7,9 @@ class SignUpMailer < ApplicationMailer
     @phone_number = params[:phone_number]
 
     mail(to: @mail, subject: 'New Account') do |format|
-      format.text {
+      format.text do
         render html: "#{@name}, You have created the account! #{@mail}, #{@phone_number}"
-      }
+      end
     end
   end
 end

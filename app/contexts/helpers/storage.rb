@@ -1,12 +1,14 @@
+# frozen_string_literal: true
+
 module Contexts
   module Helpers
     class Storage
       def self.upload(storage:, bucket:, key:, file:)
-        raise Contexts::Helpers::Errors::FileInvalidTypeError.new if File.extname(file.path) != ".jpg"
+        raise Contexts::Helpers::Errors::FileInvalidTypeError if File.extname(file.path) != '.jpg'
 
         config = {
-          key: key,
-          bucket: bucket
+          key:,
+          bucket:
         }
         storage.put_object(
           key: config[:key],

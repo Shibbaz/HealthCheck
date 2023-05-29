@@ -1,5 +1,7 @@
-require "simplecov"
-require "database_cleaner"
+# frozen_string_literal: true
+
+require 'simplecov'
+require 'database_cleaner'
 require 'sidekiq/testing'
 
 SimpleCov.start

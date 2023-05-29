@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Contexts
   module Posts
     module Queries
@@ -9,7 +11,7 @@ module Contexts
         end
 
         def call(args:)
-          Contexts::Posts::Repository.new.apply_filtering(args: args)
+          Contexts::Posts::Repository.new.apply_filtering(args:)
         end
       end
     end

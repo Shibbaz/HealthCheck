@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Contexts
   module Records
     class Repository
@@ -8,32 +10,32 @@ module Contexts
       end
 
       def create(args:)
-        event_type = Contexts::Helpers::Records.build_event(adapter: adapter, event_type: "Created")
+        event_type = Contexts::Helpers::Records.build_event(adapter:, event_type: 'Created')
         event = event_type.new(data: {
-                                 args: args,
+                                 args:,
                                  adapter: @adapter
                                })
-        $event_store.publish(event, stream_name: SecureRandom.uuid)
+        Rails.configuration.event_store.publish(event, stream_name: SecureRandom.uuid)
       end
 
       def add_like(args:, current_user_id:)
-        event_type = Contexts::Helpers::Records.build_event(adapter: adapter, event_type: "Liked")
+        event_type = Contexts::Helpers::Records.build_event(adapter:, event_type: 'Liked')
         event = event_type.new(data: {
                                  id: args[:id],
-                                 current_user_id: current_user_id,
+                                 current_user_id:,
                                  adapter: @adapter
                                })
-        $event_store.publish(event, stream_name: SecureRandom.uuid)
+        Rails.configuration.event_store.publish(event, stream_name: SecureRandom.uuid)
       end
 
       def update(args:)
-        event_type = Contexts::Helpers::Records.build_event(adapter: adapter, event_type: "Updated")
+        event_type = Contexts::Helpers::Records.build_event(adapter:, event_type: 'Updated')
         event = event_type.new(data: {
                                  adapter: @adapter,
                                  id: args[:id],
                                  text: args[:text]
                                })
-        $event_store.publish(event, stream_name: SecureRandom.uuid)
+        Rails.configuration.event_store.publish(event, stream_name: SecureRandom.uuid)
       end
 
       def unlike(args:, current_user_id:)
@@ -42,9 +44,9 @@ module Contexts
         event = event_type.new(data: {
                                  adapter: @adapter,
                                  id: args[:id],
-                                 current_user_id: current_user_id
+                                 current_user_id:
                                })
-        $event_store.publish(event, stream_name: SecureRandom.uuid)
+        Rails.configuration.event_store.publish(event, stream_name: SecureRandom.uuid)
       end
 
       def delete(args:)
@@ -54,7 +56,7 @@ module Contexts
                                  adapter: @adapter,
                                  id: args[:id]
                                })
-        $event_store.publish(event, stream_name: SecureRandom.uuid)
+        Rails.configuration.event_store.publish(event, stream_name: SecureRandom.uuid)
       end
     end
   end

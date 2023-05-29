@@ -1,44 +1,46 @@
-require "rails_helper"
-require "faker"
+# frozen_string_literal: true
+
+require 'rails_helper'
+require 'faker'
 
 RSpec.describe Contexts::Comments::Repository, type: :model do
-  subject(:repository) {
+  subject(:repository) do
     Contexts::Comments::Repository.new
-  }
-  context "create method" do
-    it "it success" do
-      expect {
-        event_store = repository.create(
+  end
+  context 'create method' do
+    it 'it success' do
+      expect do
+        repository.create(
           args: {
             user_id: SecureRandom.uuid,
             post_id: SecureRandom.uuid,
             text: "I'm amazing"
           }
         )
-      }.to raise_error(ActiveRecord::RecordInvalid)
+      end.to raise_error(ActiveRecord::RecordInvalid)
     end
   end
 
-  context "add like method" do
-    let(:user) {
+  context 'add like method' do
+    let(:user) do
       User.create!(
         id: SecureRandom.uuid,
         name: Faker::Name.name,
         email: Faker::Internet.email,
-        password_digest: "123456",
-        phone_number: 667089810
+        password_digest: '123456',
+        phone_number: 667_089_810
       )
-    }
+    end
 
-    let(:post) {
+    let(:post) do
       Post.create(
         id: SecureRandom.uuid,
         user_id: user.id,
         likes: []
       )
-    }
+    end
 
-    let(:comment) {
+    let(:comment) do
       Comment.create(
         id: SecureRandom.uuid,
         user_id: user.id,
@@ -46,39 +48,39 @@ RSpec.describe Contexts::Comments::Repository, type: :model do
         text: "I'm amazing",
         likes: []
       )
-    }
+    end
 
-    it "it success" do
+    it 'it success' do
       args = {
         id: comment.id
       }
-      event_store = repository.add_like(args: args, current_user_id: user.id)
+      event_store = repository.add_like(args:, current_user_id: user.id)
       expect(event_store).to have_published(an_event(CommentWasLiked))
       comment.reload
       expect(comment.likes).equal?([user.id])
     end
   end
 
-  context "unlike method" do
-    let(:user) {
+  context 'unlike method' do
+    let(:user) do
       User.create!(
         id: SecureRandom.uuid,
         name: Faker::Name.name,
         email: Faker::Internet.email,
-        password_digest: "123456",
-        phone_number: 667089810
+        password_digest: '123456',
+        phone_number: 667_089_810
       )
-    }
+    end
 
-    let(:post) {
+    let(:post) do
       Post.create(
         id: SecureRandom.uuid,
         user_id: user.id,
         likes: [user.id]
       )
-    }
+    end
 
-    let(:comment) {
+    let(:comment) do
       Comment.create(
         id: SecureRandom.uuid,
         user_id: user.id,
@@ -86,9 +88,9 @@ RSpec.describe Contexts::Comments::Repository, type: :model do
         text: "I'm amazing",
         likes: [user.id]
       )
-    }
+    end
 
-    it "it success" do
+    it 'it success' do
       event_store = repository.unlike(
         args: { id: comment.id },
         current_user_id: user.id
@@ -100,27 +102,27 @@ RSpec.describe Contexts::Comments::Repository, type: :model do
     end
   end
 
-  context "update method" do
-    let(:user) {
+  context 'update method' do
+    let(:user) do
       User.create!(
         id: SecureRandom.uuid,
         name: Faker::Name.name,
         email: Faker::Internet.email,
-        password_digest: "123456",
-        phone_number: 667089810
+        password_digest: '123456',
+        phone_number: 667_089_810
       )
-    }
+    end
 
-    let(:post) {
+    let(:post) do
       Post.create(
         id: SecureRandom.uuid,
         user_id: user.id,
-        text: "ah",
+        text: 'ah',
         likes: [user.id]
       )
-    }
+    end
 
-    let(:comment) {
+    let(:comment) do
       Comment.create(
         id: SecureRandom.uuid,
         user_id: user.id,
@@ -128,14 +130,14 @@ RSpec.describe Contexts::Comments::Repository, type: :model do
         text: "I'm amazing",
         likes: []
       )
-    }
+    end
 
-    it "it success" do
+    it 'it success' do
       args = {
         id: comment.id,
-        text: "hahaha"
+        text: 'hahaha'
       }
-      event_store = repository.update(args: args)
+      event_store = repository.update(args:)
       expect(event_store).to have_published(an_event(CommentWasUpdated))
     end
   end

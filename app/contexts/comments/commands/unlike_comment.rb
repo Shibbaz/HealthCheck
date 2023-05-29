@@ -1,4 +1,6 @@
-require "./app/contexts/records/commands/unlike_record"
+# frozen_string_literal: true
+
+require './app/contexts/records/commands/unlike_record'
 
 module Contexts
   module Comments

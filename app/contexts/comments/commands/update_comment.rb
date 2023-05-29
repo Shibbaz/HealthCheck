@@ -1,4 +1,6 @@
-require "./app/contexts/records/commands/update_record"
+# frozen_string_literal: true
+
+require './app/contexts/records/commands/update_record'
 
 module Contexts
   module Comments

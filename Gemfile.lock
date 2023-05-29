@@ -1732,6 +1732,7 @@ DEPENDENCIES
   redis
   rspec-rails (~> 6.0.0)
   rspec-sqlimit
+  rubocop-performance
   ruby_event_store-rspec
   search_object_graphql
   sidekiq

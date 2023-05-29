@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Contexts
   module Helpers
     class Records < GraphQL::Batch::Loader
@@ -8,7 +10,7 @@ module Contexts
 
       def self.build_event(adapter:, event_type:)
         event_name = "#{adapter}Was#{event_type}"
-        event_type = event_name.constantize
+        event_name.constantize
       end
 
       def self.load(adapter:, id:)

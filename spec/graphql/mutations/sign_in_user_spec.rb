@@ -1,58 +1,60 @@
-require "rails_helper"
+# frozen_string_literal: true
+
+require 'rails_helper'
 
 module Mutations
   module SignInUser
     RSpec.describe CreateUserMutation, type: :request do
-      describe "check how mutation works" do
-        describe ".mutation passes" do
-          let(:user) {
+      describe 'check how mutation works' do
+        describe '.mutation passes' do
+          let(:user) do
             User.create!(
-              name: "Test User",
+              name: 'Test User',
               email: Faker::Internet.email,
-              password: "[omitted]",
-              phone_number: 667089810
+              password: '[omitted]',
+              phone_number: 667_089_810
             )
-          }
+          end
 
-          let(:result) {
+          let(:result) do
             Mutations::SignInUserMutation.new(object: nil, field: nil, context: { session: {} }).resolve(credentials: {
                                                                                                            email: user.email,
                                                                                                            password: user.password
                                                                                                          })
-          }
+          end
 
-          it ".mutation does pass succesful" do
+          it '.mutation does pass succesful' do
             expect(result[:token].present?)
             assert_equal result[:user], user
           end
         end
 
-        describe ".mutation fails" do
-          let(:user) {
+        describe '.mutation fails' do
+          let(:user) do
             User.create!(
-              name: "Test User",
+              name: 'Test User',
               email: Faker::Internet.email,
-              password: "[omitted]",
-              phone_number: 667089810
+              password: '[omitted]',
+              phone_number: 667_089_810
             )
-          }
+          end
 
-          it ".mutation does not pass, no credentials" do
+          it '.mutation does not pass, no credentials' do
             not_loged_in = Mutations::SignInUserMutation.new(object: nil, field: nil,
                                                              context: { session: {} }).resolve(credentials: {})
             assert_nil not_loged_in
           end
 
-          it "failure because wrong email" do
+          it 'failure because wrong email' do
             not_loged_in = Mutations::SignInUserMutation.new(object: nil, field: nil,
-                                                             context: { session: {} }).resolve(credentials: { email: "wrong" })
+                                                             context: { session: {} }).resolve(credentials: { email: 'wrong' })
             assert_nil not_loged_in
           end
 
-          it "failure because wrong password" do
+          it 'failure because wrong password' do
             not_loged_in = Mutations::SignInUserMutation.new(object: nil, field: nil,
                                                              context: { session: {} }).resolve(credentials: {
-                                                                                                 email: user.email, password: "wrong"
+                                                                                                 email: user.email, password: 'wrong'
                                                                                                })
             assert_nil not_loged_in
           end

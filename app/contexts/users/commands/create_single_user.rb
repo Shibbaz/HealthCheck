@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Contexts
   module Users
     module Commands
@@ -12,7 +14,7 @@ module Contexts
             phone_number: stream[:phone_number],
             gender: stream[:gender]
           )
-          MailerJob.with().perform(stream)
+          MailerJob.with.perform(stream)
         end
       end
     end

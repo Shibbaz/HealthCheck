@@ -1,4 +1,6 @@
-require "./app/contexts/records/repository"
+# frozen_string_literal: true
+
+require './app/contexts/records/repository'
 module Contexts
   module Comments
     class Repository < Contexts::Records::Repository

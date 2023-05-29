@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateAcidicJobRuns < ActiveRecord::Migration[7.0]
   def change
     create_table :acidic_job_runs do |t|
@@ -5,7 +7,7 @@ class CreateAcidicJobRuns < ActiveRecord::Migration[7.0]
       t.string      :idempotency_key, null: false, index: { unique: true }
       t.text        :serialized_job, 	null: false
       t.string      :job_class,	null: false
-      t.datetime    :last_run_at,	null: true, default: -> { "CURRENT_TIMESTAMP" }
+      t.datetime    :last_run_at,	null: true, default: -> { 'CURRENT_TIMESTAMP' }
       t.datetime    :locked_at,	null: true
       t.string      :recovery_point,	null: true
       t.text        :error_object,	null: true
