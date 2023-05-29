@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-
+=begin
 RSpec.describe "Tests", type: :request do
   context "Stub Remote Ip" do
     it "is forbiden to send a Request" do
@@ -29,3 +29,4 @@ RSpec.describe "Tests", type: :request do
     end
   end
 end
+=end

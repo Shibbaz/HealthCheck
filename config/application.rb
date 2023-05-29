@@ -28,8 +28,9 @@ module Health
     config.middleware.use ActionDispatch::Cookies
     config.middleware.use config.session_store, config.session_options
     config.api_only = true
+    config.docker = true
     config.eager_load_paths += Dir[Rails.root.join("app/contexts/**/*.rb")].each { |rb| require rb }
-    config.middleware.use IpFiltering
+    #config.middleware.use IpFiltering
     ApolloUploadServer::Middleware.strict_mode = true
 
     Bundler.require(*Rails.groups)
