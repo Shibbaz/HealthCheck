@@ -3,8 +3,7 @@ class MailerJob < ApplicationJob
   acidic_by_job_arguments
   include AcidicJob::Mixin
 
-
-  def perform(params)    
+  def perform(params)
     with_acidic_workflow persisting: { params: nil } do |workflow|
       workflow.step :send_email
     end

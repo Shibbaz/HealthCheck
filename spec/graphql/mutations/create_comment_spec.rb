@@ -35,7 +35,10 @@ module Mutations
       end
 
       let(:token) {
-        result = Mutations::SignInUserMutation.new(object: nil, field: nil, context: {session: {}}).resolve(credentials: {email: user.email, password: user.password})
+        result = Mutations::SignInUserMutation.new(object: nil, field: nil,
+                                                   context: { session: {} }).resolve(credentials: {
+                                                                                       email: user.email, password: user.password
+                                                                                     })
         result[:token]
       }
 
@@ -49,7 +52,7 @@ module Mutations
 
       describe ".mutation passes" do
         it "returns a true" do
-          result = HealthSchema.execute(query, variables: variables, context: {current_user: user})
+          result = HealthSchema.execute(query, variables: variables, context: { current_user: user })
         end
       end
 

@@ -34,7 +34,8 @@ module Resolvers
         }
 
         let(:context) {
-          GraphQL::Query::Context.new(query: OpenStruct.new(schema: HealthSchema), values: {current_user: user}, object: nil)
+          GraphQL::Query::Context.new(query: OpenStruct.new(schema: HealthSchema), values: { current_user: user },
+                                      object: nil)
         }
 
         before do
@@ -52,11 +53,11 @@ module Resolvers
 
         it "returns Posts and check numbers of Comments in two posts" do
           result = HealthSchema.execute(query, variables: {
-            feeling: nil,
-            created_at: nil,
-            likes: nil,
-            followers: nil
-          }, context: context)
+                                          feeling: nil,
+                                          created_at: nil,
+                                          likes: nil,
+                                          followers: nil
+                                        }, context: context)
           first_post_comment_size = result["data"]["allposts"][0]["comments"].size
           expect(first_post_comment_size).to eq(2)
           second_post_comment_size = result["data"]["allposts"][1]["comments"].size
@@ -70,11 +71,11 @@ module Resolvers
           comment.update(text: "Test")
 
           result = HealthSchema.execute(query, variables: {
-            feeling: nil,
-            created_at: nil,
-            likes: nil,
-            followers: nil
-          }, context: context)
+                                          feeling: nil,
+                                          created_at: nil,
+                                          likes: nil,
+                                          followers: nil
+                                        }, context: context)
 
           item = result["data"]["allposts"].select { |data|
             data["id"] == post.id
@@ -91,11 +92,11 @@ module Resolvers
           comment.update(text: "Test2")
 
           result = HealthSchema.execute(query, variables: {
-            feeling: nil,
-            created_at: nil,
-            likes: nil,
-            followers: nil
-          }, context: context)
+                                          feeling: nil,
+                                          created_at: nil,
+                                          likes: nil,
+                                          followers: nil
+                                        }, context: context)
 
           item = result["data"]["allposts"].select { |data|
             data["id"] == post.id
@@ -111,33 +112,33 @@ module Resolvers
 
         it "returns Posts" do
           result = HealthSchema.execute(query, variables: {
-            feeling: nil,
-            created_at: nil,
-            likes: nil,
-            followers: nil
-          }, context: context)
+                                          feeling: nil,
+                                          created_at: nil,
+                                          likes: nil,
+                                          followers: nil
+                                        }, context: context)
           size = result["data"]["allposts"].size
           expect(size).to eq(3)
         end
 
         it "filtering by feeling" do
           result = HealthSchema.execute(query, variables: {
-            feeling: 1,
-            created_at: nil,
-            likes: nil,
-            followers: nil
-          }, context: context)
+                                          feeling: 1,
+                                          created_at: nil,
+                                          likes: nil,
+                                          followers: nil
+                                        }, context: context)
           size = result["data"]["allposts"].size
           expect(size).to eq(1)
         end
 
         it "filtering by likes" do
-          result = HealthSchema.execute(query, variables: {filters: {
-            likes: true,
-            feeling: nil,
-            created_at: nil,
-            followers: nil
-          }}, context: context)
+          result = HealthSchema.execute(query, variables: { filters: {
+                                          likes: true,
+                                          feeling: nil,
+                                          created_at: nil,
+                                          followers: nil
+                                        } }, context: context)
           size = result["data"]["allposts"].size
           likes_counter = result["data"]["allposts"].pluck("likesCounter")
           expect(likes_counter.first > likes_counter.last).to eq(true)
@@ -145,12 +146,12 @@ module Resolvers
         end
 
         it "filtering by createdAt" do
-          result = HealthSchema.execute(query, variables: {filters: {
-            created_at: true,
-            feeling: nil,
-            likes: nil,
-            followers: nil
-          }}, context: context)
+          result = HealthSchema.execute(query, variables: { filters: {
+                                          created_at: true,
+                                          feeling: nil,
+                                          likes: nil,
+                                          followers: nil
+                                        } }, context: context)
           size = result["data"]["allposts"].size
           dates = result["data"]["allposts"].pluck("createdAt")
           expect(Date.parse(dates.first) <= Date.parse(dates.last)).to eq(true)
@@ -168,17 +169,17 @@ module Resolvers
 
         it "checks num DB queries if N+1 problem a true" do
           expect {
-            HealthSchema.execute(query, variables: {}, context: {current_user: user})
+            HealthSchema.execute(query, variables: {}, context: { current_user: user })
           }.not_to exceed_query_limit(4)
         end
 
         it "none found in filtering by posts" do
           result = HealthSchema.execute(query, variables: {
-            feeling: 99,
-            created_at: nil,
-            likes: nil,
-            followers: nil
-          }, context: context)
+                                          feeling: 99,
+                                          created_at: nil,
+                                          likes: nil,
+                                          followers: nil
+                                        }, context: context)
           size = result["data"]["allposts"].size
           expect(size).to eq(0)
         end

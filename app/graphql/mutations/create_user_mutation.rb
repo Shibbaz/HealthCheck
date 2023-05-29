@@ -16,7 +16,8 @@ module Mutations
     field :status, Int, null: false
 
     def resolve(name: nil, phone_number: nil, auth_provider: nil, gender: nil)
-      user = Contexts::Users::Repository.new.create_user(auth_provider: auth_provider, name: name, phone_number: phone_number, gender: gender)
+      user = Contexts::Users::Repository.new.create_user(auth_provider: auth_provider, name: name,
+                                                         phone_number: phone_number, gender: gender)
       User.where(email: auth_provider[:credentials][:email]).first
     end
   end

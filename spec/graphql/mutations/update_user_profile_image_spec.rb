@@ -14,7 +14,7 @@ RSpec.describe Mutations::UpdateUserProfileImageMutation, type: :request do
   describe ".mutation passes" do
     it "uploads new avatar" do
       expect {
-        Mutations::UpdateUserProfileImageMutation.new(object: nil, field: nil, context: {current_user: user}).resolve(
+        Mutations::UpdateUserProfileImageMutation.new(object: nil, field: nil, context: { current_user: user }).resolve(
           id: user.id,
           file: image
         )
@@ -26,7 +26,7 @@ RSpec.describe Mutations::UpdateUserProfileImageMutation, type: :request do
 
     it "cannot upload new avatar" do
       expect {
-        Mutations::UpdateUserProfileImageMutation.new(object: nil, field: nil, context: {current_user: user}).resolve(
+        Mutations::UpdateUserProfileImageMutation.new(object: nil, field: nil, context: { current_user: user }).resolve(
           id: user.id,
           file: txt
         )

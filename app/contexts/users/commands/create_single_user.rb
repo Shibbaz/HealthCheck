@@ -4,7 +4,7 @@ module Contexts
       class CreateSingleUser
         def call(event)
           stream = event.data
-          
+
           user = stream[:adapter].create!(
             name: stream[:name],
             email: stream[:email],

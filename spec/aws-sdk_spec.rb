@@ -23,7 +23,7 @@ describe "Enhanced Stubbing Example Tests" do
         if b_contents
           obj = b_contents[key]
           if obj
-            {body: obj}
+            { body: obj }
           else
             "NoSuchKey"
           end

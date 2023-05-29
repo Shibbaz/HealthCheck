@@ -70,7 +70,7 @@ RSpec.describe Contexts::Posts::Repository, type: :model do
 
     it "it success" do
       event_store = repository.unlike(
-        args: {id: post.id},
+        args: { id: post.id },
         current_user_id: user.id
       )
       expect(event_store).to have_published(an_event(PostWasUnliked))

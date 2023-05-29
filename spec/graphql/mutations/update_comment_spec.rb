@@ -36,7 +36,10 @@ module Mutations
       end
 
       let(:token) {
-        result = Mutations::SignInUserMutation.new(object: nil, field: nil, context: {session: {}}).resolve(credentials: {email: user.email, password: user.password})
+        result = Mutations::SignInUserMutation.new(object: nil, field: nil,
+                                                   context: { session: {} }).resolve(credentials: {
+                                                                                       email: user.email, password: user.password
+                                                                                     })
         result[:token]
       }
 
@@ -50,7 +53,7 @@ module Mutations
 
       describe ".mutation passes" do
         it "returns a true" do
-          result = HealthSchema.execute(query, variables: variables, context: {current_user: user})
+          result = HealthSchema.execute(query, variables: variables, context: { current_user: user })
           comment.reload
           expect(comment[:text]).to eq "Hahaha"
         end
@@ -58,7 +61,10 @@ module Mutations
 
       describe ".mutation fails" do
         it "returns a false" do
-          expect { HealthSchema.execute(query, variables: not_valid_variables, context: {current_user: user}) }.to raise_error(ActiveRecord::RecordNotFound)
+          expect {
+            HealthSchema.execute(query, variables: not_valid_variables,
+                                        context: { current_user: user })
+          }.to raise_error(ActiveRecord::RecordNotFound)
         end
       end
 

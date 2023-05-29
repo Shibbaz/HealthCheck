@@ -18,15 +18,18 @@ module Mutations
       end
 
       let(:variables) do
-        {id: post.id}
+        { id: post.id }
       end
 
       let(:not_valid_variables) do
-        {id: SecureRandom.uuid}
+        { id: SecureRandom.uuid }
       end
 
       let(:token) {
-        result = Mutations::SignInUserMutation.new(object: nil, field: nil, context: {session: {}}).resolve(credentials: {email: user.email, password: user.password})
+        result = Mutations::SignInUserMutation.new(object: nil, field: nil,
+                                                   context: { session: {} }).resolve(credentials: {
+                                                                                       email: user.email, password: user.password
+                                                                                     })
         result[:token]
       }
 

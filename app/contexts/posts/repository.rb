@@ -32,6 +32,7 @@ module Contexts
         if !followers.nil?
           current_user = User.find_by(id: args[:user_id])
           raise Contexts::Users::Errors::UserNotFoundError if current_user.nil?
+
           ids = current_user.followers
           return @adapter.show_users_content(ids)
         end

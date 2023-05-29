@@ -14,7 +14,8 @@ module Contexts
           )
           record.nil? ? (raise error_type.new) : nil
           record.with_lock do
-            record.likes.include? current_user_id ? record.update(likes: (record.likes.uniq - [current_user_id].uniq).uniq) : (raise GraphQL::ExecutionError, "User not exists in like array")
+            record.likes.include? current_user_id ? record.update(likes: (record.likes.uniq - [current_user_id].uniq).uniq) : (raise GraphQL::ExecutionError,
+                                                                                                                                     'User not exists in like array')
           end
         end
       end

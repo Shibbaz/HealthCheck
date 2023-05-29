@@ -4,15 +4,15 @@ class Post < ApplicationRecord
   has_logidze
   belongs_to :user
   has_many :comments
-  validates :user_id, format: {with: /[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89aAbB][a-f0-9]{3}-[a-f0-9]{12}/}
+  validates :user_id, format: { with: /[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89aAbB][a-f0-9]{3}-[a-f0-9]{12}/ }
   validates :text, obscenity: {
                      sanitize: true,
                      replacement: "[censored]"
                    },
-    length: {
-      maximum: 1000,
-      message: "The review must not exceed 1000 characters"
-    }
+                   length: {
+                     maximum: 1000,
+                     message: "The review must not exceed 1000 characters"
+                   }
 
   scope :filter_by_feeling, ->(value) {
     where(feeling: value).order(arel_table["feeling"].asc)

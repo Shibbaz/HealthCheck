@@ -90,7 +90,7 @@ RSpec.describe Contexts::Comments::Repository, type: :model do
 
     it "it success" do
       event_store = repository.unlike(
-        args: {id: comment.id},
+        args: { id: comment.id },
         current_user_id: user.id
       )
       expect(comment.likes.size).equal?(1)

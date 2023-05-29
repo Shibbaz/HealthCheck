@@ -12,7 +12,7 @@ class CreateEventStoreEvents < ActiveRecord::Migration[7.0]
     add_index :event_store_events_in_streams, [:stream, :event_id], unique: true
 
     create_table(:event_store_events, id: :bigserial, force: false) do |t|
-      t.references :event, null: false, type: :uuid, index: {unique: true}
+      t.references :event, null: false, type: :uuid, index: { unique: true }
       t.string :event_type, null: false, index: true
       t.jsonb :metadata
       t.jsonb :data, null: false

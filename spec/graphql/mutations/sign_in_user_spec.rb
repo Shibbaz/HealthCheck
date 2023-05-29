@@ -15,10 +15,10 @@ module Mutations
           }
 
           let(:result) {
-            Mutations::SignInUserMutation.new(object: nil, field: nil, context: {session: {}}).resolve(credentials: {
-              email: user.email,
-              password: user.password
-            })
+            Mutations::SignInUserMutation.new(object: nil, field: nil, context: { session: {} }).resolve(credentials: {
+                                                                                                           email: user.email,
+                                                                                                           password: user.password
+                                                                                                         })
           }
 
           it ".mutation does pass succesful" do
@@ -38,17 +38,22 @@ module Mutations
           }
 
           it ".mutation does not pass, no credentials" do
-            not_loged_in = Mutations::SignInUserMutation.new(object: nil, field: nil, context: {session: {}}).resolve(credentials: {})
+            not_loged_in = Mutations::SignInUserMutation.new(object: nil, field: nil,
+                                                             context: { session: {} }).resolve(credentials: {})
             assert_nil not_loged_in
           end
 
           it "failure because wrong email" do
-            not_loged_in = Mutations::SignInUserMutation.new(object: nil, field: nil, context: {session: {}}).resolve(credentials: {email: "wrong"})
+            not_loged_in = Mutations::SignInUserMutation.new(object: nil, field: nil,
+                                                             context: { session: {} }).resolve(credentials: { email: "wrong" })
             assert_nil not_loged_in
           end
 
           it "failure because wrong password" do
-            not_loged_in = Mutations::SignInUserMutation.new(object: nil, field: nil, context: {session: {}}).resolve(credentials: {email: user.email, password: "wrong"})
+            not_loged_in = Mutations::SignInUserMutation.new(object: nil, field: nil,
+                                                             context: { session: {} }).resolve(credentials: {
+                                                                                                 email: user.email, password: "wrong"
+                                                                                               })
             assert_nil not_loged_in
           end
         end

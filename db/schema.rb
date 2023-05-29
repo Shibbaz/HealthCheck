@@ -466,7 +466,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_28_101650) do
       $function$
   SQL
 
-
   create_trigger :logidze_on_posts, sql_definition: <<-SQL
       CREATE TRIGGER logidze_on_posts BEFORE INSERT OR UPDATE ON public.posts FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
   SQL

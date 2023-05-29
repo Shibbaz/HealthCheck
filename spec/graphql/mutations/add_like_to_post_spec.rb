@@ -17,15 +17,18 @@ module Mutations
       end
 
       let(:variables) do
-        {id: post.id}
+        { id: post.id }
       end
 
       let(:not_valid_variables) do
-        {id: SecureRandom.uuid}
+        { id: SecureRandom.uuid }
       end
 
       let(:token) {
-        result = Mutations::SignInUserMutation.new(object: nil, field: nil, context: {session: {}}).resolve(credentials: {email: user.email, password: user.password})
+        result = Mutations::SignInUserMutation.new(object: nil, field: nil,
+                                                   context: { session: {} }).resolve(credentials: {
+                                                                                       email: user.email, password: user.password
+                                                                                     })
         result[:token]
       }
 
@@ -39,7 +42,7 @@ module Mutations
 
       describe ".mutation passes" do
         it "returns a true" do
-          result = HealthSchema.execute(query, variables: variables, context: {current_user: user})
+          result = HealthSchema.execute(query, variables: variables, context: { current_user: user })
           post.reload
           expect(post[:likes]).to eq [user.id]
         end
@@ -47,7 +50,10 @@ module Mutations
 
       describe ".mutation does not pass" do
         it "not valid" do
-          expect { HealthSchema.execute(query, variables: not_valid_variables, context: {current_user: user}) }.to raise_error(ActiveRecord::RecordNotFound)
+          expect {
+            HealthSchema.execute(query, variables: not_valid_variables,
+                                        context: { current_user: user })
+          }.to raise_error(ActiveRecord::RecordNotFound)
         end
       end
 

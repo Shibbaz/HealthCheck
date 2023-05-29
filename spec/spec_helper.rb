@@ -94,7 +94,7 @@ RSpec.configure do |config|
   #   # test failures related to randomization by passing the same `--seed` value
   #   # as the one that triggered the failure.
   #   Kernel.srand config.seed
-  #config.use_transactional_fixtures = false
+  # config.use_transactional_fixtures = false
   config.before(:suite) do
     DatabaseCleaner.clean_with :deletion
 
