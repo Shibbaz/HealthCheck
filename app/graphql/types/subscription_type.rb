@@ -1,7 +1,6 @@
 module Types
   class SubscriptionType < Types::BaseObject
-    field :notification_on_posts, subscription: Subscriptions::NotificationOnPosts
-    field :notification_on_comments, subscription: Subscriptions::NotificationOnComments
-
+    field :notification_comment_was_sent, subscription: Subscriptions::NotificationCommentWasSent
+    field :notification_post_was_sent, subscription: Subscriptions::NotificationPostWasSent
   end
 end

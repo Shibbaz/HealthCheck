@@ -1,5 +1,5 @@
 module Subscriptions
-  class NotificationWasSent < Subscriptions::BaseSubscription
+  class NotificationPostWasSent < Subscriptions::BaseSubscription
     field :post, Types::PostType, null: false
 
     argument :user_id, ID

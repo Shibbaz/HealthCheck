@@ -9,6 +9,6 @@ class Comment < ApplicationRecord
   belongs_to :post
 
   def graphql_notification_on_comments
-    HealthSchema.subscriptions.trigger(:notification_on_comments, {}, {comment: self.as_json}, scope: self.user_id)
+    HealthSchema.subscriptions.trigger(:notification_comment_was_sent, {}, {comment: self.as_json}, scope: self.user_id)
   end
 end

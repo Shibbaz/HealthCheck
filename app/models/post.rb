@@ -35,6 +35,6 @@ class Post < ApplicationRecord
     where(user_id: ids).order(arel_table['created_at'].desc)
   }
   def graphql_notification_on_posts
-    HealthSchema.subscriptions.trigger(:notification_on_posts, {}, {post: self.as_json}, scope: self.user_id)
+    HealthSchema.subscriptions.trigger(:notification_comment_was_sent, {}, {post: self.as_json}, scope: self.user_id)
   end
 end

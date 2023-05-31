@@ -1,13 +1,13 @@
 module Subscriptions
-  class NotificationOnComments < Subscriptions::BaseSubscription
-    field :comment, Types::PostType, null: false
+  class NotificationCommentWasSent < Subscriptions::BaseSubscription
+    field :post, Types::PostType, null: false
 
     argument :user_id, ID
 
     def notification(user_id)
-      comment = Comment.where(user_id).order(:updated_at).last
+      post = Comment.where(user_id).order(:updated_at).last
       {
-        comment: comment
+        post: post
       }
     end
 
