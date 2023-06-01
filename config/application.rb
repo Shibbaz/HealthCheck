@@ -8,7 +8,7 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-require_relative '../lib/ip_filtering'
+require_relative '../app/lib/services/ip_filtering'
 
 module Health
   class Application < Rails::Application
@@ -32,6 +32,8 @@ module Health
     config.api_only = true
     config.docker = true
     config.eager_load_paths += Dir[Rails.root.join('app/contexts/**/*.rb')].each { |rb| require rb }
+    config.eager_load_paths += Dir[Rails.root.join('app/modules/**/**/*.rb')].each { |rb| require rb }
+
     # config.middleware.use IpFiltering
     ApolloUploadServer::Middleware.strict_mode = true
 

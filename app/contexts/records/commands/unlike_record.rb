@@ -6,11 +6,11 @@ module Contexts
       class UnlikeRecord
         def call(event)
           stream = event.data
-          error_type = Contexts::Helpers::Records.build_error(adapter: stream[:adapter])
+          error_type = Services::Records.build_error(adapter: stream[:adapter])
           id = stream[:id]
           adapter = stream[:adapter]
           current_user_id = stream[:current_user_id]
-          record = Contexts::Helpers::Records.load(
+          record = Services::Records.load(
             adapter:,
             id:
           )

@@ -6,7 +6,7 @@ module Mutations
     field :status, Int, null: false
 
     def resolve(**args)
-      Contexts::Helpers::Authenticate.new.call(context:)
+      Services::Authenticate.new.call(context:)
       current_user_id = context[:current_user].id
       Contexts::Posts::Repository.new.delete(args:)
       { status: 200 }

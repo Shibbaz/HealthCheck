@@ -32,7 +32,7 @@ RSpec.describe Mutations::UpdateUserProfileImageMutation, type: :request do
           id: user.id,
           file: txt
         )
-      end.to raise_error(Contexts::Helpers::Errors::FileInvalidTypeError)
+      end.to raise_error(Services::Errors::FileInvalidTypeError)
     end
   end
 end

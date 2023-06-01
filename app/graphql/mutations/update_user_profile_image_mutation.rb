@@ -7,7 +7,7 @@ module Mutations
     field :status, Boolean, null: false
 
     def resolve(**args)
-      Contexts::Helpers::Authenticate.new.call(context:)
+      Services::Authenticate.new.call(context:)
       id = context[:current_user].id
       Contexts::Users::Repository.new.upload(id:, file: args[:file])
       { status: 200 }

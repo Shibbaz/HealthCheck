@@ -3,9 +3,9 @@
 require 'rails_helper'
 require 'faker'
 
-RSpec.describe Contexts::Helpers::Versioning, type: :model do
+RSpec.describe Services::Versions, type: :model do
   subject(:repository) do
-    Contexts::Helpers::Versioning
+    Services::Versions
   end
   context 'create method' do
     let(:user) do
@@ -37,17 +37,17 @@ RSpec.describe Contexts::Helpers::Versioning, type: :model do
     it 'it success' do
       post.update(text: 'Text')
       post.reload
-      expect(Contexts::Helpers::Versioning.versions(post.log_data).size).to eq(1)
+      expect(Services::Versions.versions(post.log_data).size).to eq(1)
 
       post.update(question: 'What is my purpose?')
       post.reload
-      expect(Contexts::Helpers::Versioning.versions(post.log_data).size).to eq(2)
+      expect(Services::Versions.versions(post.log_data).size).to eq(2)
     end
 
     it 'it fails' do
       expect do
-        Contexts::Helpers::Versioning.versions(extra_post.log_data)
-      end.to raise_error(Contexts::Helpers::Errors::VersionsNotFoundError)
+        Services::Versions.versions(extra_post.log_data)
+      end.to raise_error(Services::Errors::VersionsNotFoundError)
     end
   end
 end

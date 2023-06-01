@@ -6,20 +6,23 @@ module Contexts
       class AddLikeToRecord
         def call(event)
           data = stream_data(event)
-          error_type = Contexts::Helpers::Records.build_error(adapter: data[:adapter])
-          record = Contexts::Helpers::Records.load(
+          error_type = Services::Records.build_error(adapter: data[:adapter])
+          record = Services::Records.load(
             adapter: data[:adapter],
             id: data[:id]
           )
           record.nil? ? (raise error_type) : nil
 
           likes = record.likes.uniq
-          array = (likes + [data[:current_user_id]].uniq)
+          current_user_id = data[:current_user_id]
+          array = (likes + [current_user_id].uniq).uniq
+          return if likes == array
           record.with_lock do
             record.update(likes: array)
-            if !data[:current_user_id].eql?(record.user_id)
-              Notification.create(activity: "Like", destination_id: record.id, adapter: data[:adapter].to_s, author_id: data[:current_user_id], receiver_id: record.user_id)
-            end
+            Contexts::Notifications::Repository.new.notificationOnLike(
+              record: record,
+              current_user_id: current_user_id
+            )
           end
         end
 
