@@ -8,7 +8,7 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-require_relative '../lib/ip_filtering'
+require_relative '../app/lib/services/ip_filtering'
 
 module Health
   class Application < Rails::Application
@@ -39,6 +39,5 @@ module Health
 
     Dotenv::Railtie.load if %w[development test].include? ENV['RAILS_ENV']
     config.active_job.queue_adapter = :sidekiq
-    config.autoload_paths << "#{Rails.root}/lib"
   end
 end

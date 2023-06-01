@@ -17,7 +17,7 @@ module Contexts
           current_user_id: current_user_id,
           adapter: @adapter
         }
-        Contexts::Events::Publish.call(data: data, event_type: event_type)
+        Services::Events::Publish.call(data: data, event_type: event_type)
       end
 
       def notificationOnLike(record:, current_user_id:)
@@ -27,7 +27,7 @@ module Contexts
           current_user_id: current_user_id,
           adapter: @adapter
         }
-        Contexts::Events::Publish.call(data: data, event_type: event_type)
+        Services::Events::Publish.call(data: data, event_type: event_type)
       end
     end
   end

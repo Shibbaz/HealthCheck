@@ -3,7 +3,7 @@
 Rails.configuration.to_prepare do
   config = Rails.configuration
   config.event_store = RailsEventStore::Client.new
-  
+
   event_subscriptions = {
       Contexts::Users::Commands::CreateSingleUser => UserWasCreated,
       Contexts::Posts::Commands::CreateSinglePost => PostWasCreated,
@@ -20,5 +20,5 @@ Rails.configuration.to_prepare do
       Contexts::Notifications::Commands::NotificationOnComment => UserWasNotifiedOnComment,
       Contexts::Notifications::Commands::NotificationOnLike => UserWasNotifiedOnLike
     }
-    Contexts::Events::Subscribe.call(event_store: config.event_store, events: event_subscriptions)
+    Services::Events::Subscribe.call(event_store: config.event_store, events: event_subscriptions)
   end

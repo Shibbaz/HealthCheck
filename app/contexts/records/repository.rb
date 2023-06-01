@@ -15,7 +15,7 @@ module Contexts
           args:,
           adapter: @adapter
         }
-        Contexts::Events::Publish.call(data: data, event_type: event_type)
+        Services::Events::Publish.call(data: data, event_type: event_type)
       end
 
       def add_like(args:, current_user_id:)
@@ -25,7 +25,7 @@ module Contexts
           current_user_id:,
           adapter: @adapter
         }
-        Contexts::Events::Publish.call(data: data, event_type: event_type)
+        Services::Events::Publish.call(data: data, event_type: event_type)
       end
 
       def update(args:)
@@ -35,7 +35,7 @@ module Contexts
           id: args[:id],
           text: args[:text]
         }
-        Contexts::Events::Publish.call(data: data, event_type: event_type)
+        Services::Events::Publish.call(data: data, event_type: event_type)
       end
 
       def unlike(args:, current_user_id:)
@@ -45,7 +45,7 @@ module Contexts
           id: args[:id],
           current_user_id:
         }
-        Contexts::Events::Publish.call(data: data, event_type: event_type)
+        Services::Events::Publish.call(data: data, event_type: event_type)
       end
 
       def delete(args:)
@@ -54,7 +54,7 @@ module Contexts
           adapter: @adapter,
           id: args[:id]
         }
-        Contexts::Events::Publish.call(data: data, event_type: event_type)
+        Services::Events::Publish.call(data: data, event_type: event_type)
       end
     end
   end
