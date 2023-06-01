@@ -10,7 +10,7 @@ module Contexts
       end
 
       def create(args:)
-        event_type = Contexts::Helpers::Records.build_event(adapter:, event_type: 'Created')
+        event_type = Services::Records.build_event(adapter:, event_type: 'Created')
         data = {
           args:,
           adapter: @adapter
@@ -19,7 +19,7 @@ module Contexts
       end
 
       def add_like(args:, current_user_id:)
-        event_type = Contexts::Helpers::Records.build_event(adapter:, event_type: 'Liked')
+        event_type = Services::Records.build_event(adapter:, event_type: 'Liked')
         data = {
           id: args[:id],
           current_user_id:,
@@ -29,7 +29,7 @@ module Contexts
       end
 
       def update(args:)
-        event_type = Contexts::Helpers::Records.build_event(adapter:, event_type: 'Updated')
+        event_type = Services::Records.build_event(adapter:, event_type: 'Updated')
         data =  {
           adapter: @adapter,
           id: args[:id],
@@ -39,7 +39,7 @@ module Contexts
       end
 
       def unlike(args:, current_user_id:)
-        event_type = Contexts::Helpers::Records.build_event(adapter:, event_type: 'Unliked')
+        event_type = Services::Records.build_event(adapter:, event_type: 'Unliked')
         data = {
           adapter: @adapter,
           id: args[:id],
@@ -49,7 +49,7 @@ module Contexts
       end
 
       def delete(args:)
-        event_type = Contexts::Helpers::Records.build_event(adapter:, event_type: 'Deleted')
+        event_type = Services::Records.build_event(adapter:, event_type: 'Deleted')
         data = {
           adapter: @adapter,
           id: args[:id]

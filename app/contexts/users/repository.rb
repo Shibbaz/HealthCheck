@@ -10,7 +10,7 @@ module Contexts
       end
 
       def create_user(auth_provider:, name:, phone_number:, gender:)
-        event_type = Contexts::Helpers::Records.build_event(adapter:, event_type: 'Created')
+        event_type = Services::Records.build_event(adapter:, event_type: 'Created')
         data = {
           name:,
           email: auth_provider&.[](:credentials)&.[](:email),

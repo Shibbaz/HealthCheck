@@ -6,9 +6,9 @@ module Contexts
       class DeleteRecord
         def call(event)
           stream = event.data
-          error_type = Contexts::Helpers::Records.build_error(adapter: stream[:adapter])
+          error_type = Services::Records.build_error(adapter: stream[:adapter])
 
-          record = Contexts::Helpers::Records.load(
+          record = Services::Records.load(
             adapter: stream[:adapter],
             id: stream[:id]
           )

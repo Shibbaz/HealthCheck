@@ -3,9 +3,9 @@
 require 'rails_helper'
 require 'faker'
 
-RSpec.describe Contexts::Helpers::Storage, type: :model do
+RSpec.describe Services::Storage, type: :model do
   subject(:context) do
-    Contexts::Helpers::Storage
+    Services::Storage
   end
   context 'upload method' do
     let(:fake_s3) { {} }
@@ -32,7 +32,7 @@ RSpec.describe Contexts::Helpers::Storage, type: :model do
       file_key = 'obj'
       file = fixture_file_upload(Rails.root.join('spec', 'fixtures', 'images', 'image.jpg'), 'image/jpg')
       expect do
-        Contexts::Helpers::Storage.upload(
+        Services::Storage.upload(
           storage: client,
           bucket: bucket_key,
           key: file_key,
@@ -47,14 +47,14 @@ RSpec.describe Contexts::Helpers::Storage, type: :model do
       file_key = 'obj'
       file = fixture_file_upload(Rails.root.join('spec', 'fixtures', 'file.txt'), 'txt')
       expect do
-        Contexts::Helpers::Storage.upload(
+        Services::Storage.upload(
           storage: client,
           bucket: bucket_key,
           key: file_key,
           file:
         )
       end.to raise_error(
-        Contexts::Helpers::Errors::FileInvalidTypeError
+        Services::Errors::FileInvalidTypeError
       )
     end
   end

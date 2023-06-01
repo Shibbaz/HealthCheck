@@ -9,7 +9,7 @@ module Mutations
     field :status, Int, null: false
 
     def resolve(**args)
-      Contexts::Helpers::Authenticate.new.call(context:)
+      Services::Authenticate.new.call(context:)
       args = args.merge({ user_id: context[:current_user].id })
       Contexts::Posts::Repository.new.create(args:)
 

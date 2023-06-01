@@ -6,8 +6,8 @@ module Contexts
       class UpdateRecord
         def call(event)
           stream = event.data
-          error_type = Contexts::Helpers::Records.build_error(adapter: stream[:adapter])
-          record = Contexts::Helpers::Records.load(
+          error_type = Services::Records.build_error(adapter: stream[:adapter])
+          record = Services::Records.load(
             adapter: stream[:adapter],
             id: stream[:id]
           )

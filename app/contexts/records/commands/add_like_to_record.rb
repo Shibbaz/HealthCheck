@@ -6,8 +6,8 @@ module Contexts
       class AddLikeToRecord
         def call(event)
           data = stream_data(event)
-          error_type = Contexts::Helpers::Records.build_error(adapter: data[:adapter])
-          record = Contexts::Helpers::Records.load(
+          error_type = Services::Records.build_error(adapter: data[:adapter])
+          record = Services::Records.load(
             adapter: data[:adapter],
             id: data[:id]
           )

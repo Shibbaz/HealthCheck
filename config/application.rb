@@ -39,5 +39,6 @@ module Health
 
     Dotenv::Railtie.load if %w[development test].include? ENV['RAILS_ENV']
     config.active_job.queue_adapter = :sidekiq
+    config.autoload_paths << "#{Rails.root}/lib"
   end
 end

@@ -7,7 +7,7 @@ module Mutations
     field :status, Int, null: false
 
     def resolve(**args)
-      Contexts::Helpers::Authenticate.new.call(context:)
+      Services::Authenticate.new.call(context:)
       Contexts::Comments::Repository.new.update(args:)
       { status: 200 }
     end

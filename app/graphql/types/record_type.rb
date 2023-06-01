@@ -7,7 +7,7 @@ module Types
         field :updated_at, GraphQL::Types::ISO8601DateTime, null: false
         
         def likes
-            Contexts::Helpers::Records.for(User).load_many(object.likes)
+            Services::Records.for(User).load_many(object.likes)
         end
       
         def likes_counter
@@ -15,7 +15,7 @@ module Types
         end
       
         def versions
-            Contexts::Helpers::Versioning.versions(object.log_data)
+            Services::Versions.versions(object.log_data)
         rescue Contexts::Helpers::Errors::VersionsNotFoundError
             []
         end

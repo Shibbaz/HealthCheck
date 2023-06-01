@@ -7,7 +7,7 @@ module Contexts
         def call(event)
           file_key = SecureRandom.uuid
           data = event.data
-          Contexts::Helpers::Storage.upload(
+          Services::Storage.upload(
             storage: Rails.configuration.s3,
             bucket: ENV['S3_BUCKET'],
             key: file_key,
