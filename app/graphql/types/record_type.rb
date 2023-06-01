@@ -3,6 +3,8 @@ module Types
         field :likes, [Types::UserType], null: false
         field :likes_counter, Int, null: false
         field :versions, [GraphQL::Types::JSON], null: false
+        field :created_at, GraphQL::Types::ISO8601DateTime, null: false
+        field :updated_at, GraphQL::Types::ISO8601DateTime, null: false
         
         def likes
             Contexts::Helpers::Records.for(User).load_many(object.likes)
