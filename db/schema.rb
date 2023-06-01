@@ -75,8 +75,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_01_006420) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "author_id", default: -> { "gen_random_uuid()" }, null: false
-    t.uuid "receiver_id", default: -> { "gen_random_uuid()" }, null: false
     t.uuid "destination_id", default: -> { "gen_random_uuid()" }, null: false
+    t.uuid "receiver_id", default: -> { "gen_random_uuid()" }, null: false
   end
 
   create_table "posts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -477,10 +477,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_01_006420) do
   SQL
 
 
-  create_trigger :logidze_on_comments, sql_definition: <<-SQL
-      CREATE TRIGGER logidze_on_comments BEFORE INSERT OR UPDATE ON public.comments FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
-  SQL
   create_trigger :logidze_on_posts, sql_definition: <<-SQL
       CREATE TRIGGER logidze_on_posts BEFORE INSERT OR UPDATE ON public.posts FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
+  SQL
+  create_trigger :logidze_on_comments, sql_definition: <<-SQL
+      CREATE TRIGGER logidze_on_comments BEFORE INSERT OR UPDATE ON public.comments FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
   SQL
 end

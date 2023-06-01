@@ -15,4 +15,6 @@ Rails.configuration.to_prepare do
   config.event_store.subscribe(Contexts::Comments::Commands::UpdateComment.new, to: [CommentWasUpdated])
   config.event_store.subscribe(Contexts::Comments::Commands::DeleteComment.new, to: [CommentWasDeleted])
   config.event_store.subscribe(Contexts::Users::Commands::AddUserAvatar.new, to: [UserAvatarWasUploaded])
+  config.event_store.subscribe(Contexts::Notifications::Commands::NotificationOnComment.new, to: [UserWasNotifiedOnComment])
+  config.event_store.subscribe(Contexts::Notifications::Commands::NotificationOnLike.new, to: [UserWasNotifiedOnLike])
 end

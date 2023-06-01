@@ -3,9 +3,9 @@
 class ChangeNotificationsIdsToUuids < ActiveRecord::Migration[7.0]
   def change
     add_column :notifications, :author_uuid, :uuid, default: 'gen_random_uuid()', null: false
-    add_column :notifications, :user_uuid, :uuid, default: 'gen_random_uuid()', null: false
     add_column :notifications, :destination_uuid, :uuid, default: 'gen_random_uuid()', null: false
     add_column :notifications, :uuid, :uuid, default: 'gen_random_uuid()', null: false
+    add_column :notifications, :receiver_uuid, :uuid, default: 'gen_random_uuid()', null: false
 
     change_table :notifications do |t|
       t.remove :id

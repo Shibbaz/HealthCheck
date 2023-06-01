@@ -6,19 +6,18 @@ module Contexts
       class CreateRecord
         def call(event)
           stream = event.data
-          record ||= stream[:adapter].create!(
+          adapter = stream[:adapter]
+          record ||= adapter.create!(
             stream[:args]
           )
-          if record != nil && stream[:adapter].eql?(Comment)
-            post = Post.find stream[:args][:post_id]
-            Notification.create(
-              activity: "Comment", 
-              destination_id: stream[:args][:post_id],
-              adapter: stream[:adapter].to_s, 
-              author_id: stream[:current_user_id],
-              receiver_id: post.user_id
+          args = args.merge({ record: record })
+          Contexts::Notifications::Repository.new.notificationOnComment(
+            adapter: adapter, 
+            record: record, 
+            id: stream[:args][:id], 
+            current_user_id: stream[:adapter][current_user_id]
             )
-          end
+
         end
       end
     end

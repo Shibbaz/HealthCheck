@@ -14,12 +14,15 @@ module Contexts
           record.nil? ? (raise error_type) : nil
 
           likes = record.likes.uniq
-          array = (likes + [data[:current_user_id]].uniq)
+          current_user_id = data[:current_user_id]
+          array = (likes + [current_user_id].uniq).uniq
+          return if likes == array
           record.with_lock do
             record.update(likes: array)
-            if !data[:current_user_id].eql?(record.user_id)
-              Notification.create(activity: "Like", destination_id: record.id, adapter: data[:adapter].to_s, author_id: data[:current_user_id], receiver_id: record.user_id)
-            end
+            Contexts::Notifications::Repository.new.notificationOnLike(
+              record: record,
+              current_user_id: current_user_id
+            )
           end
         end
 
