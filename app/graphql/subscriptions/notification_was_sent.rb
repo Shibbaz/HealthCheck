@@ -4,8 +4,12 @@ module Subscriptions
     argument :user_id, ID
     
     def subscribe(user_id)
+      notification = Notification.where(receiver_id: user_id.values.first).order(:updated_at).last
+      if notification.eql? nil
+        exit
+      end
       {
-        notification: Notification.where(receiver_id: user_id.values.first).order(:updated_at).last
+        notification: notification
       }
     end
   end
