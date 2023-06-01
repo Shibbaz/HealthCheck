@@ -11,23 +11,23 @@ module Contexts
 
       def notificationOnComment(type:, record:, current_user_id:)
         event_type = UserWasNotifiedOnComment
-        event = event_type.new(data: {
-                                type: type,
-                                 record: record,
-                                 current_user_id: current_user_id,
-                                 adapter: @adapter
-                               })
-        Rails.configuration.event_store.publish(event, stream_name: SecureRandom.uuid)
+        data = {
+          type: type,
+          record: record,
+          current_user_id: current_user_id,
+          adapter: @adapter
+        }
+        Contexts::Events::Publish.call(data: data, event_type: event_type)
       end
 
       def notificationOnLike(record:, current_user_id:)
         event_type = UserWasNotifiedOnLike
-        event = event_type.new(data: {
-                                 record: record,
-                                 current_user_id: current_user_id,
-                                 adapter: @adapter
-                               })
-        Rails.configuration.event_store.publish(event, stream_name: SecureRandom.uuid)
+        data = {
+          record: record,
+          current_user_id: current_user_id,
+          adapter: @adapter
+        }
+        Contexts::Events::Publish.call(data: data, event_type: event_type)
       end
     end
   end
