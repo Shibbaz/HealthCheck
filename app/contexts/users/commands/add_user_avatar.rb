@@ -5,7 +5,6 @@ module Contexts
     module Commands
       class AddUserAvatar
         def call(event)
-          user = User.find event.data[:id]
           file_key = SecureRandom.uuid
           data = event.data
           Contexts::Helpers::Storage.upload(

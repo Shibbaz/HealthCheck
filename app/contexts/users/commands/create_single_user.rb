@@ -7,7 +7,7 @@ module Contexts
         def call(event)
           stream = event.data
 
-          user = stream[:adapter].create!(
+          stream[:adapter].create!(
             name: stream[:name],
             email: stream[:email],
             password: stream[:password],
