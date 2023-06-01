@@ -17,6 +17,9 @@ module Contexts
           array = (likes + [data[:current_user_id]].uniq)
           record.with_lock do
             record.update(likes: array)
+            if !data[:current_user_id].eql?(record.user_id)
+              Notification.create(activity: "Like", destination_id: record.id, adapter: data[:adapter].to_s, author_id: data[:current_user_id], receiver_id: record.user_id)
+            end
           end
         end
 

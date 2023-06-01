@@ -3,10 +3,11 @@
 class HealthSchema < GraphQL::Schema
   mutation(Types::MutationType)
   query(Types::QueryType)
+  subscription(Types::SubscriptionType)
 
   # For batch-loading (see https://graphql-ruby.org/dataloader/overview.html)
   use GraphQL::Batch
-
+  use GraphQL::Subscriptions::ActionCableSubscriptions, broadcast: true
   # GraphQL-Ruby calls this when something goes wrong while running a query:
 
   # Union and Interface Resolution
