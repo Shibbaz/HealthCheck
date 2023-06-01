@@ -3,9 +3,6 @@
 require 'obscenity/active_model'
 
 class Post < ApplicationRecord
-  after_save :graphql_notification_on_posts
-  after_update :graphql_notification_on_posts
-
   has_logidze
   belongs_to :user
   has_many :comments
@@ -34,7 +31,5 @@ class Post < ApplicationRecord
   scope :show_users_content, lambda { |ids|
     where(user_id: ids).order(arel_table['created_at'].desc)
   }
-  def graphql_notification_on_posts
-    HealthSchema.subscriptions.trigger(:notification_comment_was_sent, {}, {post: self.as_json}, scope: self.user_id)
-  end
 end
+
