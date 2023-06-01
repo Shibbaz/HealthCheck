@@ -16,7 +16,7 @@ module Types
       
         def versions
             Services::Versions.versions(object.log_data)
-        rescue Contexts::Helpers::Errors::VersionsNotFoundError
+        rescue Concepts::Helpers::Errors::VersionsNotFoundError
             []
         end
     end

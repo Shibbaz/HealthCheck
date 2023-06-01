@@ -31,7 +31,7 @@ module Health
     config.middleware.use config.session_store, config.session_options
     config.api_only = true
     config.docker = true
-    config.eager_load_paths += Dir[Rails.root.join('app/contexts/**/*.rb')].each { |rb| require rb }
+    config.eager_load_paths += Dir[Rails.root.join('app/concepts/**/*.rb')].each { |rb| require rb }
     config.eager_load_paths += Dir[Rails.root.join('app/modules/**/**/*.rb')].each { |rb| require rb }
 
     # config.middleware.use IpFiltering

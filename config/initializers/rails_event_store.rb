@@ -5,20 +5,20 @@ Rails.configuration.to_prepare do
   config.event_store = RailsEventStore::Client.new
 
   event_subscriptions = {
-      Contexts::Users::Commands::CreateSingleUser => UserWasCreated,
-      Contexts::Posts::Commands::CreateSinglePost => PostWasCreated,
-      Contexts::Posts::Commands::AddLikeToPost => PostWasLiked,
-      Contexts::Posts::Commands::UnlikePost => PostWasUnliked,
-      Contexts::Posts::Commands::UpdatePost => PostWasUpdated,
-      Contexts::Posts::Commands::DeletePost => PostWasDeleted,
-      Contexts::Comments::Commands::CreateSingleComment => CommentWasCreated,
-      Contexts::Comments::Commands::AddLikeToComment => CommentWasLiked,
-      Contexts::Comments::Commands::UnlikeComment => CommentWasUnliked,
-      Contexts::Comments::Commands::UpdateComment => CommentWasUpdated,
-      Contexts::Comments::Commands::DeleteComment => CommentWasDeleted,
-      Contexts::Users::Commands::AddUserAvatar => UserAvatarWasUploaded,
-      Contexts::Notifications::Commands::NotificationOnComment => UserWasNotifiedOnComment,
-      Contexts::Notifications::Commands::NotificationOnLike => UserWasNotifiedOnLike
+      Concepts::Users::Commands::CreateSingleUser => UserWasCreated,
+      Concepts::Posts::Commands::CreateSinglePost => PostWasCreated,
+      Concepts::Posts::Commands::AddLikeToPost => PostWasLiked,
+      Concepts::Posts::Commands::UnlikePost => PostWasUnliked,
+      Concepts::Posts::Commands::UpdatePost => PostWasUpdated,
+      Concepts::Posts::Commands::DeletePost => PostWasDeleted,
+      Concepts::Comments::Commands::CreateSingleComment => CommentWasCreated,
+      Concepts::Comments::Commands::AddLikeToComment => CommentWasLiked,
+      Concepts::Comments::Commands::UnlikeComment => CommentWasUnliked,
+      Concepts::Comments::Commands::UpdateComment => CommentWasUpdated,
+      Concepts::Comments::Commands::DeleteComment => CommentWasDeleted,
+      Concepts::Users::Commands::AddUserAvatar => UserAvatarWasUploaded,
+      Concepts::Notifications::Commands::NotificationOnComment => UserWasNotifiedOnComment,
+      Concepts::Notifications::Commands::NotificationOnLike => UserWasNotifiedOnLike
     }
     Services::Events::Subscribe.call(event_store: config.event_store, events: event_subscriptions)
   end

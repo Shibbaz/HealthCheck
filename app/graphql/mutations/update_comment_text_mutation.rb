@@ -8,7 +8,7 @@ module Mutations
 
     def resolve(**args)
       Services::Authenticate.new.call(context:)
-      Contexts::Comments::Repository.new.update(args:)
+      Concepts::Comments::Repository.new.update(args:)
       { status: 200 }
     end
   end

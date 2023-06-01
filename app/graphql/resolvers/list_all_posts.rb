@@ -12,7 +12,7 @@ module Resolvers
       args = args.merge({
                           user_id: context[:current_user].id
                         })
-      Contexts::Posts::Queries::AllRecords.new.call(args:)
+      Concepts::Posts::Queries::AllRecords.new.call(args:)
     rescue ActiveRecord::RecordNotFound => e
       raise GraphQL::ExecutionError, e.message
     end

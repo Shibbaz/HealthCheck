@@ -3,7 +3,7 @@
 module Services
   class Records < GraphQL::Batch::Loader
     def self.build_error(adapter:)
-      error_name = "Contexts::#{adapter}s::Errors::#{adapter}NotFoundError"
+      error_name = "Concepts::#{adapter}s::Errors::#{adapter}NotFoundError"
       error_type = error_name.constantize
     end
 

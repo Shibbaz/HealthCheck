@@ -8,7 +8,7 @@ module Mutations
     def resolve(**args)
       Services::Authenticate.new.call(context:)
       current_user_id = context[:current_user].id
-      Contexts::Posts::Repository.new.delete(args:)
+      Concepts::Posts::Repository.new.delete(args:)
       { status: 200 }
     end
   end

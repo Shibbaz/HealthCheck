@@ -7,7 +7,7 @@ module Mutations
 
     def resolve(**args)
       Services::Authenticate.new.call(context:)
-      Contexts::Comments::Repository.new.add_like(args:, current_user_id: context[:current_user].id)
+      Concepts::Comments::Repository.new.add_like(args:, current_user_id: context[:current_user].id)
       { status: 200 }
     end
   end
