@@ -108,10 +108,3 @@ group :development, :test do
   gem "pry-byebug"
   gem "pry-stack_explorer"
 end
-
-group :development, :test do
-  gem "hirb"
-  gem "hirb-unicode-steakknife", require: "hirb-unicode"
-  gem "pry-byebug"
-  gem "pry-stack_explorer"
-end
