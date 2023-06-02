@@ -6,6 +6,8 @@
 
 # Ignore bundler config.
 /.bundle
+/sql_warning.txt
+.vscode
 /data/*
 # Ignore all logfiles and tempfiles.
 /log/*
