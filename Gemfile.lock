@@ -1569,6 +1569,7 @@ GEM
     pg_search (2.3.6)
       activerecord (>= 5.2)
       activesupport (>= 5.2)
+    pg_trgm (0.0.1)
     promise.rb (0.7.4)
     pry (0.14.2)
       coderay (~> 1.1)
@@ -1606,6 +1607,9 @@ GEM
       nokogiri (>= 1.6)
     rails-html-sanitizer (1.5.0)
       loofah (~> 2.19, >= 2.19.1)
+    rails-pg-extras (5.2.2)
+      rails
+      ruby-pg-extras (= 5.2.2)
     rails_event_store (2.9.1)
       activejob (>= 6.0)
       activemodel (>= 6.0)
@@ -1675,6 +1679,9 @@ GEM
       rubocop (>= 1.7.0, < 2.0)
       rubocop-ast (>= 0.4.0)
     ruby-next-core (0.15.3)
+    ruby-pg-extras (5.2.2)
+      pg
+      terminal-table
     ruby-progressbar (1.13.0)
     ruby_event_store (2.9.1)
       concurrent-ruby (~> 1.0, >= 1.1.6)
@@ -1703,6 +1710,8 @@ GEM
     simplecov_json_formatter (0.1.4)
     standard (0.0.36.1)
       rubocop (> 0.63)
+    terminal-table (3.0.2)
+      unicode-display_width (>= 1.1.1, < 3)
     thor (1.2.2)
     timeout (0.3.2)
     tzinfo (2.0.6)
@@ -1742,11 +1751,13 @@ DEPENDENCIES
   obscenity
   pg (~> 1.1)
   pg_search
+  pg_trgm
   pry-byebug
   pry-stack_explorer
   puma (~> 5.0)
   rack-cors
   rails (~> 7.0.4, >= 7.0.4.3)
+  rails-pg-extras
   rails_event_store
   redis
   rspec-rails (~> 6.0.0)

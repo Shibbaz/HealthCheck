@@ -10,9 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_01_006420) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_02_183800) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
+  enable_extension "pg_trgm"
   enable_extension "plpgsql"
 
   create_table "acidic_job_runs", force: :cascade do |t|
@@ -77,6 +78,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_01_006420) do
     t.uuid "author_id", default: -> { "gen_random_uuid()" }, null: false
     t.uuid "destination_id", default: -> { "gen_random_uuid()" }, null: false
     t.uuid "receiver_id", default: -> { "gen_random_uuid()" }, null: false
+    t.index ["receiver_id"], name: "index_notifications_on_receiver_id"
+    t.index ["updated_at"], name: "index_notifications_on_updated_at"
   end
 
   create_table "posts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -88,6 +91,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_01_006420) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.jsonb "log_data"
+    t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -102,6 +106,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_01_006420) do
     t.datetime "updated_at", null: false
     t.uuid "followers", default: [], null: false, array: true
     t.uuid "avatar_id", default: -> { "gen_random_uuid()" }, null: false
+    t.index ["email"], name: "index_users_on_email"
+    t.index ["updated_at"], name: "index_users_on_updated_at"
   end
 
   add_foreign_key "comments", "posts"
