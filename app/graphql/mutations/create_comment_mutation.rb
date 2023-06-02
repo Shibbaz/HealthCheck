@@ -8,7 +8,7 @@ module Mutations
     field :status, Int, null: false
 
     def resolve(**args)
-      Services::Authenticate.new.call(context:)
+      Services::Validations::Authenticate.call(context:)
       args = args.merge({ user_id: context[:current_user].id })
       Concepts::Comments::Repository.new.create(args:)
 
