@@ -69,6 +69,8 @@ gem 'acidic_job'
 gem 'redis'
 gem 'rubocop-performance', require: false
 gem 'sidekiq'
+gem 'awesome_print'
+gem 'graphql-rails_logger'
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
@@ -98,4 +100,18 @@ end
 
 group :test do
   gem 'ruby_event_store-rspec'
+end
+
+group :development, :test do
+  gem "hirb"
+  gem "hirb-unicode-steakknife", require: "hirb-unicode"
+  gem "pry-byebug"
+  gem "pry-stack_explorer"
+end
+
+group :development, :test do
+  gem "hirb"
+  gem "hirb-unicode-steakknife", require: "hirb-unicode"
+  gem "pry-byebug"
+  gem "pry-stack_explorer"
 end
