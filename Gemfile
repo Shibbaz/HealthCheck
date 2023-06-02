@@ -109,4 +109,5 @@ group :development, :test do
   gem "hirb-unicode-steakknife", require: "hirb-unicode"
   gem "pry-byebug"
   gem "pry-stack_explorer"
+  gem 'appmap'
 end

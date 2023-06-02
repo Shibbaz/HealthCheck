@@ -1,0 +1,7 @@
+---
+name: health
+language: ruby
+appmap_dir: tmp/appmap
+packages:
+- path: app
+exclude: []
