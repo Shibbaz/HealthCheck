@@ -8,7 +8,7 @@ module Resolvers
     argument :filters, Types::PostFilter, required: false
 
     def resolve(**args)
-      Services::Authenticate.new.call(context:)
+      Services::Validations::Authenticate.call(context:)
       args = args.merge({
                           user_id: context[:current_user].id
                         })

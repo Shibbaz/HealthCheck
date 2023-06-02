@@ -33,6 +33,7 @@ module Health
     config.docker = true
     config.eager_load_paths += Dir[Rails.root.join('app/concepts/**/**/*.rb')].each { |rb| require rb }
     config.eager_load_paths += Dir[Rails.root.join('app/modules/**/**/*.rb')].each { |rb| require rb }
+    config.eager_load_paths += Dir[Rails.root.join('app/lib/**/*.rb')].each { |rb| require rb }
 
     # config.middleware.use IpFiltering
     ApolloUploadServer::Middleware.strict_mode = true

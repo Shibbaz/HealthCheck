@@ -7,7 +7,7 @@ module Concepts
         def call(event)
           file_key = SecureRandom.uuid
           data = event.data
-          Services::Storage.upload(
+          Services::Storage::Upload.call(
             storage: Rails.configuration.s3,
             bucket: ENV['S3_BUCKET'],
             key: file_key,

@@ -3,9 +3,9 @@
 require 'rails_helper'
 require 'faker'
 
-RSpec.describe Services::Storage, type: :model do
+RSpec.describe Services::Storage::Upload, type: :model do
   subject(:context) do
-    Services::Storage
+    Services::Storage::Upload
   end
   context 'upload method' do
     let(:fake_s3) { {} }
@@ -32,7 +32,7 @@ RSpec.describe Services::Storage, type: :model do
       file_key = 'obj'
       file = fixture_file_upload(Rails.root.join('spec', 'fixtures', 'images', 'image.jpg'), 'image/jpg')
       expect do
-        Services::Storage.upload(
+        Services::Storage::Upload.call(
           storage: client,
           bucket: bucket_key,
           key: file_key,
@@ -47,7 +47,7 @@ RSpec.describe Services::Storage, type: :model do
       file_key = 'obj'
       file = fixture_file_upload(Rails.root.join('spec', 'fixtures', 'file.txt'), 'txt')
       expect do
-        Services::Storage.upload(
+        Services::Storage::Upload.call(
           storage: client,
           bucket: bucket_key,
           key: file_key,
