@@ -31,6 +31,16 @@ module Concepts
         }
         Services::Events::Publish.call(data:, event_type:)
       end
+
+      def update(args:, current_user:)
+        event_type = Services::Records.build_event(adapter:, event_type: 'Updated')
+        data = {
+          adapter: @adapter,
+          args: args,
+          current_user: current_user
+        }
+        Services::Events::Publish.call(data:, event_type:)
+      end
     end
   end
 end
