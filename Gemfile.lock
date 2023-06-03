@@ -1510,6 +1510,9 @@ GEM
     erubi (1.12.0)
     factory_bot (6.2.1)
       activesupport (>= 5.0.0)
+    factory_bot_rails (6.2.0)
+      factory_bot (~> 6.2.0)
+      railties (>= 5.0.0)
     faker (3.2.0)
       i18n (>= 1.8.11, < 2)
     fx (0.8.0)
@@ -1517,7 +1520,7 @@ GEM
       railties (>= 6.0.0)
     globalid (1.1.0)
       activesupport (>= 5.0)
-    graphql (2.0.22)
+    graphql (1.13.19)
     graphql-batch (0.5.3)
       graphql (>= 1.12.18, < 3)
       promise.rb (~> 0.7.2)
@@ -1655,6 +1658,9 @@ GEM
     rspec-expectations (3.12.3)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.12.0)
+    rspec-graphql_matchers (1.4.0)
+      graphql (>= 1.10.12, < 2.0)
+      rspec (~> 3.0)
     rspec-mocks (3.12.5)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.12.0)
@@ -1747,7 +1753,7 @@ DEPENDENCIES
   database_cleaner-redis
   debug
   dotenv-rails
-  factory_bot
+  factory_bot_rails
   faker
   fx
   graphql
@@ -1768,6 +1774,7 @@ DEPENDENCIES
   rails-pg-extras
   rails_event_store
   redis
+  rspec-graphql_matchers
   rspec-rails (~> 6.0.0)
   rspec-sqlimit
   rubocop-performance

@@ -6,17 +6,11 @@ module Mutations
   module Posts
     RSpec.describe UnlikePostMutation, type: :request do
       let(:user) do
-        User.create!(
-          id: SecureRandom.uuid,
-          name: Faker::Name.name,
-          email: 'test@test.com',
-          password: 'test',
-          phone_number: 667_089_810
-        )
+        create(:user)
       end
 
       let(:post) do
-        Post.create(id: SecureRandom.uuid, user_id: user.id, likes: [user.id])
+        create(:post, user_id: user.id, likes: [user.id])
       end
 
       let(:variables) do

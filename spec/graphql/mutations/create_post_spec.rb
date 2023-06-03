@@ -6,12 +6,7 @@ module Mutations
   module Posts
     RSpec.describe CreatePostMutation, type: :request do
       let(:user) do
-        User.create!(
-          name: Faker::Name.name,
-          email: 'test@test.com',
-          password: 'test',
-          phone_number: 667_089_810
-        )
+        create(:user)
       end
 
       let(:variables) do

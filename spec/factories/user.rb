@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'faker'
+
 FactoryBot.define do
   factory :user do
     name { Faker::Name.name }
@@ -8,7 +9,7 @@ FactoryBot.define do
     password_digest { Faker::Internet.password }
     id { SecureRandom.uuid }
     archive { false }
-    points { 0 }
-    phone_number { 667_089_810 }
+    followers { []}
+    phone_number { 667089810 }
   end
 end
