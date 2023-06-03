@@ -4,9 +4,9 @@ class GraphqlChannel < ApplicationCable::Channel
   end
 
   def execute(data)
-    query = data["query"]
-    variables = ensure_hash(data["variables"])
-    operation_name = data["operationName"]
+    query = data['query']
+    variables = ensure_hash(data['variables'])
+    operation_name = data['operationName']
     context = {
       # Re-implement whatever context methods you need
       # in this channel or ApplicationCable::Channel

@@ -15,7 +15,7 @@ module Concepts
           args:,
           adapter: @adapter
         }
-        Services::Events::Publish.call(data: data, event_type: event_type)
+        Services::Events::Publish.call(data:, event_type:)
       end
 
       def add_like(args:, current_user_id:)
@@ -25,17 +25,17 @@ module Concepts
           current_user_id:,
           adapter: @adapter
         }
-        Services::Events::Publish.call(data: data, event_type: event_type)
+        Services::Events::Publish.call(data:, event_type:)
       end
 
       def update(args:)
         event_type = Services::Records.build_event(adapter:, event_type: 'Updated')
-        data =  {
+        data = {
           adapter: @adapter,
           id: args[:id],
           text: args[:text]
         }
-        Services::Events::Publish.call(data: data, event_type: event_type)
+        Services::Events::Publish.call(data:, event_type:)
       end
 
       def unlike(args:, current_user_id:)
@@ -45,7 +45,7 @@ module Concepts
           id: args[:id],
           current_user_id:
         }
-        Services::Events::Publish.call(data: data, event_type: event_type)
+        Services::Events::Publish.call(data:, event_type:)
       end
 
       def delete(args:)
@@ -54,7 +54,7 @@ module Concepts
           adapter: @adapter,
           id: args[:id]
         }
-        Services::Events::Publish.call(data: data, event_type: event_type)
+        Services::Events::Publish.call(data:, event_type:)
       end
     end
   end

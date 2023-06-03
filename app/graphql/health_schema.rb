@@ -5,9 +5,7 @@ class HealthSchema < GraphQL::Schema
   query(Types::QueryType)
   subscription(Types::SubscriptionType)
   max_complexity 100
-  if ENV['RAILS_ENV'] == "production" || ENV['RAILS_ENV'] == "development"
-    tracer(GraphQlTracer.new)
-  end
+  tracer(GraphQlTracer.new) if ENV['RAILS_ENV'] == 'production' || ENV['RAILS_ENV'] == 'development'
 
   # For batch-loading (see https://graphql-ruby.org/dataloader/overview.html)
   use GraphQL::Batch

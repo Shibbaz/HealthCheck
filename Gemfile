@@ -66,13 +66,13 @@ gem 'apollo_upload_server', '2.1'
 
 gem 'acidic_job'
 
+gem 'awesome_print'
+gem 'graphql-rails_logger'
+gem 'pg_trgm'
+gem 'rails-pg-extras'
 gem 'redis'
 gem 'rubocop-performance', require: false
 gem 'sidekiq'
-gem 'awesome_print'
-gem 'graphql-rails_logger'
-gem "rails-pg-extras"
-gem "pg_trgm"
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
@@ -85,8 +85,8 @@ group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'debug', platforms: %i[mri mingw x64_mingw]
   gem 'factory_bot_rails'
-  gem 'rspec-rails', '~> 6.0.0'
   gem 'rspec-graphql_matchers'
+  gem 'rspec-rails', '~> 6.0.0'
 end
 
 group :test do
@@ -106,11 +106,11 @@ group :test do
 end
 
 group :development, :test do
-  gem "hirb"
-  gem "hirb-unicode-steakknife", require: "hirb-unicode"
-  gem "pry-byebug"
-  gem "pry-stack_explorer"
   gem 'appmap'
+  gem 'hirb'
+  gem 'hirb-unicode-steakknife', require: 'hirb-unicode'
+  gem 'pry-byebug'
+  gem 'pry-stack_explorer'
 end
 
-gem "factory_bot_rails"
+gem 'factory_bot_rails'

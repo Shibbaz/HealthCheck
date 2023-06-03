@@ -12,15 +12,15 @@ module Concepts
           current_user_id = data[:current_user_id]
 
           notification_adapter = record.class
-          if record != nil && notification_adapter.eql?(Comment)
-            adapter.create(
-              activity: "Comment", 
-              destination_id: record.id,
-              adapter: notification_adapter.to_s, 
-              author_id: current_user_id,
-              receiver_id: record.user_id
-            )
-          end
+          return unless !record.nil? && notification_adapter.eql?(Comment)
+
+          adapter.create(
+            activity: 'Comment',
+            destination_id: record.id,
+            adapter: notification_adapter.to_s,
+            author_id: current_user_id,
+            receiver_id: record.user_id
+          )
         end
       end
     end

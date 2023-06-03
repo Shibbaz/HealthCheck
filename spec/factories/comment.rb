@@ -6,6 +6,6 @@ FactoryBot.define do
   factory :comment do
     user_id { SecureRandom.uuid }
     text { Faker::Markdown.emphasis }
-    likes {[]}
+    likes { [] }
   end
 end
