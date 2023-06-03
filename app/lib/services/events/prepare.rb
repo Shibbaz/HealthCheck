@@ -18,7 +18,8 @@ module Services
           Concepts::Comments::Commands::DeleteComment => CommentWasDeleted,
           Concepts::Users::Commands::AddUserAvatar => UserAvatarWasUploaded,
           Concepts::Notifications::Commands::NotificationOnComment => UserWasNotifiedOnComment,
-          Concepts::Notifications::Commands::NotificationOnLike => UserWasNotifiedOnLike
+          Concepts::Notifications::Commands::NotificationOnLike => UserWasNotifiedOnLike,
+          Concepts::Posts::Commands::AddPostFile => PostFileWasUploaded
         }
       end
     end
