@@ -2,6 +2,6 @@
 
 class EnableHstore < ActiveRecord::Migration[7.0]
   def change
-    enable_extension :hstore
+    safety_assured { enable_extension :hstore }
   end
 end
