@@ -152,7 +152,7 @@ module Resolvers
         it 'checks num DB queries if N+1 problem a true' do
           expect do
             HealthSchema.execute(query, variables: {}, context: { current_user: user })
-          end.not_to exceed_query_limit(4)
+          end.not_to exceed_query_limit(5)
         end
 
         it 'none found in filtering by posts' do
@@ -165,17 +165,54 @@ module Resolvers
           size = result['data']['allposts'].size
           expect(size).to eq(0)
         end
+
+        it 'paginates the posts' do
+          result = HealthSchema.execute(query, variables: {
+                                          feeling: nil,
+                                          created_at: nil,
+                                          likes: nil,
+                                          followers: nil,
+                                          postPage: 1,
+                                          postLimit: 1
+                                        }, context:)
+          size = result['data']['allposts'].size
+          expect(size).to eq(1)
+        end
+  
+        it 'paginates the comments' do
+          result = HealthSchema.execute(query, variables: {
+                                          feeling: nil,
+                                          created_at: nil,
+                                          likes: nil,
+                                          followers: nil,
+                                          commentPage: 1,
+                                          commentLimit: 1
+                                        }, context:)
+          size = result['data']['allposts'][0]['comments'].size
+          expect(size).to eq(1)
+  
+          result = HealthSchema.execute(query, variables: {
+                                          feeling: nil,
+                                          created_at: nil,
+                                          likes: nil,
+                                          followers: nil,
+                                          commentPage: 1,
+                                          commentLimit: 2
+                                        }, context:)
+          size = result['data']['allposts'][0]['comments'].size
+          expect(size).to eq(2)
+        end
       end
 
       def query
         <<~GQL
-          query($feeling: Int, $likes: Boolean, $createdAt: Boolean, $followers: Boolean) {
-              allposts(filters: {feeling: $feeling, likes: $likes, createdAt: $createdAt, followers: $followers}) {
+          query($feeling: Int, $likes: Boolean, $createdAt: Boolean, $followers: Boolean, $postPage: Int, $postLimit: Int, $commentPage: Int, $commentLimit: Int) {
+              allposts(filters: {feeling: $feeling, likes: $likes, createdAt: $createdAt, followers: $followers}, page: $postPage, limit: $postLimit) {
                 id
                 feeling
                 likesCounter
                 createdAt
-                comments{
+                comments(page: $commentPage, limit: $commentLimit){
                   id
                   versions
                 }
