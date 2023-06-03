@@ -35,6 +35,16 @@ module Concepts
 
         posts
       end
+
+      def upload(id:, file:)
+        event_type = PostFileWasUploaded
+        data = {
+          id:,
+          file:,
+          adapter: @adapter
+        }
+        Services::Events::Publish.call(data:, event_type:)
+      end
     end
   end
 end
