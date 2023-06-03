@@ -7,32 +7,14 @@ module Resolvers
     RSpec.describe ListAllPosts, type: :request do
       describe '.resolve' do
         let(:user) do
-          User.create!(
-            id: SecureRandom.uuid,
-            name: 'test',
-            email: 'test@test.com',
-            password: 'test',
-            phone_number: 667_089_810
-          )
+          create(:user, name: 'John')
         end
         let(:extra_user) do
-          User.create!(
-            id: SecureRandom.uuid,
-            name: 'test2',
-            email: 'test2@test.com',
-            password: 'test2',
-            phone_number: 667_089_810
-          )
+          create(:user, name: 'Sam')
         end
 
         let(:extra_new_user) do
-          User.create!(
-            id: SecureRandom.uuid,
-            name: 'test3',
-            email: 'test3@test.com',
-            password: 'test3',
-            phone_number: 667_089_810
-          )
+          create(:user, name: 'Max')
         end
 
         let(:context) do
@@ -42,13 +24,13 @@ module Resolvers
 
         before do
           posts = [
-            Post.create(id: SecureRandom.uuid, user_id: user.id, likes: [user.id], text: 'Ah', feeling: 1),
-            Post.create(id: SecureRandom.uuid, user_id: extra_user.id, likes: [], text: 'Ah', feeling: 0),
-            Post.create(id: SecureRandom.uuid, user_id: extra_new_user.id, likes: [], text: 'Ah', feeling: 0)
+            create(:post, user_id: user.id, likes: [user.id], text: 'Ah', feeling: 1),
+            create(:post, user_id: extra_user.id, likes: [], text: 'Ah', feeling: 0),
+            create(:post, user_id: extra_new_user.id, likes: [], text: 'Ah', feeling: 0)
           ]
-          Comment.create(id: SecureRandom.uuid, user_id: user.id, post_id: posts[0].id, text: 'test')
-          Comment.create(id: SecureRandom.uuid, user_id: user.id, post_id: posts[0].id, text: 'test')
-          Comment.create(id: SecureRandom.uuid, user_id: user.id, post_id: posts[1].id, text: 'test')
+          create(:comment, user_id: user.id, post_id: posts[0].id, text: 'test')
+          create(:comment, user_id: user.id, post_id: posts[0].id, text: 'test')
+          create(:comment, user_id: user.id, post_id: posts[1].id, text: 'test')
         end
 
         it 'returns Posts and check numbers of Comments in two posts' do

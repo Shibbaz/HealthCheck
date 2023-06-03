@@ -6,20 +6,15 @@ module Mutations
   module Comments
     RSpec.describe AddLikeToCommentMutation, type: :request do
       let(:user) do
-        User.create!(
-          name: Faker::Name.name,
-          email: 'test@test.com',
-          password: 'test',
-          phone_number: 667_089_810
-        )
+        create(:user)
       end
 
       let(:post) do
-        Post.create(id: SecureRandom.uuid, user_id: user.id, likes: [], text: 'Ah')
+        create(:post, user_id: user.id, text: 'Ah')
       end
 
       let(:comment) do
-        Comment.create(id: SecureRandom.uuid, user_id: user.id, likes: [], text: 'Ah', post_id: post.id)
+        create(:comment, user_id: user.id, likes: [], text: 'Ah', post_id: post.id)
       end
 
       let(:variables) do

@@ -6,16 +6,11 @@ module Mutations
   module Posts
     RSpec.describe AddLikeToPostMutation, type: :request do
       let(:user) do
-        User.create!(
-          name: Faker::Name.name,
-          email: 'test@test.com',
-          password: 'test',
-          phone_number: 667_089_810
-        )
+        create(:user)
       end
 
       let(:post) do
-        Post.create(id: SecureRandom.uuid, user_id: user.id, likes: [], text: 'Ah')
+        create(:post, user_id: user.id, text: 'Ah')
       end
 
       let(:variables) do

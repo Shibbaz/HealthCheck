@@ -10,7 +10,7 @@ RSpec.describe Mutations::UpdateUserProfileImageMutation, type: :request do
     fixture_file_upload(Rails.root.join('spec', 'fixtures', 'file.txt'), 'txt')
   end
   let(:user) do
-    User.create(email: Faker::Internet.email, password_digest: 'test', phone_number: 667_089_810, name: 'test')
+    create(:user)
   end
 
   describe '.mutation passes' do

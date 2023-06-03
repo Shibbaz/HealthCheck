@@ -6,21 +6,15 @@ module Mutations
   module Comments
     RSpec.describe UpdateCommentTextMutation, type: :request do
       let(:user) do
-        User.create!(
-          id: SecureRandom.uuid,
-          name: Faker::Name.name,
-          email: 'test@test.com',
-          password: 'test',
-          phone_number: 667_089_810
-        )
+        create(:user)
       end
 
       let(:post) do
-        Post.create(id: SecureRandom.uuid, user_id: user.id, likes: [], text: 'Ah')
+        create(:post, user_id: user.id)
       end
 
       let(:comment) do
-        Comment.create(id: SecureRandom.uuid, user_id: user.id, likes: [], text: 'Ah', post_id: post.id)
+        create(:comment, user_id: user.id, post_id: post.id, text: 'Ah')
       end
 
       let(:variables) do
