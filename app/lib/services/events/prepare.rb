@@ -19,7 +19,8 @@ module Services
           Concepts::Users::Commands::AddUserAvatar => UserAvatarWasUploaded,
           Concepts::Notifications::Commands::NotificationOnComment => UserWasNotifiedOnComment,
           Concepts::Notifications::Commands::NotificationOnLike => UserWasNotifiedOnLike,
-          Concepts::Posts::Commands::AddPostFile => PostFileWasUploaded
+          Concepts::Posts::Commands::AddPostFile => PostFileWasUploaded,
+          Concepts::Users::Commands::UpdateUser => UserWasUpdated
         }
       end
     end
