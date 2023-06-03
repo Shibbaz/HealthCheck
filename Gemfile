@@ -84,8 +84,9 @@ group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'debug', platforms: %i[mri mingw x64_mingw]
-  gem 'factory_bot'
+  gem 'factory_bot_rails'
   gem 'rspec-rails', '~> 6.0.0'
+  gem 'rspec-graphql_matchers'
 end
 
 group :test do
@@ -111,3 +112,5 @@ group :development, :test do
   gem "pry-stack_explorer"
   gem 'appmap'
 end
+
+gem "factory_bot_rails"
