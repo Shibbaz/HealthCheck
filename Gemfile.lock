@@ -1524,6 +1524,8 @@ GEM
     graphql-batch (0.5.3)
       graphql (>= 1.12.18, < 3)
       promise.rb (~> 0.7.2)
+    graphql-pagination (1.2.1)
+      graphql (~> 1.12)
     graphql-rails_logger (1.2.4)
       actionpack (> 5.0)
       activesupport (> 5.0)
@@ -1540,6 +1542,10 @@ GEM
       reline (>= 0.3.0)
     jmespath (1.6.2)
     json (2.6.3)
+    kaminari-activerecord (1.2.2)
+      activerecord
+      kaminari-core (= 1.2.2)
+    kaminari-core (1.2.2)
     logidze (1.2.3)
       activerecord (>= 5.0)
       railties (>= 5.0)
@@ -1758,9 +1764,11 @@ DEPENDENCIES
   fx
   graphql
   graphql-batch
+  graphql-pagination
   graphql-rails_logger
   hirb
   hirb-unicode-steakknife
+  kaminari-activerecord
   logidze (~> 1.1)
   obscenity
   pg (~> 1.1)
