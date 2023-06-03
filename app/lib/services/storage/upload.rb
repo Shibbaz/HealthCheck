@@ -3,7 +3,7 @@ require 'aws-sdk'
 module Services
   module Storage
     class Upload
-      def self.call(storage: Rails.configuration.s3, bucket:, key:, file:)
+      def self.call(bucket:, key:, file:, storage: Rails.configuration.s3)
         raise Services::Errors::FileInvalidTypeError if File.extname(file.path) != '.jpg'
 
         config = {

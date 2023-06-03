@@ -17,11 +17,12 @@ module Concepts
           current_user_id = data[:current_user_id]
           array = (likes + [current_user_id].uniq).uniq
           return if likes == array
+
           record.with_lock do
             record.update(likes: array)
             Concepts::Notifications::Repository.new.notificationOnLike(
-              record: record,
-              current_user_id: current_user_id
+              record:,
+              current_user_id:
             )
           end
         end

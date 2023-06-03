@@ -9,7 +9,7 @@ FactoryBot.define do
     password_digest { Faker::Internet.password }
     id { SecureRandom.uuid }
     archive { false }
-    followers { []}
-    phone_number { 667089810 }
+    followers { [] }
+    phone_number { 667_089_810 }
   end
 end

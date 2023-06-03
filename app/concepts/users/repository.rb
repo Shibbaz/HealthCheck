@@ -19,7 +19,7 @@ module Concepts
           gender:,
           adapter: @adapter
         }
-        Services::Events::Publish.call(data: data, event_type: event_type)
+        Services::Events::Publish.call(data:, event_type:)
       end
 
       def upload(id:, file:)
@@ -29,7 +29,7 @@ module Concepts
           file:,
           adapter: @adapter
         }
-        Services::Events::Publish.call(data: data, event_type: event_type)
+        Services::Events::Publish.call(data:, event_type:)
       end
     end
   end

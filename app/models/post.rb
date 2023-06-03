@@ -32,4 +32,3 @@ class Post < ApplicationRecord
     where(user_id: ids).order(arel_table['created_at'].desc)
   }
 end
-

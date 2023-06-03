@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Services
   class IpFiltering
     IP_WHITELIST = ['::1', 'localhost', '127.0.0.1'].freeze

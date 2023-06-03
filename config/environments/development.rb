@@ -80,6 +80,6 @@ Rails.application.configure do
     enable_starttls_auto: true
   }
   config.action_cable.url = 'ws://localhost:3000/cable'
-  config.action_cable.allowed_request_origins = [/http:\/\/*/, /https:\/\/*/, /file:\/\/*/, 'file://', nil]
+  config.action_cable.allowed_request_origins = [%r{http://*}, %r{https://*}, %r{file://*}, 'file://', nil]
   config.action_cable.disable_request_forgery_protection = true
 end

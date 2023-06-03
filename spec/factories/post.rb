@@ -7,6 +7,6 @@ FactoryBot.define do
     user_id { SecureRandom.uuid }
     text { Faker::Markdown.emphasis }
     id { SecureRandom.uuid }
-    likes {[]}
+    likes { [] }
   end
 end

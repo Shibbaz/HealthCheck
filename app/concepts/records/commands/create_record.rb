@@ -10,14 +10,13 @@ module Concepts
           record ||= adapter.create!(
             stream[:args]
           )
-          args = args.merge({ record: record })
+          args = args.merge({ record: })
           Concepts::Notifications::Repository.new.notificationOnComment(
-            adapter: adapter, 
-            record: record, 
-            id: stream[:args][:id], 
+            adapter:,
+            record:,
+            id: stream[:args][:id],
             current_user_id: stream[:adapter][current_user_id]
-            )
-
+          )
         end
       end
     end
