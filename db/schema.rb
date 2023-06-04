@@ -13,7 +13,6 @@
 ActiveRecord::Schema[7.0].define(version: 2023_06_03_144000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
-  enable_extension "pg_trgm"
   enable_extension "plpgsql"
 
   create_table "acidic_job_runs", force: :cascade do |t|
@@ -84,13 +83,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_03_144000) do
 
   create_table "posts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "user_id"
-    t.text "text"
     t.string "question", default: "How do you feel today?"
     t.integer "feeling", default: 0
     t.uuid "likes", default: [], array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.jsonb "log_data"
+    t.text "text"
     t.uuid "file_id", default: -> { "gen_random_uuid()" }, null: false
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
@@ -444,7 +443,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_03_144000) do
           FOR k IN (SELECT key FROM jsonb_each(item))
           LOOP
             IF jsonb_typeof(item->k) = 'object' THEN
-               item := jsonb_set(item, ARRAY[k], to_jsonb(item->>k));
+              item := jsonb_set(item, ARRAY[k], to_jsonb(item->>k));
             END IF;
           END LOOP;
 
@@ -484,10 +483,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_03_144000) do
   SQL
 
 
-  create_trigger :logidze_on_comments, sql_definition: <<-SQL
-      CREATE TRIGGER logidze_on_comments BEFORE INSERT OR UPDATE ON public.comments FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
-  SQL
   create_trigger :logidze_on_posts, sql_definition: <<-SQL
       CREATE TRIGGER logidze_on_posts BEFORE INSERT OR UPDATE ON public.posts FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
+  SQL
+  create_trigger :logidze_on_comments, sql_definition: <<-SQL
+      CREATE TRIGGER logidze_on_comments BEFORE INSERT OR UPDATE ON public.comments FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
   SQL
 end
