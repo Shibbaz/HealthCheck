@@ -12,8 +12,8 @@ development:
 
 test:
   <<: *connection
-  database: health_test
-  url: <%= ENV['DATABASE_URL'].gsub('development', 'test') || ENV['DATABASE_URL'].gsub('production', 'test') %>
+  database: health_test<%= ENV['TEST_ENV_NUMBER'] %>
+  url: <%= "#{ENV['DATABASE_URL'].gsub('development', 'test') || ENV['DATABASE_URL'].gsub('production', 'test')}#{ENV.fetch('TEST_ENV_NUMBER')}" %>
 
 production:
   <<: *connection

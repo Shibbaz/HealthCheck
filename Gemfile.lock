@@ -1577,6 +1577,8 @@ GEM
       racc (~> 1.4)
     obscenity (1.0.2)
     parallel (1.23.0)
+    parallel_tests (4.2.1)
+      parallel
     parser (3.2.2.1)
       ast (~> 2.4.1)
     pg (1.5.3)
@@ -1773,6 +1775,7 @@ DEPENDENCIES
   kaminari-activerecord
   logidze (~> 1.1)
   obscenity
+  parallel_tests
   pg (~> 1.1)
   pg_search
   pg_trgm
