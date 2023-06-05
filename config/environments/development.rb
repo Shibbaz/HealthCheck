@@ -12,7 +12,8 @@ Rails.application.configure do
 
   # Do not eager load code on boot.
   config.eager_load = false
-
+  config.active_record.async_query_executor = :global_thread_pool
+  config.active_record.global_executor_concurrency = 100
   # Show full error reports.
   config.consider_all_requests_local = true
 
