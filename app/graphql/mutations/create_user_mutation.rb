@@ -20,7 +20,7 @@ module Mutations
     def resolve(name: nil, phone_number: nil, auth_provider: nil, gender: nil)
       user = Concepts::Users::Repository.new.create_user(auth_provider:, name:,
                                                          phone_number:, gender:)
-      User.where(email: auth_provider[:credentials][:email]).first
+      User.find_by(email: auth_provider[:credentials][:email])
     end
   end
 end
