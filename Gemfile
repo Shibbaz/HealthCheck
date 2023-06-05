@@ -77,7 +77,8 @@ gem 'graphql-pagination'
 gem 'kaminari-activerecord'
 gem "strong_migrations"
 gem 'parallel_tests', group: [:development, :test]
-
+gem 'benchmark-ips'
+gem 'benchmark-memory', '~> 0.2.0'
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 

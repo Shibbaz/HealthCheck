@@ -12,18 +12,18 @@ module Concepts
       end
 
       def apply_filtering(args:)
-        posts = @adapter.all
+        posts = @adapter.all.load_async
         raise Concepts::Posts::Errors::PostNotFoundError if posts == []
 
         feeling ||= args[:filters][:feeling]
         likes ||= args[:filters][:likes]
         created_at ||= args[:filters][:created_at]
         followers ||= args[:filters][:followers]
-        return @adapter.filter_by_feeling(feeling) unless feeling.nil?
+        return @adapter.filter_by_feeling(feeling).load_async unless feeling.nil?
 
         return @adapter.filter_by_likes unless likes.nil?
 
-        return @adapter.filter_by_created_at unless created_at.nil?
+        return @adapter.filter_by_created_at.load_async unless created_at.nil?
 
         unless followers.nil?
           current_user = User.find_by(id: args[:user_id])

@@ -13,6 +13,8 @@ Rails.application.configure do
   # and those relying on copy on write to perform better.
   # Rake tasks automatically ignore this option for performance.
   config.eager_load = true
+  config.active_record.async_query_executor = :global_thread_pool
+  config.active_record.global_executor_concurrency = 5
 
   # Full error reports are disabled and caching is turned on.
   config.consider_all_requests_local = false

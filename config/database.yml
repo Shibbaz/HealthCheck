@@ -1,7 +1,7 @@
 connection: &connection
   adapter: postgresql
   encoding: unicode
-  pool: 10
+  pool: 80
   username: <%= ENV['POSTGRES_USERNAME'] %>
   password: <%= ENV['POSTGRES_PASSWORD'] %>
 
