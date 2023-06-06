@@ -7,8 +7,6 @@ module Services
                 receiver_id: user_id,
                 created_at: (time.beginning_of_day..time.end_of_day)
             ).load_async.order(created_at: :desc).limit(10)
-            authors_ids = command.pluck(:receiver_id)
-            count = command.count
             connections = ->(followers) { 
                 ids = user.followers & followers
                 User.where(id: ids).load_async.map {|user|{
@@ -27,7 +25,6 @@ module Services
                 }
             }
             { 
-                count: count,
                 user: {
                     id: user.id,
                     name: user.name,
