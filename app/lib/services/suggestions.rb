@@ -8,8 +8,8 @@ module Services
                         ids = user.followers & followers
                         self.connectionsNearby(ids)
                     }
-                    userPayload(user).merge({ 
-                        mutual: mutual.call(user.followers & entity.followers)
+                    self.userPayload(entity).merge({ 
+                        mutual: mutual.call(entity.followers)
                     })
                 }
             }
