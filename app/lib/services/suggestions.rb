@@ -27,7 +27,7 @@ module Services
         private
 
         def self.query(receiver_id:, time: DateTime.now)
-            sug= Suggestion.where(
+            Suggestion.where(
                 receiver_id: receiver_id,
                 created_at: (time.beginning_of_day..time.end_of_day)
             ).load_async.order(created_at: :desc).limit(20)
