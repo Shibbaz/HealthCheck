@@ -17,5 +17,6 @@ module Types
     field :upload_profile_image, mutation: Mutations::UpdateUserProfileImageMutation
     field :upload_post_file, mutation: Mutations::UpdatePostFileMutation
     field :update_user, mutation: Mutations::UpdateUserMutation
+    field :add_follow_to_user, mutation: Mutations::AddFollowerToUserMutation
   end
 end
