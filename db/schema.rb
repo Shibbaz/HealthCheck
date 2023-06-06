@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_03_144000) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_06_135500) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
   enable_extension "plpgsql"
@@ -92,6 +92,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_03_144000) do
     t.text "text"
     t.uuid "file_id", default: -> { "gen_random_uuid()" }, null: false
     t.index ["user_id"], name: "index_posts_on_user_id"
+  end
+
+  create_table "suggestions", force: :cascade do |t|
+    t.text "author_id"
+    t.text "receiver_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
