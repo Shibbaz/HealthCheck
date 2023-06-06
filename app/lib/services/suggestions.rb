@@ -1,6 +1,9 @@
 module Services
     class Suggestions
         def self.suggest(user:)
+            if user.eql?(nil)
+                 raise ArgumentError.new("User can't be nil") 
+            end
             command = self.query(receiver_id: user.id)
             authors = -> {
                 User.where(id: command.pluck(:author_id)).load_async.map {|entity|
