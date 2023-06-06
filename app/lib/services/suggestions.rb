@@ -8,12 +8,9 @@ module Services
                         ids = user.followers & followers
                         self.connectionsNearby(ids)
                     }
-                    {
-                        id: entity.id,
-                        name: entity.name,
-                        followersCount: entity.followers.count, 
+                    userPayload(user).merge({ 
                         mutual: mutual.call(user.followers & entity.followers)
-                    }
+                    })
                 }
             }
             payload(user: user, authors: authors.call)
@@ -39,14 +36,18 @@ module Services
                 followersCount: user.followers.count
             }}
         end
+        
+        def self.userPayload(user)
+            {
+                id: user.id,
+                name: user.name,
+                followers: user.followers.count,
+            }
+        end
 
         def self.payload(user:, authors:)
             { 
-                user: {
-                    id: user.id,
-                    name: user.name,
-                    followers: user.followers.count,
-                }, 
+                user: userPayload(user), 
                 authors: authors
             }
         end
