@@ -34,7 +34,7 @@ module Services
             }
         end
 
-        def init(receiver_id:, author_id:)
+        def self.create(receiver_id:, author_id:)
             Suggestion.create(receiver_id: receiver_id, author_id: author_id)
         end
     end
