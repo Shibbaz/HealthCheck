@@ -41,6 +41,16 @@ module Concepts
         }
         Services::Events::Publish.call(data:, event_type:)
       end
+
+      def add_follow(args:, current_user_id:)
+        event_type = Services::Records.build_event(adapter:, event_type: 'Followed')
+        data = {
+          id: args[:id],
+          current_user_id:,
+          adapter: @adapter
+        }
+        Services::Events::Publish.call(data:, event_type:)
+      end
     end
   end
 end
