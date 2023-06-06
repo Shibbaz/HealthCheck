@@ -1735,6 +1735,7 @@ GEM
     simplecov_json_formatter (0.1.4)
     standard (0.0.36.1)
       rubocop (> 0.63)
+    stripe (8.5.0)
     strong_migrations (1.4.4)
       activerecord (>= 5.2)
     terminal-table (3.0.2)
@@ -1802,6 +1803,7 @@ DEPENDENCIES
   sidekiq
   simplecov
   standard
+  stripe
   strong_migrations
   tzinfo-data
 
