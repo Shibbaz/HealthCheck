@@ -21,8 +21,8 @@ module Services
           Concepts::Notifications::Commands::NotificationOnLike => UserWasNotifiedOnLike,
           Concepts::Posts::Commands::AddPostFile => PostFileWasUploaded,
           Concepts::Users::Commands::UpdateUser => UserWasUpdated,
-          Concepts::Users::Commands::AddFollowerToUser => UserWasFollowed
-
+          Concepts::Users::Commands::AddFollowerToUser => UserWasFollowed,
+          Concepts::Users::Commands::AddStripeKeyToUser => StripeKeyWasAdded
         }
       end
     end
