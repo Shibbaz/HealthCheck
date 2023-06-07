@@ -21,6 +21,12 @@ module Concepts
             author_id: current_user_id,
             receiver_id: record.user_id
           )
+          if record.user_id != current_user_id
+            Services::Suggestions.create(
+              receiver_id: record.user_id,
+              author_id: current_user_id
+            )
+          end
         end
       end
     end

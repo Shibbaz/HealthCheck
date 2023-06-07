@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 module Concepts
-  module Records
+  module Users
     module Commands
-      class AddLikeToRecord
+      class AddFollowerToUser
         def call(event)
           data = stream_data(event)
           error_type = Services::Records.build_error(adapter: data[:adapter])
@@ -13,23 +13,13 @@ module Concepts
           )
           record.nil? ? (raise error_type) : nil
 
-          likes = record.likes.uniq
+          followers = record.followers.uniq
           current_user_id = data[:current_user_id]
-          array = (likes + [current_user_id].uniq).uniq
-          return if likes == array
+          array = (followers + [current_user_id].uniq).uniq
+          return if followers == array
 
           record.with_lock do
             record.update(likes: array)
-            Concepts::Notifications::Repository.new.notificationOnLike(
-              record:,
-              current_user_id:
-            )
-            if record.user_id != current_user_id
-              Services::Suggestions.create(
-                receiver_id: record.user_id,
-                author_id: current_user_id
-              )
-            end
           end
         end
 
