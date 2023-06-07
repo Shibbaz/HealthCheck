@@ -271,7 +271,7 @@ RSpec.describe Concepts::Posts::Repository, type: :model do
           filters: {
 
           },
-          user_id: extra_user.id,
+          usr: extra_user.id,
           visibility: true
         }
       )
@@ -284,7 +284,7 @@ RSpec.describe Concepts::Posts::Repository, type: :model do
           filters: {
 
           },
-          user_id: extra_user.id,
+          usr: extra_user.id,
           visibility: false
         }
       )

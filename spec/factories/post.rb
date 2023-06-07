@@ -8,5 +8,6 @@ FactoryBot.define do
     text { Faker::Markdown.emphasis }
     id { SecureRandom.uuid }
     likes { [] }
+    visibility { false }
   end
 end
