@@ -176,6 +176,12 @@ RSpec.describe Concepts::Posts::Repository, type: :model do
         user_id: extra_user.id,
         likes: []
       )
+      Post.create(
+        id: SecureRandom.uuid,
+        user_id: extra_user.id,
+        likes: [],
+        visibility: true
+      )
     end
 
     it 'it has no filters' do
@@ -189,7 +195,7 @@ RSpec.describe Concepts::Posts::Repository, type: :model do
           }
         }
       )
-      expect(data.size).to eq(2)
+      expect(data.size).to eq(3)
     end
 
     it 'it has feeling filters' do
@@ -220,7 +226,7 @@ RSpec.describe Concepts::Posts::Repository, type: :model do
       size = data.size
       likes_counter = data.pluck(:likes).map(&:size)
       expect(likes_counter.first < likes_counter.last).to eq(true)
-      expect(size).to eq(2)
+      expect(size).to eq(3)
     end
 
     it 'it has created_at filters' do
@@ -237,7 +243,7 @@ RSpec.describe Concepts::Posts::Repository, type: :model do
       size = data.size
       dates = data.pluck(:created_at)
       expect(Date.parse(dates.first.to_s) <= Date.parse(dates.last.to_s)).to eq(true)
-      expect(size).to eq(2)
+      expect(size).to eq(3)
     end
 
     it 'it has followers filters' do
@@ -256,7 +262,33 @@ RSpec.describe Concepts::Posts::Repository, type: :model do
         }
       )
       size = data.size
-      expect(size).to eq(2)
+      expect(size).to eq(3)
+    end
+
+    it 'shows no vissible content' do
+      data = repository.apply_filtering(
+        args: {
+          filters: {
+
+          },
+          user_id: extra_user.id,
+          visibility: true
+        }
+      )
+      expect(data.size).to eq(1)
+    end
+
+    it 'shows vissible content' do
+      data = repository.apply_filtering(
+        args: {
+          filters: {
+
+          },
+          user_id: extra_user.id,
+          visibility: false
+        }
+      )
+      expect(data.size).to eq(3)
     end
   end
 end
