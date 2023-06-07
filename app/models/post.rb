@@ -31,4 +31,8 @@ class Post < ApplicationRecord
   scope :show_users_content, lambda { |ids|
     where(user_id: ids).order(arel_table['created_at'].desc)
   }
+
+  scope :visible_content, lambda { |visibility, id|
+    where(user_id: id, visibility: visibility).order(arel_table['created_at'].desc)
+  }
 end
