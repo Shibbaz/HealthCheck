@@ -18,5 +18,6 @@ module Types
     field :upload_post_file, mutation: Mutations::UpdatePostFileMutation
     field :update_user, mutation: Mutations::UpdateUserMutation
     field :add_follow_to_user, mutation: Mutations::AddFollowerToUserMutation
+    field :add_stripe_key_to_user, mutation: Mutations::AddStripeKeyToUserMutation
   end
 end
