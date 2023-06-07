@@ -16,6 +16,9 @@ module Concepts
         raise Concepts::Posts::Errors::PostNotFoundError if posts == []
 
         feeling ||= args[:filters][:feeling]
+        visibility ||= args[:visibility]
+        return @adapter.visible_content(visibility, args[:user_id]).load_async if visibility == true
+
         likes ||= args[:filters][:likes]
         created_at ||= args[:filters][:created_at]
         followers ||= args[:filters][:followers]
@@ -26,10 +29,10 @@ module Concepts
         return @adapter.filter_by_created_at.load_async unless created_at.nil?
 
         unless followers.nil?
-          current_user = User.find_by(id: args[:user_id])
-          raise Concepts::Users::Errors::UserNotFoundError if current_user.nil?
+          user = User.find_by(id: args[:user_id])
+          raise Concepts::Users::Errors::UserNotFoundError if user.nil?
 
-          ids = current_user.followers
+          ids = user.followers
           return @adapter.show_users_content(ids)
         end
 
