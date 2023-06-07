@@ -20,7 +20,9 @@ module Services
           Concepts::Notifications::Commands::NotificationOnComment => UserWasNotifiedOnComment,
           Concepts::Notifications::Commands::NotificationOnLike => UserWasNotifiedOnLike,
           Concepts::Posts::Commands::AddPostFile => PostFileWasUploaded,
-          Concepts::Users::Commands::UpdateUser => UserWasUpdated
+          Concepts::Users::Commands::UpdateUser => UserWasUpdated,
+          Concepts::Users::Commands::AddFollowerToUser => UserWasFollowed
+
         }
       end
     end
