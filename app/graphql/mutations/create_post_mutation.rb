@@ -5,7 +5,7 @@ module Mutations
     argument :feeling, Int, required: true
     argument :question, String, required: true
     argument :text, String, required: true
-
+    argument :visibility, Boolean, required: false, default_value: false
     field :status, Int, null: false
 
     def resolve(**args)

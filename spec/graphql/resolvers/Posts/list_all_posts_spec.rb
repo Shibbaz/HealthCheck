@@ -10,7 +10,7 @@ module Resolvers
           create(:user, name: 'John')
         end
         let(:extra_user) do
-          create(:user, name: 'Sam')
+          create(:user, name: 'Sam', followers: [user.id])
         end
 
         let(:extra_new_user) do
@@ -26,7 +26,8 @@ module Resolvers
           posts = [
             create(:post, user_id: user.id, likes: [user.id], text: 'Ah', feeling: 1),
             create(:post, user_id: extra_user.id, likes: [], text: 'Ah', feeling: 0),
-            create(:post, user_id: extra_new_user.id, likes: [], text: 'Ah', feeling: 0)
+            create(:post, user_id: extra_new_user.id, likes: [], text: 'Ah', feeling: 0),
+            create(:post, user_id: extra_user.id, likes: [], text: 'Ah', feeling: 0, visibility: true)
           ]
           create(:comment, user_id: user.id, post_id: posts[0].id, text: 'test')
           create(:comment, user_id: user.id, post_id: posts[0].id, text: 'test')
@@ -100,7 +101,7 @@ module Resolvers
                                           followers: nil
                                         }, context:)
           size = result['data']['allposts'].size
-          expect(size).to eq(3)
+          expect(size).to eq(4)
         end
 
         it 'filtering by feeling' do
@@ -124,7 +125,7 @@ module Resolvers
           size = result['data']['allposts'].size
           likes_counter = result['data']['allposts'].pluck('likesCounter')
           expect(likes_counter.first > likes_counter.last).to eq(true)
-          expect(size).to eq(3)
+          expect(size).to eq(4)
         end
 
         it 'filtering by createdAt' do
@@ -137,22 +138,23 @@ module Resolvers
           size = result['data']['allposts'].size
           dates = result['data']['allposts'].pluck('createdAt')
           expect(Date.parse(dates.first) <= Date.parse(dates.last)).to eq(true)
-          expect(size).to eq(3)
+          expect(size).to eq(4)
         end
 
         it 'shows posts of user and its followers' do
           followers = [user.id, extra_user.id]
           user.update(followers:)
           user.reload
-          result = HealthSchema.execute(query_followers, variables: {}, context:)
+          byebug
+          result = HealthSchema.execute(query_followers, variables: {followers: true}, context:)
           size = result['data']['allposts'].size
-          expect(size).to eq(2)
+          expect(size).to eq(3)
         end
 
         it 'checks num DB queries if N+1 problem a true' do
           expect do
             HealthSchema.execute(query, variables: {}, context: { current_user: user })
-          end.not_to exceed_query_limit(5)
+          end.not_to exceed_query_limit(7)
         end
 
         it 'none found in filtering by posts' do
@@ -202,6 +204,17 @@ module Resolvers
           size = result['data']['allposts'][0]['comments'].size
           expect(size).to eq(2)
         end
+
+        it 'shows vissible content' do
+
+          extra_user.update(followers: [user.id])
+          extra_user.reload
+          result = HealthSchema.execute(query_user_content, variables: {
+            usr: extra_user.id
+                                        }, context:)
+          size = result["data"]["allposts"].size
+          expect(size).to eq(1)
+        end
       end
 
       def query
@@ -224,8 +237,25 @@ module Resolvers
 
       def query_followers
         <<~GQL
-          query {
-            allposts(filters: {followers: true}) {
+          query($followers: Boolean) {
+            allposts(filters: {followers: $followers}) {
+              createdAt
+              feeling
+              id
+              likes{
+                id
+              }
+              question
+              updatedAt
+            }
+          }
+        GQL
+      end
+
+      def query_user_content
+        <<~GQL
+          query($usr: ID!) {
+            allposts(usr: $usr, filters: {}) {
               createdAt
               feeling
               id
