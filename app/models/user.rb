@@ -15,6 +15,14 @@ class User < ApplicationRecord
   validates :phone_number, presence: true, length: { maximum: 15 },
                            format: { with: VALID_PHONE_NUMBER_REGEX }
 
+  def stripe_transaction(destination:, amount:, currency:)
+    source = Services::Payments::Transfer.account(self.stripe_key)
+    self.with_lock do
+      destination = Services::Payments::Transfer.account(destination.stripe_key)
+      Services::Payments::Transfer.transfer(source: source, destination: destination, amount: amount, currency: currency)
+    end
+  end
+
   def set_followers_attribute
     update(followers: [id])
   end

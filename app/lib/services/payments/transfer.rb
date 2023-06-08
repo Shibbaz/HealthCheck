@@ -9,13 +9,26 @@ module Services
             error: e.message
           }
       end
+      def connect
+        response = HTTParty.post("https://connect.stripe.com/oauth/token",
+        query: {
+          client_secret: ENV["STRIPE_SECRET_KEY"],
+          code: params[:code],
+          grant_type: "authorization_code"
+        }
+      )
+      end
 
-      def self.transfer(account:, ammount:, currency:)
+      def self.transfer(source:, destination:, amount:, currency:)
           Stripe::Transfer.create({
-            amount: ammount,
+            amount: amount,
             currency: currency,
-            destination: account.id,
-          })
+            destination: destination.id,
+          },
+            {
+              stripe_account: '{{source.id}}'
+            }
+          )
         rescue Stripe::InvalidRequestError => e
           {
             error: e.message

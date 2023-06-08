@@ -22,7 +22,8 @@ module Services
           Concepts::Posts::Commands::AddPostFile => PostFileWasUploaded,
           Concepts::Users::Commands::UpdateUser => UserWasUpdated,
           Concepts::Users::Commands::AddFollowerToUser => UserWasFollowed,
-          Concepts::Users::Commands::AddStripeKeyToUser => StripeKeyWasAdded
+          Concepts::Users::Commands::AddStripeKeyToUser => StripeKeyWasAdded,
+          Concepts::Users::Commands::MakeStripeTransactionToUser => UserWasDonated
         }
       end
     end
