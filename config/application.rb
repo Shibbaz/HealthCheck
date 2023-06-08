@@ -42,5 +42,7 @@ module Health
 
     Dotenv::Railtie.load if %w[development test].include? ENV['RAILS_ENV']
     config.active_job.queue_adapter = :sidekiq
+    config.active_record.encryption.support_unencrypted_data = true
+    Stripe.api_key  = ENV['STRIPE_API_KEY']
   end
 end
