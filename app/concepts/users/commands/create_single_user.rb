@@ -6,7 +6,6 @@ module Concepts
       class CreateSingleUser
         def call(event)
           stream = event.data
-
           stream[:adapter].create!(
             name: stream[:name],
             email: stream[:email],

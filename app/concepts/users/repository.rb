@@ -61,6 +61,16 @@ module Concepts
         }
         Services::Events::Publish.call(data:, event_type:)
       end
+
+      def add_transfer_platform(args:, current_user:)
+        event_type = UserWasDonated
+        data = {
+          adapter: @adapter,
+          args: args,
+          current_user: current_user
+        }
+        Services::Events::Publish.call(data:, event_type:)
+      end
     end
   end
 end
