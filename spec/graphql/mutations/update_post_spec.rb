@@ -54,10 +54,9 @@ module Mutations
 
       describe '.mutation fails' do
         it 'returns a false' do
-          expect do
-            HealthSchema.execute(query, variables: not_valid_variables,
-                                        context: { current_user: user })
-          end.to raise_error(ActiveRecord::RecordNotFound)
+          mutation = HealthSchema.execute(query, variables: not_valid_variables, context: { current_user: user })
+          expect(mutation['data']['updatePostInsights']['status']).to eq 404
+          expect(mutation['data']['updatePostInsights']['error']['message']).to eq 'ActiveRecord::RecordNotFound'
         end
       end
 
@@ -65,8 +64,10 @@ module Mutations
         <<~GQL
           mutation($id: ID!, $text: String!){
             updatePostInsights(input: {id: $id, text: $text}){
-              clientMutationId
               status
+              error{
+                message
+              }
             }
           }
         GQL

@@ -49,10 +49,15 @@ module Mutations
         end
 
         it 'not valid' do
-          expect do
-            HealthSchema.execute(query, variables: not_valid_variables,
-                                        context: { current_user: user })
-          end.to raise_error(ActiveRecord::RecordNotFound)
+          mutation = HealthSchema.execute(
+              query,
+              variables: not_valid_variables,
+              context: {
+                current_user: user
+              }
+            )
+          expect(mutation['data']['unlikeToComment']['status']).to eq 404 
+          expect(mutation['data']['unlikeToComment']['error']['message']).to eq 'ActiveRecord::RecordNotFound'
         end
       end
 
@@ -60,8 +65,10 @@ module Mutations
         <<~GQL
           mutation($id: ID!){
             unlikeToComment(input: {id: $id}){
-              clientMutationId
               status
+              error{
+                message
+              }
             }
           }
         GQL

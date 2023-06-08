@@ -54,15 +54,15 @@ module Mutations
         end
 
         it 'not valid' do
-          expect do
-            HealthSchema.execute(
+          mutation = HealthSchema.execute(
               query,
               variables: not_valid_variables,
               context: {
                 current_user: user
               }
             )
-          end.to raise_error(ActiveRecord::RecordNotFound)
+          expect(mutation['data']['deletePost']['status']).to eq 404 
+          expect(mutation['data']['deletePost']['error']['message']).to eq 'ActiveRecord::RecordNotFound'
         end
       end
 
@@ -72,6 +72,9 @@ module Mutations
             deletePost(input: {id: $id}){
               clientMutationId
               status
+              error{
+                message
+              }
             }
           }
         GQL

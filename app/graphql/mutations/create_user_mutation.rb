@@ -21,6 +21,13 @@ module Mutations
       user = Concepts::Users::Repository.new.create_user(auth_provider:, name:,
                                                          phone_number:, gender:)
       User.find_by(email: auth_provider[:credentials][:email])
+    rescue => e
+      return {
+        error: {
+          message: e.class,
+        },
+        status: 404
+      }
     end
   end
 end

@@ -8,7 +8,14 @@ module Mutations
     def resolve(**args)
       Services::Validations::Authenticate.call(context:)
       Concepts::Users::Repository.new.add_follow(args:, current_user_id: context[:current_user].id)
-      { status: 200 }
+      return { status: 200 }
+    rescue => e
+      return {
+        error: {
+          message: e.class,
+        },
+        status: 404
+      }
     end
   end
 end

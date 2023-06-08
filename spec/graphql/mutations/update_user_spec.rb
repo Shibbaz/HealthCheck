@@ -50,10 +50,9 @@ module Mutations
 
       describe '.mutation fails' do
         it 'returns a false' do
-          expect do
-            HealthSchema.execute(query, variables: not_valid_variables,
-                                        context: { current_user: user })
-          end.to raise_error(ActiveRecord::RecordNotFound)
+          mutation = HealthSchema.execute(query, variables: not_valid_variables, context: { current_user: user })
+          expect(mutation['data']['updateUser']['status']).to eq(404)
+          expect(mutation['data']['updateUser']['error']['message']).to eq('Concepts::Users::Errors::UserEmailWasIncorrectError')
         end
       end
 
@@ -63,6 +62,9 @@ module Mutations
             updateUser(input: {email: $email, password: $password}){
               clientMutationId
               status
+              error{
+                message
+              }
             }
           }
         GQL

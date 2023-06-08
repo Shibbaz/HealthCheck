@@ -29,7 +29,6 @@ module Concepts
         return @adapter.filter_by_created_at.load_async unless created_at.nil?
 
         unless followers.nil?
-          byebug
           user_id = args[:user_id]
           user ||= User.find_by(id: user_id)
           raise Concepts::Users::Errors::UserNotFoundError if user == nil

@@ -57,11 +57,16 @@ module Mutations
       end
 
       describe '.mutation fails' do
-        it 'returns a false' do
-          expect do
-            HealthSchema.execute(query, variables: not_valid_variables,
-                                        context: { current_user: user })
-          end.to raise_error(ActiveRecord::RecordNotFound)
+        it 'not valid' do
+          mutation = HealthSchema.execute(
+              query,
+              variables: not_valid_variables,
+              context: {
+                current_user: user
+              }
+            )
+          expect(mutation['data']['updateCommentText']['status']).to eq 404 
+          expect(mutation['data']['updateCommentText']['error']['message']).to eq 'ActiveRecord::RecordNotFound'
         end
       end
 
@@ -69,8 +74,10 @@ module Mutations
         <<~GQL
           mutation($id: ID!, $text: String!){
             updateCommentText(input: {id: $id, text: $text}){
-              clientMutationId
               status
+              error{
+                message
+              }
             }
           }
         GQL

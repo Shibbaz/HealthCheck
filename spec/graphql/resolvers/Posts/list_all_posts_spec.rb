@@ -145,7 +145,6 @@ module Resolvers
           followers = [user.id, extra_user.id]
           user.update(followers:)
           user.reload
-          byebug
           result = HealthSchema.execute(query_followers, variables: {followers: true}, context:)
           size = result['data']['allposts'].size
           expect(size).to eq(3)
