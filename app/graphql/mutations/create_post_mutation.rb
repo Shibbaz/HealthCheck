@@ -7,13 +7,20 @@ module Mutations
     argument :text, String, required: true
     argument :visibility, Boolean, required: false, default_value: false
     field :status, Int, null: false
+    field :error, Types::ErrorType, null: false
 
     def resolve(**args)
       Services::Validations::Authenticate.call(context:)
       args = args.merge({ user_id: context[:current_user].id })
       Concepts::Posts::Repository.new.create(args:)
-
-      { status: 200 }
+      return { status: 200 }
+    rescue => e
+      return {
+        error: {
+          message: e.class,
+        },
+        status: 404
+      }
     end
   end
 end

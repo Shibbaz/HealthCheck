@@ -48,10 +48,9 @@ module Mutations
 
       describe '.mutation does not pass' do
         it 'not valid' do
-          expect do
-            HealthSchema.execute(query, variables: not_valid_variables,
-                                        context: { current_user: user })
-          end.to raise_error(ActiveRecord::RecordNotFound)
+          mutation = HealthSchema.execute(query, variables: not_valid_variables, context: { current_user: user })
+          expect(mutation['data']['addLikeToPost']['status']).to eq 404 
+          expect(mutation['data']['addLikeToPost']['error']['message']).to eq 'ActiveRecord::RecordNotFound'
         end
       end
 
@@ -59,8 +58,10 @@ module Mutations
         <<~GQL
           mutation($id: ID!){
             addLikeToPost(input: {id: $id}){
-              clientMutationId
               status
+              error{
+                message
+              }
             }
           }
         GQL
