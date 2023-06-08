@@ -4,12 +4,20 @@ module Mutations
   class UnlikeCommentMutation < BaseMutation
     argument :id, ID, required: true
     field :status, Int, null: false
+    field :error, Types::ErrorType, null: false
 
     def resolve(**args)
       Services::Validations::Authenticate.call(context:)
       current_user_id = context[:current_user].id
       Concepts::Comments::Repository.new.unlike(args:, current_user_id:)
-      { status: 200 }
+      return { status: 200 }
+    rescue => e
+      return {
+        error: {
+          message: e.class,
+        },
+        status: 404
+      }
     end
   end
 end

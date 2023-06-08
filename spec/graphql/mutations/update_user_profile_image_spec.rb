@@ -27,12 +27,12 @@ RSpec.describe Mutations::UpdateUserProfileImageMutation, type: :request do
     end
 
     it 'cannot upload new avatar' do
-      expect do
-        Mutations::UpdateUserProfileImageMutation.new(object: nil, field: nil, context: { current_user: user }).resolve(
-          id: user.id,
-          file: txt
-        )
-      end.to raise_error(Services::Errors::FileInvalidTypeError)
+      mutation = Mutations::UpdateUserProfileImageMutation.new(object: nil, field: nil, context: { current_user: user }).resolve(
+        id: user.id,
+        file: txt
+      )
+      expect(mutation[:error][:message]).to be(Services::Errors::FileInvalidTypeError)
+      expect(mutation[:status]).to eq(404)
     end
   end
 end

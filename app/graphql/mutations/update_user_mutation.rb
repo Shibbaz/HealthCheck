@@ -8,11 +8,19 @@ module Mutations
     argument :phone_number, Int, required: false
     argument :gender, Int, required: false
     field :status, Int, null: false
+    field :error, Types::ErrorType, null: false
 
     def resolve(**args)
       Services::Validations::Authenticate.call(context:)
       Concepts::Users::Repository.new.update(args:, current_user: context[:current_user])
-      { status: 200 }
+      return { status: 200 }
+    rescue => e
+      return {
+        error: {
+          message: e.class,
+        },
+        status: 404
+      }
     end
   end
 end

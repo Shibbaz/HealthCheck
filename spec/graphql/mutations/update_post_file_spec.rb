@@ -30,12 +30,12 @@ RSpec.describe Mutations::UpdatePostFileMutation, type: :request do
     end
 
     it 'cannot upload new post file' do
-      expect do
-        Mutations::UpdatePostFileMutation.new(object: nil, field: nil, context: { current_user: user }).resolve(
-          id: post.id,
-          file: txt
-        )
-      end.to raise_error(Services::Errors::FileInvalidTypeError)
+      mutation = Mutations::UpdatePostFileMutation.new(object: nil, field: nil, context: { current_user: user }).resolve(
+        id: post.id,
+        file: txt
+      )      
+      expect(mutation[:error][:message]).to eq(Services::Errors::FileInvalidTypeError)
+      expect(mutation[:status]).to be(404)
     end
   end
 end
