@@ -6,20 +6,20 @@ module Concepts
       class AddFollowerToUser
         def call(event)
           data = stream_data(event)
-          error_type = Services::Records.build_error(adapter: data[:adapter])
           record = Services::Records.load(
             adapter: data[:adapter],
             id: data[:id]
           )
-          record.nil? ? (raise error_type) : nil
+          Error.raise(record)
 
-          followers = record.followers.uniq
+          followers = record.followers.dup
           current_user_id = data[:current_user_id]
-          array = (followers + [current_user_id].uniq).uniq
-          return if followers == array
+
+          record.followers.concat([current_user_id])
+          return if followers == record.followers
 
           record.with_lock do
-            record.update(followers: array)
+            record.save!
           end
         end
 
