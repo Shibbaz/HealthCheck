@@ -25,7 +25,7 @@ module Mutations
 
       let(:token) do
         result = Mutations::Users::SignInMutation.new(object: nil, field: nil,
-                                                   context: { session: {} }).resolve(credentials: {
+                                                   context: { ip: Faker::Internet.ip_v4_address, session: {} }).resolve(credentials: {
                                                                                        email: user.email, password: user.password
                                                                                      })
         result[:token]
@@ -43,14 +43,14 @@ module Mutations
       describe '.mutation passes' do
         it 'returns a true' do
           previous_password = user.password_digest
-          HealthSchema.execute(query, variables:, context: { current_user: user })
+          HealthSchema.execute(query, variables:, context: { ip: Faker::Internet.ip_v4_address, current_user: user })
           expect(user.password_digest).to_not eq previous_password
         end
       end
 
       describe '.mutation fails' do
         it 'returns a false' do
-          mutation = HealthSchema.execute(query, variables: not_valid_variables, context: { current_user: user })
+          mutation = HealthSchema.execute(query, variables: not_valid_variables, context: { ip: Faker::Internet.ip_v4_address, current_user: user })
           expect(mutation['data']['updateUser']['status']).to eq(404)
           expect(mutation['data']['updateUser']['error']['message']).to eq('Concepts::Users::Errors::UserEmailWasIncorrectError')
         end

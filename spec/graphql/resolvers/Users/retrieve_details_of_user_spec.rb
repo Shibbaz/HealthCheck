@@ -14,7 +14,7 @@ module Resolvers
         end
 
         let(:context) do
-          GraphQL::Query::Context.new(query: OpenStruct.new(schema: HealthSchema), values: { current_user: user },
+          GraphQL::Query::Context.new(query: OpenStruct.new(schema: HealthSchema), values: { current_user: user, ip: Faker::Internet.ip_v4_address },
                                       object: nil)
         end
 

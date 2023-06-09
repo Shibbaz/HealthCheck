@@ -18,7 +18,7 @@ module Resolvers
         end
 
         let(:context) do
-          GraphQL::Query::Context.new(query: OpenStruct.new(schema: HealthSchema), values: { current_user: user },
+          GraphQL::Query::Context.new(query: OpenStruct.new(schema: HealthSchema), values: { current_user: user, ip: Faker::Internet.ip_v4_address },
                                       object: nil)
         end
 
@@ -152,7 +152,7 @@ module Resolvers
 
         it 'checks num DB queries if N+1 problem a true' do
           expect do
-            HealthSchema.execute(query, variables: {}, context: { current_user: user })
+            HealthSchema.execute(query, variables: {}, context: { ip: Faker::Internet.ip_v4_address, current_user: user })
           end.not_to exceed_query_limit(7)
         end
 

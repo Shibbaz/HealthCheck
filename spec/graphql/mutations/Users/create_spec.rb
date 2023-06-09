@@ -18,7 +18,7 @@ RSpec.describe Mutations::Users::CreateMutation, type: :request do
 
   describe '.mutation passes' do
     it 'create new user' do
-      user = Mutations::Users::CreateMutation.new(object: nil, field: nil, context: {}).resolve(
+      user = Mutations::Users::CreateMutation.new(object: nil, field: nil, context: {ip: Faker::Internet.ip_v4_address}).resolve(
         name: 'Test User',
         phone_number: 667_089_810,
         auth_provider:,

@@ -23,7 +23,7 @@ module Mutations
 
       let(:token) do
         result = Mutations::Users::SignInMutation.new(object: nil, field: nil,
-                                                   context: { session: {} }).resolve(credentials: {
+                                                   context: { ip: Faker::Internet.ip_v4_address, session: {} }).resolve(credentials: {
                                                                                        email: user.email, password: user.password
                                                                                      })
         result[:token]
@@ -39,7 +39,7 @@ module Mutations
 
       describe '.mutation' do
         it 'returns a true' do
-          HealthSchema.execute(query, variables:, context: { current_user: user })
+          HealthSchema.execute(query, variables:, context: { ip: Faker::Internet.ip_v4_address, current_user: user })
           post.reload
           expect(post[:likes]).to eq []
         end
@@ -49,6 +49,7 @@ module Mutations
               query,
               variables: not_valid_variables,
               context: {
+                ip: Faker::Internet.ip_v4_address,
                 current_user: user
               }
             )

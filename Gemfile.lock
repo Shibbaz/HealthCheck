@@ -1523,6 +1523,9 @@ GEM
       railties (>= 6.0.0)
     globalid (1.1.0)
       activesupport (>= 5.0)
+    graph_attack (2.3.1)
+      graphql (>= 1.7.9)
+      ratelimit (>= 1.0.4)
     graphql (1.13.19)
     graphql-batch (0.5.3)
       graphql (>= 1.12.18, < 3)
@@ -1650,10 +1653,15 @@ GEM
       zeitwerk (~> 2.5)
     rainbow (3.1.1)
     rake (13.0.6)
+    ratelimit (1.0.4)
+      redis (>= 3.0.0)
+      redis-namespace (>= 1.0.0)
     redis (5.0.6)
       redis-client (>= 0.9.0)
     redis-client (0.14.1)
       connection_pool
+    redis-namespace (1.11.0)
+      redis (>= 4)
     regexp_parser (2.8.0)
     reline (0.3.3)
       io-console (~> 0.5)
@@ -1772,6 +1780,7 @@ DEPENDENCIES
   factory_bot_rails
   faker
   fx
+  graph_attack
   graphql
   graphql-batch
   graphql-pagination

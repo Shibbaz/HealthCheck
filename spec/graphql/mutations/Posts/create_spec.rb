@@ -29,7 +29,7 @@ module Mutations
 
       let(:token) do
         result = Mutations::Users::SignInMutation.new(object: nil, field: nil,
-                                                   context: { session: {} }).resolve(credentials: {
+                                                   context: { ip: Faker::Internet.ip_v4_address, session: {} }).resolve(credentials: {
                                                                                        email: user.email, password: user.password
                                                                                      })
         result[:token]
