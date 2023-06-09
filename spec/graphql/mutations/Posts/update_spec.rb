@@ -29,7 +29,7 @@ module Mutations
 
       let(:token) do
         result = Mutations::Users::SignInMutation.new(object: nil, field: nil,
-                                                   context: { session: {} }).resolve(credentials: {
+                                                   context: { ip: Faker::Internet.ip_v4_address, session: {} }).resolve(credentials: {
                                                                                        email: user.email, password: user.password
                                                                                      })
         result[:token]
@@ -46,7 +46,7 @@ module Mutations
 
       describe '.mutation passes' do
         it 'returns a true' do
-          HealthSchema.execute(query, variables:, context: { current_user: user })
+          HealthSchema.execute(query, variables:, context: { ip: Faker::Internet.ip_v4_address, current_user: user })
           post.reload
           expect(post[:text]).to eq 'Hahaha'
         end
@@ -54,7 +54,7 @@ module Mutations
 
       describe '.mutation fails' do
         it 'returns a false' do
-          mutation = HealthSchema.execute(query, variables: not_valid_variables, context: { current_user: user })
+          mutation = HealthSchema.execute(query, variables: not_valid_variables, context: { ip: Faker::Internet.ip_v4_address, current_user: user })
           expect(mutation['data']['updatePostInsights']['status']).to eq 404
           expect(mutation['data']['updatePostInsights']['error']['message']).to eq 'ActiveRecord::RecordNotFound'
         end

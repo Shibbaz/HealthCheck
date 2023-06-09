@@ -16,7 +16,7 @@ RSpec.describe Mutations::Users::UpdateProfileImageMutation, type: :request do
   describe '.mutation passes' do
     it 'uploads new avatar' do
       expect do
-        Mutations::Users::UpdateProfileImageMutation.new(object: nil, field: nil, context: { current_user: user }).resolve(
+        Mutations::Users::UpdateProfileImageMutation.new(object: nil, field: nil, context: { ip: Faker::Internet.ip_v4_address, current_user: user }).resolve(
           id: user.id,
           file: image
         )
@@ -27,7 +27,7 @@ RSpec.describe Mutations::Users::UpdateProfileImageMutation, type: :request do
     end
 
     it 'cannot upload new avatar' do
-      mutation = Mutations::Users::UpdateProfileImageMutation.new(object: nil, field: nil, context: { current_user: user }).resolve(
+      mutation = Mutations::Users::UpdateProfileImageMutation.new(object: nil, field: nil, context: { ip: Faker::Internet.ip_v4_address, current_user: user }).resolve(
         id: user.id,
         file: txt
       )

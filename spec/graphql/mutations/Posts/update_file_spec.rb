@@ -30,7 +30,7 @@ RSpec.describe Mutations::Posts::UpdateFileMutation, type: :request do
     end
 
     it 'cannot upload new post file' do
-      mutation = Mutations::Posts::UpdateFileMutation.new(object: nil, field: nil, context: { current_user: user }).resolve(
+      mutation = Mutations::Posts::UpdateFileMutation.new(object: nil, field: nil, context: { ip: Faker::Internet.ip_v4_address, current_user: user }).resolve(
         id: post.id,
         file: txt
       )      

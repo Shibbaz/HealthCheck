@@ -27,7 +27,7 @@ module Mutations
 
       let(:token) do
         result = Mutations::Users::SignInMutation.new(object: nil, field: nil,
-                                                   context: { session: {} }).resolve(credentials: {
+                                                   context: { ip: Faker::Internet.ip_v4_address, session: {} }).resolve(credentials: {
                                                                                        email: user.email, password: user.password
                                                                                      })
         result[:token]
@@ -43,7 +43,7 @@ module Mutations
 
       describe '.mutation passes' do
         it 'returns a true' do
-          HealthSchema.execute(query, variables:, context: { current_user: user })
+          HealthSchema.execute(query, variables:, context: { ip: Faker::Internet.ip_v4_address, current_user: user })
           comment.reload
           expect(comment[:likes]).to eq [user.id]
         end
@@ -51,7 +51,7 @@ module Mutations
 
       describe '.mutation does not pass' do
         it 'not valid' do
-          mutation = HealthSchema.execute(query, variables: not_valid_variables, context: { current_user: user })
+          mutation = HealthSchema.execute(query, variables: not_valid_variables, context: { ip: Faker::Internet.ip_v4_address, current_user: user })
           expect(mutation['data']['addLikeToComment']['status']).to eq(404)
           expect(mutation['data']['addLikeToComment']['error']['message']).to eq 'ActiveRecord::RecordNotFound'
         end
