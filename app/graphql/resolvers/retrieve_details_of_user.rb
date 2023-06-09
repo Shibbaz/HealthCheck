@@ -4,7 +4,7 @@ module Resolvers
   class RetrieveDetailsOfUser < GraphQL::Schema::Resolver
     description 'details of user'
 
-    type Types::UserType, null: false
+    type Types::Concepts::UserType, null: false
     argument :user_id, ID, required: false
 
     def resolve(**args)
