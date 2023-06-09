@@ -1,4 +1,4 @@
-Wmodule Concepts
+module Concepts
   module Notifications
     class Repository
       attr_reader :adapter
