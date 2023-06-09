@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module Mutations
   module Users
     class AddFollowerMutation < BaseMutation
@@ -11,12 +9,7 @@ module Mutations
         Concepts::Users::Repository.new.add_follow(args:, current_user_id: context[:current_user].id)
         return { status: 200 }
       rescue => e
-        return {
-          error: {
-            message: e.class,
-          },
-          status: 404
-        }
+        Error.json(e)
       end
     end
   end

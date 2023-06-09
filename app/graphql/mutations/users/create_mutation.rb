@@ -23,12 +23,7 @@ module Mutations
                                                           phone_number:, gender:)
         User.find_by(email: auth_provider[:credentials][:email])
       rescue => e
-        return {
-          error: {
-            message: e.class,
-          },
-          status: 404
-        }
+        Error.json(e)
       end
     end
   end

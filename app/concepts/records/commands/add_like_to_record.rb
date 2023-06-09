@@ -6,20 +6,18 @@ module Concepts
       class AddLikeToRecord
         def call(event)
           data = stream_data(event)
-          error_type = Services::Records.build_error(adapter: data[:adapter])
           record = Services::Records.load(
             adapter: data[:adapter],
             id: data[:id]
           )
-          record.nil? ? (raise error_type) : nil
-
-          likes = record.likes.uniq
+          Error.raise(record)
+          likes = record.likes.dup
           current_user_id = data[:current_user_id]
-          array = (likes + [current_user_id].uniq).uniq
-          return if likes == array
-
+          return if likes.equal? record.likes
           record.with_lock do
-            record.update(likes: array)
+            record.likes = record.likes.concat([current_user_id])
+            record.save!
+            record.reload
             Concepts::Notifications::Repository.new.notificationOnLike(
               record:,
               current_user_id:

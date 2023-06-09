@@ -16,12 +16,7 @@ module Mutations
         Concepts::Users::Repository.new.update(args:, current_user: context[:current_user])
         return { status: 200 }
       rescue => e
-        return {
-          error: {
-            message: e.class,
-          },
-          status: 404
-        }
+        Error.json(e)
       end
     end
   end

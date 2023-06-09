@@ -19,7 +19,7 @@ module Concepts
           return if followers == array
 
           record.with_lock do
-            record.update(likes: array)
+            record.update(followers: array)
           end
         end
 

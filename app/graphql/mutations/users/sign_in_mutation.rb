@@ -12,12 +12,7 @@ module Mutations
       def resolve(credentials: nil)
         Concepts::Users::Queries::SignInUser.new.call(credentials:, context:)
       rescue => e
-        return {
-          error: {
-            message: e.class,
-          },
-          status: 404
-        }
+        Error.json(e)
       end
     end
   end

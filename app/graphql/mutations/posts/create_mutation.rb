@@ -16,12 +16,7 @@ module Mutations
         Concepts::Posts::Repository.new.create(args:)
         return { status: 200 }
       rescue => e
-        return {
-          error: {
-            message: e.class,
-          },
-          status: 404
-        }
+        Error.json(e)
       end
     end
   end
