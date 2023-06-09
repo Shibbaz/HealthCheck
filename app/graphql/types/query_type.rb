@@ -7,5 +7,6 @@ module Types
     include GraphQL::Types::Relay::HasNodesField
     # field :allposts, resolver: Resolvers::ListAllPosts
     field :allposts, resolver: Resolvers::ListAllPosts
+    field :retrieveDetailsOfUser, resolver: Resolvers::RetrieveDetailsOfUser
   end
 end
