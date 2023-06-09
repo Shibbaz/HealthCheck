@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 class HealthSchema < GraphQL::Schema
-  mutation(Types::MutationType)
-  query(Types::QueryType)
-  subscription(Types::SubscriptionType)
+  mutation(Types::Registry::MutationType)
+  query(Types::Registry::QueryType)
+  subscription(Types::Registry::SubscriptionType)
   max_complexity 100
   tracer(GraphQlTracer.new) if ENV['RAILS_ENV'] == 'production' || ENV['RAILS_ENV'] == 'development'
 

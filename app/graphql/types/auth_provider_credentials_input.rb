@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Types
-  class AuthProviderCredentialsInput < BaseInputObject
+  class AuthProviderCredentialsInput < Base::InputObject
     # the name is usually inferred by class name but can be overwritten
     graphql_name 'AUTH_PROVIDER_CREDENTIALS'
 

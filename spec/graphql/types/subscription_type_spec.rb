@@ -1,7 +1,7 @@
-describe Types::SubscriptionType do
+describe Types::Registry::SubscriptionType do
   describe 'subposts' do
     subject do
-      Types::SubscriptionType.fields['notificationWasSent']
+      Types::Registry::SubscriptionType.fields['notificationWasSent']
     end
 
     it 'accepts an ID argument' do

@@ -4,11 +4,11 @@ module Resolvers
   class ListAllPosts < GraphQL::Schema::Resolver
     description 'list all posts and filter it if'
 
-    type [Types::PostType], null: false
+    type [Types::Concepts::PostType], null: false
     
     argument :page, Integer, required: false
     argument :limit, Integer, required: false
-    argument :filters, Types::PostFilter, required: false
+    argument :filters, Types::Filters::PostFilter, required: false
     argument :usr, ID, required: false, default_value: nil
 
 

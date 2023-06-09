@@ -1,4 +1,4 @@
-describe Types::RecordType do
+describe Types::Concepts::RecordType do
   subject { described_class }
 
   it { is_expected.to have_field(:likes).of_type('[User!]!') }
