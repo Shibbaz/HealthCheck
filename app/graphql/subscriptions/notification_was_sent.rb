@@ -1,3 +1,5 @@
+# Notifications subscription
+
 module Subscriptions
   class NotificationWasSent < Subscriptions::BaseSubscription
     field :notification, Types::Concepts::NotificationType, null: false
@@ -6,9 +8,7 @@ module Subscriptions
     def subscribe(user_id)
       notification = Notification.where(receiver_id: user_id.values.first).load_async.order(:updated_at).last
       exit if notification.eql? nil
-      {
-        notification:
-      }
+      OpenStruct.new(notification: notification)
     end
   end
 end

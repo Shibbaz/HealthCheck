@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class HealthSchema < GraphQL::Schema
   mutation(Types::Registry::MutationType)
   query(Types::Registry::QueryType)

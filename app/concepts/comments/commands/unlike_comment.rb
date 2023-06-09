@@ -1,5 +1,5 @@
-# frozen_string_literal: true
-
+# Unliking a comment by current user on comment by comment id
+# Inherit from Concepts::Records::Commands::UnlikeRecord
 require './app/concepts/records/commands/unlike_record'
 
 module Concepts

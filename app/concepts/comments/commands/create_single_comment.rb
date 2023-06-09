@@ -1,5 +1,5 @@
-# frozen_string_literal: true
-
+# Creating single comment by current user
+# Inherit from Concepts::Records::Commands::CreateRecord
 require './app/concepts/records/commands/create_record'
 
 module Concepts

@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require 'obscenity/active_model'
 
 class Post < ApplicationRecord

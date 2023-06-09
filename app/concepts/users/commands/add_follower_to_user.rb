@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+# Adding Follower to Current User by User ID
 
 module Concepts
   module Users

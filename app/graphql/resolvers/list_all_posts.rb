@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+# Listing all Posts, Query can be found in doc/graphql/resolvers
 
 module Resolvers
   class ListAllPosts < GraphQL::Schema::Resolver

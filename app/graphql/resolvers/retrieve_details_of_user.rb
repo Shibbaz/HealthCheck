@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+# Listing details of User, Query can be found in doc/graphql/resolvers
 
 module Resolvers
   class RetrieveDetailsOfUser < GraphQL::Schema::Resolver

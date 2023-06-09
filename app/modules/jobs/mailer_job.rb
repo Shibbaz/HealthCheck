@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class MailerJob < ApplicationJob
   queue_as :mailer
   acidic_by_job_arguments

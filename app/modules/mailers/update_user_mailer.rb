@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class UpdateUserMailer < ApplicationMailer
   def afterwards
     @mail = params[:receiver]

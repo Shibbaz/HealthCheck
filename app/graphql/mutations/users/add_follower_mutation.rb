@@ -1,3 +1,5 @@
+# Adding follower to User mutation, Graphql script can be found in doc/graphql/mutations
+
 module Mutations
   module Users
     class AddFollowerMutation < BaseMutation

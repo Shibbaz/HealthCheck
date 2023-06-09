@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module Types
   module Concepts
     class Concepts::CommentType < Types::Concepts::RecordType

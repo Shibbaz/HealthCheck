@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module Types
   module Concepts
     class Concepts::PostType < Types::Concepts::RecordType

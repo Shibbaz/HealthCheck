@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class UpdateUserJob < ApplicationJob
   queue_as :update_user
   acidic_by_job_arguments

@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module Services
   module Errors
     class FileInvalidTypeError < ActiveRecord::RecordNotFound

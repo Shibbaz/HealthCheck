@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+# Update text mutation, Graphql script can be found in doc/graphql/mutations
 
 module Mutations
   module Posts

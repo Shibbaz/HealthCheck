@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+# Sign in User mutation, Graphql script can be found in doc/graphql/mutations
 
 module Mutations
   module Users

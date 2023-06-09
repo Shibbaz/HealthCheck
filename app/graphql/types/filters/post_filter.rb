@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module Types
   module Filters
     class PostFilter < Types::Base::InputObject

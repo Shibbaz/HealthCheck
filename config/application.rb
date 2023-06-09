@@ -8,8 +8,6 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-require_relative '../app/lib/services/ip_filtering'
-
 module Health
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.

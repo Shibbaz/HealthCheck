@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module Types
   class AuthProviderCredentialsInput < Base::InputObject
     # the name is usually inferred by class name but can be overwritten

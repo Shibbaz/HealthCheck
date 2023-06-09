@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+# CRUD Concepts commands are reused in other concepts.
 
 module Concepts
   module Records
