@@ -1,5 +1,3 @@
-
-
 module Concepts
   module Posts
     module Errors

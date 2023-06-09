@@ -1,5 +1,3 @@
-
-
 require './app/concepts/records/repository'
 module Concepts
   module Comments
