@@ -9,15 +9,8 @@ module Services
             error: e.message
           }
       end
-      def connect
-        response = HTTParty.post("https://connect.stripe.com/oauth/token",
-        query: {
-          client_secret: ENV["STRIPE_SECRET_KEY"],
-          code: params[:code],
-          grant_type: "authorization_code"
-        }
-      )
-      end
+
+      #The provided key 'sk_test_****************Vs7p' does not have access to account - bug '
 
       def self.transfer(source:, destination:, amount:, currency:)
           Stripe::Transfer.create({

@@ -7,17 +7,12 @@ module Concepts
                 def call(event)
                     data = event.data
                     error_type = Services::Records.build_error(adapter: data[:adapter])
-                    source ||= data[:current_user]
-                    destination ||= data[:adapter].find(data[:args][:id]).stripe_key
+                    transfer_source ||= data[:current_user]
+                    destination ||= data[:adapter].find(data[:args][:id])
                     amount = data[:args][:amount]
                     currency = data[:args][:currency]
-                    (source.nil? || destination.nil?)  ? (raise error_type) : nil
-                    source.transfer(destination: destination, amount: amount, currency: currency)
-                rescue => e
-                    {
-                      error: e.message,
-                      status: 404
-                    }
+                    (transfer_source.nil? || destination.nil?)  ? (raise error_type) : nil
+                    transfer_source.stripe_transaction(destination: destination, amount: amount, currency: currency)
                 end
             end
         end

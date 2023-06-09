@@ -17,10 +17,8 @@ class User < ApplicationRecord
 
   def stripe_transaction(destination:, amount:, currency:)
     source = Services::Payments::Transfer.account(self.stripe_key)
-    self.with_lock do
-      destination = Services::Payments::Transfer.account(destination.stripe_key)
-      Services::Payments::Transfer.transfer(source: source, destination: destination, amount: amount, currency: currency)
-    end
+    destination = Services::Payments::Transfer.account(destination.stripe_key)
+    Services::Payments::Transfer.transfer(source: source, destination: destination, amount: amount, currency: currency)
   end
 
   def set_followers_attribute
