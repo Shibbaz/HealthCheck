@@ -1,7 +1,7 @@
 # Listing details of User, Query can be found in doc/graphql/resolvers
 
 module Resolvers
-  class RetrieveDetailsOfUser < GraphQL::Schema::Resolver
+  class RetrieveDetailsOfUser < Resolvers::BaseResolver
     description 'details of user'
 
     type Types::Concepts::UserType, null: false

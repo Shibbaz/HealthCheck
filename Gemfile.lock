@@ -1530,6 +1530,9 @@ GEM
     graphql-batch (0.5.3)
       graphql (>= 1.12.18, < 3)
       promise.rb (~> 0.7.2)
+    graphql-fragment_cache (1.18.2)
+      graphql (>= 1.12.0)
+      ruby-next (>= 0.10.0)
     graphql-pagination (1.2.1)
       graphql (~> 1.12)
     graphql-rails_logger (1.2.4)
@@ -1537,6 +1540,10 @@ GEM
       activesupport (> 5.0)
       railties (> 5.0)
       rouge (~> 3.0)
+    graphql-schema_comparator (1.1.2)
+      bundler (>= 1.14)
+      graphql (>= 1.10, < 3.0)
+      thor (>= 0.19, < 2.0)
     hirb (0.7.3)
     hirb-unicode-steakknife (0.0.9)
       hirb (~> 0.5)
@@ -1711,7 +1718,13 @@ GEM
     rubocop-performance (1.16.0)
       rubocop (>= 1.7.0, < 2.0)
       rubocop-ast (>= 0.4.0)
+    ruby-next (0.15.3)
+      ruby-next-core (= 0.15.3)
+      ruby-next-parser (>= 3.1.1.0)
+      unparser (~> 0.6.0)
     ruby-next-core (0.15.3)
+    ruby-next-parser (3.1.1.3)
+      parser (>= 3.0.3.1)
     ruby-pg-extras (5.2.2)
       pg
       terminal-table
@@ -1752,6 +1765,9 @@ GEM
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     unicode-display_width (1.8.0)
+    unparser (0.6.7)
+      diff-lcs (~> 1.3)
+      parser (>= 3.2.0)
     websocket-driver (0.7.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
@@ -1783,8 +1799,10 @@ DEPENDENCIES
   graph_attack
   graphql
   graphql-batch
+  graphql-fragment_cache
   graphql-pagination
   graphql-rails_logger
+  graphql-schema_comparator
   hirb
   hirb-unicode-steakknife
   kaminari-activerecord

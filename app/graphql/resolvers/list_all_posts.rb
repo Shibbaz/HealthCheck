@@ -1,7 +1,7 @@
 # Listing all Posts, Query can be found in doc/graphql/resolvers
 
 module Resolvers
-  class ListAllPosts < GraphQL::Schema::Resolver
+  class ListAllPosts < Resolvers::BaseResolver
     description 'list all posts and filter it if'
 
     type [Types::Concepts::PostType], null: false

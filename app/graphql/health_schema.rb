@@ -1,4 +1,5 @@
 class HealthSchema < GraphQL::Schema
+  use GraphQL::FragmentCache
   mutation(Types::Registry::MutationType)
   query(Types::Registry::QueryType)
   subscription(Types::Registry::SubscriptionType)
