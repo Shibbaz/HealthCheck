@@ -48,5 +48,6 @@ module Health
     end
     config.graphql_fragment_cache.store = :redis_cache_store, { url: ENV['REDIS_URL'] }
     GraphQL::FragmentCache.enabled = false if Rails.env.test?
+    config.middleware.insert_before ActionDispatch::Static, Rack::Deflater
   end
 end
