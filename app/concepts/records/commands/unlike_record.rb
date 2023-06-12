@@ -16,8 +16,7 @@ module Concepts
           Error.raise(record)
           record.with_lock do
             record.likes.delete(current_user_id)
-            record.likes.include? current_user_id ? record.save! : (raise GraphQL::ExecutionError,
-                                                                                                                                     'User not exists in like array')
+            record.likes.include? current_user_id ? record.save! : (raise GraphQL::ExecutionError, 'User not exists in like array')
           end
         end
       end
