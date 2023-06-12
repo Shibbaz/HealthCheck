@@ -1,0 +1,8 @@
+        <<~GQL
+            mutation($text: String!, $postId: ID!, $u){
+            createComment(input: {feeling: $feeling, question: $question, likes: $likes, insigths: $insigths}){
+              clientMutationId
+              status
+            }
+          }
+        GQL

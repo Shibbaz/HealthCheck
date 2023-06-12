@@ -1,0 +1,8 @@
+        <<~GQL
+            mutation($email: String!, $password: String!) {
+                signinUser(input: {credentials: {email: $email, password: $password}}) {
+                    clientMutationId
+                    token
+                }
+            }
+        GQL

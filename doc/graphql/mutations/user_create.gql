@@ -1,0 +1,7 @@
+        <<~GQL
+            mutation($name: String!, $authProvider: AuthProviderSignupData, $phoneNumber: Int!, $gender: Int!) {
+            createUser(input: {name: $name, authProvider: $authProvider phoneNumber: $phoneNumber, gender: $gender }) {
+                    status
+                }
+            }
+        GQL

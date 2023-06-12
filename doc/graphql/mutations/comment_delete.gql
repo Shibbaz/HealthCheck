@@ -1,0 +1,10 @@
+        <<~GQL
+          mutation($id: ID!){
+            deleteCommentText(input: {id: $id}){
+              status
+              error{
+                message
+              }
+            }
+          }
+        GQL

@@ -1,0 +1,10 @@
+        <<~GQL
+          mutation($id: ID!){
+            unlikeToPost(input: {id: $id}){
+              status
+              error{
+                message
+              }
+            }
+          }
+        GQL

@@ -1,0 +1,11 @@
+        <<~GQL
+          mutation($email: String!, $password: String!){
+            updateUser(input: {email: $email, password: $password}){
+              clientMutationId
+              status
+              error{
+                message
+              }
+            }
+          }
+        GQL
