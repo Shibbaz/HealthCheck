@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+# Sign in User mutation, Graphql script can be found in doc/graphql/mutations
 
 module Mutations
   module Users
@@ -12,12 +12,7 @@ module Mutations
       def resolve(credentials: nil)
         Concepts::Users::Queries::SignInUser.new.call(credentials:, context:)
       rescue => e
-        return {
-          error: {
-            message: e.class,
-          },
-          status: 404
-        }
+        Error.json(e)
       end
     end
   end

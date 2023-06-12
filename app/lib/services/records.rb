@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+# Purpose: Helper for loading records from the database and building errors and events
 
 module Services
   class Records < GraphQL::Batch::Loader

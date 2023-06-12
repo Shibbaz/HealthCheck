@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+# Creating Post mutation, Graphql script can be found in doc/graphql/mutations
 
 module Mutations
   module Posts
@@ -16,12 +16,7 @@ module Mutations
         Concepts::Posts::Repository.new.create(args:)
         return { status: 200 }
       rescue => e
-        return {
-          error: {
-            message: e.class,
-          },
-          status: 404
-        }
+        Error.json(e)
       end
     end
   end

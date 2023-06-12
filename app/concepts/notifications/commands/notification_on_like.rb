@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+# Notification was Sent to the Current User that a Like was made on a Post or Comment
 
 module Concepts
   module Notifications

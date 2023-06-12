@@ -1,3 +1,5 @@
+# Suggestion User to follow Subscription for Current User
+
 module Subscriptions
   class SuggestionWasSent < Subscriptions::BaseSubscription
     field :suggestion, Types::Concepts::SuggestionType, null: false
@@ -7,9 +9,7 @@ module Subscriptions
       user = User.find(user_id)
       suggestion = Services::Suggestions.suggest(user: user)
       exit if suggestion.eql? nil
-      {
-        suggestion:
-      }
+      OpenStruct.new(suggestion: suggestion)
     end
   end
 end

@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+# Creating User mutation, Graphql script can be found in doc/graphql/mutations
 
 module Mutations
   module Users
@@ -23,12 +23,7 @@ module Mutations
                                                           phone_number:, gender:)
         User.find_by(email: auth_provider[:credentials][:email])
       rescue => e
-        return {
-          error: {
-            message: e.class,
-          },
-          status: 404
-        }
+        Error.json(e)
       end
     end
   end

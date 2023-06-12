@@ -1,5 +1,5 @@
-# frozen_string_literal: true
-
+# Liking a comment by current user on Comment by comment id
+# Inherit from the AddLikeToRecord command
 require './app/concepts/records/commands/add_like_to_record'
 
 module Concepts

@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+# Adding file to post by current user by post id
 
 module Concepts
   module Posts

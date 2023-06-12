@@ -1,6 +1,6 @@
-# frozen_string_literal: true
-
+# Unliking a post by current user on Post by post id
 require './app/concepts/records/commands/unlike_record'
+
 module Concepts
   module Posts
     module Commands

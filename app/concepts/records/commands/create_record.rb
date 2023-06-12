@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+# CRUD Concepts commands are reused in other concepts.
 
 module Concepts
   module Records
@@ -10,7 +10,7 @@ module Concepts
           record ||= adapter.create!(
             stream[:args]
           )
-          args = args.merge({ record: })
+          args.merge({ record: })
           Concepts::Notifications::Repository.new.notificationOnComment(
             adapter:,
             record:,

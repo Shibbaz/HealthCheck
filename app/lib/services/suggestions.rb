@@ -1,3 +1,6 @@
+# Purpose: Suggests users to follow based on if any of them have interacted with the current user.
+# This is a service class that is used in the graphql subscription type.
+
 module Services
     class Suggestions
         def self.suggest(user:)
@@ -11,10 +14,11 @@ module Services
                         ids = user.followers & followers
                         self.connectionsNearby(ids)
                     }
-                    self.userPayload(entity).merge({ 
-                            mutual: mutual.call(entity.followers)
-                        }, occurances: command.reject{|object| object.author_id != entity.id}.count
-                    )
+                    occurances = command.reject{|object| object.author_id != entity.id}.count
+                    payload = self.userPayload(entity)
+                    payload.mutual = mutual.call(entity.followers)
+                    payload.occurances = occurances
+                    payload
                 }
             }
             payload(
@@ -37,26 +41,17 @@ module Services
         end
 
         def self.connectionsNearby(ids)
-            User.where(id: ids).load_async.map {|user|{
-                id: user.id,
-                name: user.name,
-                followersCount: user.followers.count
-            }}
+            User.where(id: ids).load_async.map {|user|
+                OpenStruct.new(id: user.id, name: user.name, followersCount: user.followers.count)
+            }
         end
         
         def self.userPayload(user)
-            {
-                id: user.id,
-                name: user.name,
-                followers: user.followers.count,
-            }
+            OpenStruct.new(id: user.id, name: user.name, followers: user.followers.count)
         end
 
         def self.payload(user:, authors:)
-            { 
-                user: userPayload(user), 
-                authors: authors
-            }
+            OpenStruct.new(user: userPayload(user), authors: authors)
         end
     end
 end

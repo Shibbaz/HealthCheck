@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+# Create a single user
 
 module Concepts
   module Users

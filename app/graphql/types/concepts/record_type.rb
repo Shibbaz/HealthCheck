@@ -8,15 +8,23 @@ module Types
       field :updated_at, GraphQL::Types::ISO8601DateTime, null: false
 
       def likes
-        Services::Records.for(User).load_many(object.likes)
+        outer_path = context.namespace(:interpreter)[:current_path]
+        Services::Records.for(User).load_many(object.likes) do |user|
+          context.namespace(:interpreter)[:current_path] = outer_path
+          cache_fragment(user, context: context)
+        end
       end
 
       def likes_counter
-        object.likes.size
+        cache_fragment(object_cache_key: "record_likes_counter", expires_in: 5.minutes) {
+          object.likes.size
+        }
       end
 
       def versions
-        Services::Versions.versions(object.log_data)
+        cache_fragment(object_cache_key: "record_versions", expires_in: 5.minutes) {
+          Services::Versions.versions(object.log_data)
+      }
       rescue Concepts::Helpers::Errors::VersionsNotFoundError
         []
       end

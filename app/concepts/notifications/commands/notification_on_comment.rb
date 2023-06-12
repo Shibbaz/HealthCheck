@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+# Notification was Sent to the Current User that a Comment was made on a Post
 
 module Concepts
   module Notifications

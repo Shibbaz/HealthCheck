@@ -1,0 +1,11 @@
+        <<~GQL
+          mutation($id: ID!){
+            deletePost(input: {id: $id}){
+              clientMutationId
+              status
+              error{
+                message
+              }
+            }
+          }
+        GQL

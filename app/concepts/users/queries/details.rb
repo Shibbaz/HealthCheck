@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module Concepts
   module Users
     module Queries
@@ -12,3 +10,4 @@ module Concepts
     end
   end
 end
+

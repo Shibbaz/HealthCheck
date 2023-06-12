@@ -1,0 +1,11 @@
+        <<~GQL
+          mutation($id: ID!){
+            addLikeToComment(input: {id: $id}){
+              status
+              error{
+                message
+              }
+            }
+          }
+        GQL
+        

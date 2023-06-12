@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+# Adding Like to Comment, Graphql script  can be found in doc/graphql/mutations
 
 module Mutations
   module Comments
@@ -12,12 +12,7 @@ module Mutations
         Concepts::Comments::Repository.new.add_like(args:, current_user_id: context[:current_user].id)
         return { status: 200 }
       rescue => e
-        return {
-          error: {
-            message: e.class,
-          },
-          status: 404
-        }
+        Error.json(e)
       end
     end
   end

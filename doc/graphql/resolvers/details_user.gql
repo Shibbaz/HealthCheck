@@ -1,0 +1,11 @@
+          <<~GQL
+            query {
+              retrieveDetailsOfUser {
+                  id
+                  name
+                  gender
+                  email
+                  phoneNumber
+              }
+            }
+          GQL

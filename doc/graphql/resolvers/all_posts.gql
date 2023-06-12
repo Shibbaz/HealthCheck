@@ -1,0 +1,15 @@
+        <<~GQL
+          query($usr: ID!) {
+            allposts(usr: $usr, filters: {}) {
+              createdAt
+              feeling
+              id
+              likes{
+                id
+              }
+              question
+              updatedAt
+            }
+          }
+        GQL
+      end

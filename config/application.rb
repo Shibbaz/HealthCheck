@@ -8,8 +8,6 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-require_relative '../app/lib/services/ip_filtering'
-
 module Health
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
@@ -42,5 +40,14 @@ module Health
 
     Dotenv::Railtie.load if %w[development test].include? ENV['RAILS_ENV']
     config.active_job.queue_adapter = :sidekiq
+    GraphQL::FragmentCache.configure do |config|
+      config.default_options = {
+        expires_in: 1.hour, # Expire cache keys after 1 hour
+        schema_cache_key: nil # Do not clear the cache on each schema change
+      }
+    end
+    config.graphql_fragment_cache.store = :redis_cache_store, { url: ENV['REDIS_URL'] }
+    GraphQL::FragmentCache.enabled = false if Rails.env.test?
+    config.middleware.insert_before ActionDispatch::Static, Rack::Deflater
   end
 end

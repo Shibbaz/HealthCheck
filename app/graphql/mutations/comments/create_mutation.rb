@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+# Creating Comment mutation, Graphql script can be found in doc/graphql/mutations
 
 module Mutations
   module Comments
@@ -10,16 +10,11 @@ module Mutations
 
       def resolve(**args)
         Services::Validations::Authenticate.call(context:)
-        args = args.merge({ user_id: context[:current_user].id })
+        args.merge({ user_id: context[:current_user].id })
         Concepts::Comments::Repository.new.create(args:)
         return { status: 200 }
       rescue => e
-        return {
-          error: {
-            message: e.class,
-          },
-          status: 404
-        }
+        Error.json(e)
       end
     end
   end

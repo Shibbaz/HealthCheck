@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+# Adding follower to User mutation, Graphql script can be found in doc/graphql/mutations
 
 module Mutations
   module Users
@@ -11,12 +11,7 @@ module Mutations
         Concepts::Users::Repository.new.add_follow(args:, current_user_id: context[:current_user].id)
         return { status: 200 }
       rescue => e
-        return {
-          error: {
-            message: e.class,
-          },
-          status: 404
-        }
+        Error.json(e)
       end
     end
   end

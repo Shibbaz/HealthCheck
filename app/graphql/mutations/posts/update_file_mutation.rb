@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+# Update file mutation, Graphql script can be found in doc/graphql/mutations
 
 module Mutations
   module Posts
@@ -14,12 +14,7 @@ module Mutations
         Concepts::Posts::Repository.new.upload(id:, file: args[:file])
         return { status: 200 }
       rescue => e
-        return {
-          error: {
-            message: e.class,
-          },
-          status: 404
-        }
+        Error.json(e)
       end
     end
   end

@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+# CRUD Concepts commands are reused in other concepts.
 
 module Concepts
   module Records
@@ -6,7 +6,6 @@ module Concepts
       class UnlikeRecord
         def call(event)
           stream = event.data
-          error_type = Services::Records.build_error(adapter: stream[:adapter])
           id = stream[:id]
           adapter = stream[:adapter]
           current_user_id = stream[:current_user_id]
@@ -14,10 +13,10 @@ module Concepts
             adapter:,
             id:
           )
-          record.nil? ? (raise error_type) : nil
+          Error.raise(record)
           record.with_lock do
-            record.likes.include? current_user_id ? record.update(likes: (record.likes.uniq - [current_user_id].uniq).uniq) : (raise GraphQL::ExecutionError,
-                                                                                                                                     'User not exists in like array')
+            record.likes.delete(current_user_id)
+            record.likes.include? current_user_id ? record.save! : (raise GraphQL::ExecutionError, 'User not exists in like array')
           end
         end
       end

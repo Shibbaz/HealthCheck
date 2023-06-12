@@ -1,0 +1,10 @@
+        <<~GQL
+          mutation($id: ID!, $text: String!){
+            updateCommentText(input: {id: $id, text: $text}){
+              status
+              error{
+                message
+              }
+            }
+          }
+        GQL
