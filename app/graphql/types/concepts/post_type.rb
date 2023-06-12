@@ -11,8 +11,13 @@ module Types
       end
     
       def comments(page: nil, limit: nil)
+        if (page.nil? || limit.nil?)
+          comment_ids = object.comment_ids
+        else
+          comment_ids = object.comment_ids[(page-1) * limit..limit-1]
+        end
+        return [] if comment_ids.nil?
         outer_path = context.namespace(:interpreter)[:current_path]
-        comment_ids = object.comment_ids[(page-1) * limit..limit]
         Services::Records.for(Comment).load_many(comment_ids) do |comment|
           context.namespace(:interpreter)[:current_path] = outer_path
           cache_fragment(comment, context: context)
