@@ -1,3 +1,5 @@
+# Creating Post mutation, Graphql script can be found in doc/graphql/mutations
+
 module Mutations
   module Posts
     class CreateMutation < BaseMutation

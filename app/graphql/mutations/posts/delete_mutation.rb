@@ -1,5 +1,7 @@
 # Deleting post mutation, Graphql script can be found in doc/graphql/mutations
 
+# Deleting Post mutation, Graphql script can be found in doc/graphql/mutations
+
 module Mutations
   module Posts
     class DeleteMutation < BaseMutation
