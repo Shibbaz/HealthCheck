@@ -11,9 +11,12 @@ module Types
       end
     
       def comments(page: nil, limit: nil)
-        cache_fragment(object_cache_key: "post_comments", expires_in: 5.minutes) {
-          object.comments.page(page).per(limit)
-        }
+        outer_path = context.namespace(:interpreter)[:current_path]
+        comment_ids = object.comment_ids[(page-1) * limit..limit]
+        Services::Records.for(Comment).load_many(comment_ids) do |comment|
+          context.namespace(:interpreter)[:current_path] = outer_path
+          cache_fragment(comment, context: context)
+        end
       end
 
       def id
