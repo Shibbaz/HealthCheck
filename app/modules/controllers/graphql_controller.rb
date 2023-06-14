@@ -1,19 +1,40 @@
 class GraphqlController < ApplicationController
 
   def execute
-    variables = prepare_variables(params[:variables])
-    query = params[:query]
-    operation_name = params[:operationName]
-    context = {
-      session:,
-      current_user:,
-      ip: request.ip
-    }
-    result = HealthSchema.execute(query, variables:, context:, operation_name:)
+    context = {}
+
+    # Apollo sends the params in a _json variable when batching is enabled
+    # see the Apollo Documentation about query batching: http://dev.apollodata.com/core/network.html#query-batching
+    result = if params[:_json]
+      queries = params[:_json].map do |param|
+        {
+          query: param[:query],
+          operation_name: param[:operationName],
+          variables: ensure_hash(param[:variables]),
+          context: {
+            extensions: ensure_hash(params[:extensions]),
+            session:,
+            current_user:,
+            ip: request.ip
+          }
+        }
+      end
+      HealthSchema.multiplex(queries)
+    else
+      variables = prepare_variables(params[:variables])
+      query = params[:query]
+      operation_name = params[:operationName]
+      context = {
+        extensions: ensure_hash(params[:extensions]),
+        session:,
+        current_user:,
+        ip: request.ip
+      }
+      result = HealthSchema.execute(query, variables:, context:, operation_name:)
+    end
     render json: result
   rescue StandardError => e
     raise e unless Rails.env.development?
-
     handle_error_in_development(e)
   end
 
