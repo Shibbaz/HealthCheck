@@ -8,21 +8,21 @@ module Types
       field :gender, String, null: false
 
       def email
-        cache_fragment(object_cache_key: "user_email", expires_in: 5.minutes) { object.email }
+        cache_fragment(object_cache_key: "user_email", expires_in: 1.hour) { object.email }
       end
 
       def id
-        cache_fragment(object_cache_key: "user_id", expires_in: 5.minutes) { object.id }
+        cache_fragment(object_cache_key: "user_id", expires_in: 1.hour) { object.id }
       end
 
       def phone_number
-        cache_fragment(object_cache_key: "user_phone_number", expires_in: 5.minutes) {
+        cache_fragment(object_cache_key: "user_phone_number", expires_in: 1.hour) {
           object.phone_number
         }
       end
 
       def gender
-        cache_fragment(object_cache_key: "user_gender", expires_in: 5.minutes) {
+        cache_fragment(object_cache_key: "user_gender", expires_in: 1.hour) {
           case object.gender
           when 0
             'man'

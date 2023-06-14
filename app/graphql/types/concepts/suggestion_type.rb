@@ -5,7 +5,7 @@ module Types
       field :user, Types::Concepts::UserType, null: false
 
       def user
-        cache_fragment(object_cache_key: "suggestion_user", expires_in: 5.minutes) {
+        cache_fragment(object_cache_key: "suggestion_user", expires_in: 1.hour) {
           Services::Records.for(User).load(object.user)
         }
       end
