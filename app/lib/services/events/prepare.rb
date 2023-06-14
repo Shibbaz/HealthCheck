@@ -3,7 +3,12 @@ module Services
     class Prepare
       def self.call
         config = Rails.configuration
-        config.event_store = RailsEventStore::Client.new
+        config.event_store =RailsEventStore::Client.new(
+          dispatcher: RubyEventStore::ComposedDispatcher.new(
+              RailsEventStore::AfterCommitAsyncDispatcher.new(scheduler: CustomScheduler.new),
+              RubyEventStore::Dispatcher.new,
+            ),
+        )
         {
           Concepts::Users::Commands::CreateSingleUser => UserWasCreated,
           Concepts::Posts::Commands::CreateSinglePost => PostWasCreated,
