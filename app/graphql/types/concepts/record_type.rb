@@ -16,13 +16,13 @@ module Types
       end
 
       def likes_counter
-        cache_fragment(object_cache_key: "record_likes_counter", expires_in: 5.minutes) {
+        cache_fragment(object_cache_key: "record_likes_counter", expires_in: 1.hour) {
           object.likes.size
         }
       end
 
       def versions
-        cache_fragment(object_cache_key: "record_versions", expires_in: 5.minutes) {
+        cache_fragment(object_cache_key: "record_versions", expires_in: 1.hour) {
           Services::Versions.versions(object.log_data)
       }
       rescue Concepts::Helpers::Errors::VersionsNotFoundError

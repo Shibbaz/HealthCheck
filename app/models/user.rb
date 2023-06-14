@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  self.cache_versioning = true
   has_secure_password
   after_create :set_followers_attribute
   has_many :posts

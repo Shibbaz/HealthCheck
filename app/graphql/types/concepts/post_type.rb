@@ -25,19 +25,19 @@ module Types
       end
 
       def id
-        cache_fragment(object_cache_key: "post_id", expires_in: 5.minutes) { object.id }
+        cache_fragment(object_cache_key: "post_id", expires_in: 1.hour) { object.id }
       end
 
       def text
-        cache_fragment(object_cache_key: "post_text", expires_in: 5.minutes) { object.text }
+        cache_fragment(object_cache_key: "post_text", expires_in: 1.hour) { object.text }
       end
 
       def question
-        cache_fragment(object_cache_key: "post_question", expires_in: 5.minutes) { object.question }
+        cache_fragment(object_cache_key: "post_question", expires_in: 1.hour) { object.question }
       end
 
       def feeling
-        cache_fragment(object_cache_key: "post_feeling", expires_in: 5.minutes) { object.feeling }
+        cache_fragment(object_cache_key: "post_feeling", expires_in: 1.hour) { object.feeling }
       end
     end
   end

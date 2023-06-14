@@ -1,4 +1,5 @@
 class Suggestion < ApplicationRecord
+    self.cache_versioning = true
     after_save :graphql_suggestion_on_users
 
     def graphql_suggestion_on_users

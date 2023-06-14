@@ -1,6 +1,7 @@
 require 'obscenity/active_model'
 
 class Post < ApplicationRecord
+  self.cache_versioning = true
   has_logidze
   belongs_to :user
   has_many :comments
