@@ -80,6 +80,7 @@ gem 'benchmark-memory', '~> 0.2.0'
 gem "graph_attack"
 gem 'graphql-schema_comparator'
 gem 'graphql-fragment_cache'
+gem 'graphql-persisted_queries'
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
