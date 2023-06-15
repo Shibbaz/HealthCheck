@@ -9,7 +9,7 @@ module Services
               RailsEventStore::AfterCommitAsyncDispatcher.new(scheduler: CustomScheduler.new),
               RubyEventStore::Dispatcher.new,
             ),
-            mapper: RubyEventStore::Mappers::JSONMapper.new
+            mapper: RubyEventStore::Mappers::Default.new
         )
         {
           Concepts::Users::Commands::CreateSingleUser => UserWasCreated,
@@ -29,7 +29,6 @@ module Services
           Concepts::Posts::Commands::AddPostFile => PostFileWasUploaded,
           Concepts::Users::Commands::UpdateUser => UserWasUpdated,
           Concepts::Users::Commands::AddFollowerToUser => UserWasFollowed
-
         }
       end
     end
