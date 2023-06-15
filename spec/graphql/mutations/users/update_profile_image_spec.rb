@@ -13,8 +13,8 @@ RSpec.describe Mutations::Users::UpdateProfileImageMutation, type: :request do
     create(:user)
   end
 
-  describe '.mutation passes' do
-    it 'uploads new avatar' do
+  describe 'Mutation Success' do
+    it 'expects uploading new avatar successfully' do
       expect do
         Mutations::Users::UpdateProfileImageMutation.new(object: nil, field: nil, context: { ip: Faker::Internet.ip_v4_address, current_user: user }).resolve(
           id: user.id,
@@ -25,8 +25,10 @@ RSpec.describe Mutations::Users::UpdateProfileImageMutation, type: :request do
       expect(user.avatar_id).to_not be(nil)
       expect { Rails.configuration.s3.get_object(bucket: 'files', key: user.avatar_id) }.to_not raise_error
     end
+  end
 
-    it 'cannot upload new avatar' do
+  describe 'Mutation Failure' do
+    it 'expects failure on uploading new avatar' do
       mutation = Mutations::Users::UpdateProfileImageMutation.new(object: nil, field: nil, context: { ip: Faker::Internet.ip_v4_address, current_user: user }).resolve(
         id: user.id,
         file: txt

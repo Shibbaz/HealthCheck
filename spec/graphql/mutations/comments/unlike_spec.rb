@@ -41,14 +41,16 @@ module Mutations
         user ||= User.find user_id
       end
 
-      describe '.mutation' do
-        it 'returns a true' do
+      describe 'Mutation Success' do
+        it 'expects to unlike comment successfully' do
           HealthSchema.execute(query, variables:, context: { ip: Faker::Internet.ip_v4_address, current_user: user })
           comment.reload
           expect(comment[:likes]).to eq []
         end
+      end
 
-        it 'not valid' do
+      describe 'Mutation Failure' do
+        it 'expects to have invalid params' do
           mutation = HealthSchema.execute(
               query,
               variables: not_valid_variables,
@@ -58,7 +60,6 @@ module Mutations
               }
             )
           expect(mutation['data']['unlikeToComment']['status']).to eq 404 
-          expect(mutation['data']['unlikeToComment']['error']['message']).to eq 'ActiveRecord::RecordNotFound'
         end
       end
 

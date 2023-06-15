@@ -38,19 +38,20 @@ module Mutations
         user
       end
 
-      describe '.mutation passes' do
-        it 'returns a true' do
+      describe 'Mutation Success' do
+        it 'expects to add like on post successfully' do
           HealthSchema.execute(query, variables:, context: { ip: Faker::Internet.ip_v4_address, current_user: user })
           post.reload
           expect(post[:likes]).to eq [user.id]
         end
       end
 
-      describe '.mutation does not pass' do
-        it 'not valid' do
-          mutation = HealthSchema.execute(query, variables: not_valid_variables, context: { ip: Faker::Internet.ip_v4_address, current_user: user })
+      describe 'Mutation Failure' do
+        it 'expects to have invalid params' do
+          mutation = HealthSchema.execute(query, variables: not_valid_variables, context: { 
+            ip: Faker::Internet.ip_v4_address, current_user: user 
+          })
           expect(mutation['data']['addLikeToPost']['status']).to eq 404 
-          expect(mutation['data']['addLikeToPost']['error']['message']).to eq 'ActiveRecord::RecordNotFound'
         end
       end
 

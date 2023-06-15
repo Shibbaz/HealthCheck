@@ -14,7 +14,7 @@ module Mutations
           feeling: 1,
           question: "What's up?",
           likes: [],
-          insights: 'it works fine'
+          text: 'it works fine'
         }
       end
 
@@ -23,7 +23,7 @@ module Mutations
           feeling: 1,
           question: "What's up?",
           likes: [],
-          insights: 'it works fine'
+          text: 'it works fine'
         }
       end
 
@@ -44,16 +44,29 @@ module Mutations
         user
       end
 
-      describe '.mutation passes' do
-        it 'returns a true' do
-          HealthSchema.execute(query, variables:, context: { current_user: user })
+      describe 'Mutation Success' do
+        it 'expects to create post successfully' do
+          HealthSchema.execute(query, variables:, context: { 
+            current_user: user,
+            ip: Faker::Internet.ip_v4_address
+          })
+        end
+      end
+
+      describe 'Mutation Failure' do
+        it 'expects to not create post' do
+          mutation = HealthSchema.execute(query, variables: not_valid_variables, context: { 
+            ip: Faker::Internet.ip_v4_address,
+            current_user: user 
+          })
+          expect(mutation['data']['createPost']['status']).to eq(404)
         end
       end
 
       def query
         <<~GQL
-            mutation($feeling: Int!, $question: String!, $likes: ID!, $insigths: String!){
-            createPost(input: {feeling: $feeling, question: $question, likes: $likes, insigths: $insigths}){
+            mutation($feeling: Int!, $question: String! $text: String!){
+            createPost(input: {feeling: $feeling, question: $question, text: $text}){
               clientMutationId
               status
             }

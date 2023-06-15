@@ -5,9 +5,9 @@ require 'rails_helper'
 module Mutations
   module Users
     module SignIn
-      RSpec.describe CreateMutation, type: :request do
-        describe 'check how mutation works' do
-          describe '.mutation passes' do
+      RSpec.describe SignInMutation, type: :request do
+        describe 'Sign in' do
+          describe 'Mutation Success' do
             let(:user) do
               User.create!(
                 name: 'Test User',
@@ -24,13 +24,13 @@ module Mutations
                                                                                                           })
             end
 
-            it '.mutation does pass succesful' do
+            it 'Mutation does pass succesful' do
               expect(result[:token].present?)
               assert_equal result[:user], user
             end
           end
 
-          describe '.mutation fails' do
+          describe 'Mutation Failure' do
             let(:user) do
               User.create!(
                 name: 'Test User',
@@ -40,19 +40,19 @@ module Mutations
               )
             end
 
-            it '.mutation does not pass, no credentials' do
+            it 'expects mutation to not pass, lack of credentials' do
               not_loged_in = Mutations::Users::SignInMutation.new(object: nil, field: nil,
                                                               context: { session: {} }).resolve(credentials: {})
               assert_nil not_loged_in
             end
 
-            it 'failure because wrong email' do
+            it 'expects sign-in failure, wrong email' do
               not_loged_in = Mutations::Users::SignInMutation.new(object: nil, field: nil,
                                                               context: { session: {} }).resolve(credentials: { email: 'wrong' })
               assert_nil not_loged_in
             end
 
-            it 'failure because wrong password' do
+            it 'expects sign-in failure, wrong password' do
               not_loged_in = Mutations::Users::SignInMutation.new(object: nil, field: nil,
                                                               context: { session: {} }).resolve(credentials: {
                                                                                                   email: user.email, password: 'wrong'

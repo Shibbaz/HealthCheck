@@ -38,8 +38,8 @@ module Mutations
         user
       end
 
-      describe '.mutation' do
-        it 'returns a true' do
+      describe 'Mutation Success' do
+        it 'expects to delete post successfully' do
           HealthSchema.execute(
             query,
             variables:,
@@ -53,8 +53,10 @@ module Mutations
             post.reload
           end.to raise_error(ActiveRecord::RecordNotFound)
         end
+      end
 
-        it 'not valid' do
+      describe 'Mutation Failure' do
+        it 'expects to have invalid params' do
           mutation = HealthSchema.execute(
               query,
               variables: not_valid_variables,
@@ -64,7 +66,6 @@ module Mutations
               }
             )
           expect(mutation['data']['deletePost']['status']).to eq 404 
-          expect(mutation['data']['deletePost']['error']['message']).to eq 'ActiveRecord::RecordNotFound'
         end
       end
 

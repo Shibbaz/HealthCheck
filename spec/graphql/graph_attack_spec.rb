@@ -31,7 +31,7 @@ module Resolvers
           end
 
 
-          it 'checks if graphattack' do
+          it 'expects no graph attack' do
             @result = nil
             (1..14).step(1) do |n|
                 @result = HealthSchema.execute(query, variables: {
@@ -45,7 +45,7 @@ module Resolvers
             expect(data.size).to be(4)
           end
 
-          it 'checks if graphattack' do
+          it 'expects graph attack' do
             @result = nil
             (1..15).step(1) do |n|
                 @result = HealthSchema.execute(query, variables: {

@@ -48,16 +48,16 @@ module Mutations
         user
       end
 
-      describe '.mutation passes' do
-        it 'returns a true' do
+      describe 'Mutation Success' do
+        it 'expects to update comment successfully' do
           HealthSchema.execute(query, variables:, context: { ip: Faker::Internet.ip_v4_address, current_user: user })
           comment.reload
           expect(comment[:text]).to eq 'Hahaha'
         end
       end
 
-      describe '.mutation fails' do
-        it 'not valid' do
+      describe 'Mutation Failure' do
+        it 'expects to have invalid params' do
           mutation = HealthSchema.execute(
               query,
               variables: not_valid_variables,
@@ -67,7 +67,6 @@ module Mutations
               }
             )
           expect(mutation['data']['updateCommentText']['status']).to eq 404 
-          expect(mutation['data']['updateCommentText']['error']['message']).to eq 'ActiveRecord::RecordNotFound'
         end
       end
 

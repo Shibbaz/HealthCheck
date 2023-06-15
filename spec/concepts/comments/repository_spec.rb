@@ -8,7 +8,7 @@ RSpec.describe Concepts::Comments::Repository, type: :model do
     Concepts::Comments::Repository.new
   end
   context 'create method' do
-    it 'it success' do
+    it 'expects successfully creating comment' do
       expect do
         repository.create(
           args: {
@@ -50,7 +50,7 @@ RSpec.describe Concepts::Comments::Repository, type: :model do
       )
     end
 
-    it 'it success' do
+    it 'expects new like on comment' do
       args = {
         id: comment.id
       }
@@ -90,7 +90,7 @@ RSpec.describe Concepts::Comments::Repository, type: :model do
       )
     end
 
-    it 'it success' do
+    it 'expects comment to be unliked' do
       event_store = repository.unlike(
         args: { id: comment.id },
         current_user_id: user.id
@@ -132,7 +132,7 @@ RSpec.describe Concepts::Comments::Repository, type: :model do
       )
     end
 
-    it 'it success' do
+    it 'expects succesfully updating comment' do
       args = {
         id: comment.id,
         text: 'hahaha'
