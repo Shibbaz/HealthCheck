@@ -1,6 +1,6 @@
         <<~GQL
-            mutation($feeling: Int!, $question: String!, $likes: ID!, $insigths: String!){
-            createPost(input: {feeling: $feeling, question: $question, likes: $likes, insigths: $insigths}){
+            mutation($feeling: Int!, $question: String! $text: String!){
+            createPost(input: {feeling: $feeling, question: $question, text: $text}){
               clientMutationId
               status
             }
