@@ -26,7 +26,7 @@ RSpec.describe Services::Storage::Upload, type: :model do
       client
     end
 
-    it 'it success' do
+    it 'expects successfully uploading file' do
       bucket_key = 'foo'
       client.create_bucket(bucket: bucket_key)
       file_key = 'obj'
@@ -41,7 +41,7 @@ RSpec.describe Services::Storage::Upload, type: :model do
       end.to_not raise_error
     end
 
-    it 'it fails' do
+    it 'expects uploading file failure' do
       bucket_key = 'foo'
       client.create_bucket(bucket: bucket_key)
       file_key = 'obj'

@@ -8,7 +8,7 @@ RSpec.describe Concepts::Users::Repository, type: :model do
     Concepts::Users::Repository.new
   end
   context 'create method' do
-    it 'it success' do
+    it 'expects successfully creating user' do
       auth_provider = {
         credentials: {
           email: Faker::Internet.email,

@@ -8,7 +8,7 @@ RSpec.describe Concepts::Posts::Repository, type: :model do
     Concepts::Posts::Repository.new
   end
   context 'create method' do
-    it 'it success' do
+    it 'expects successfully creating post' do
       expect do
         repository.create(
           args: {
@@ -40,7 +40,7 @@ RSpec.describe Concepts::Posts::Repository, type: :model do
       )
     end
 
-    it 'it success' do
+    it 'expects post to got like' do
       args = {
         id: post.id
       }
@@ -70,7 +70,7 @@ RSpec.describe Concepts::Posts::Repository, type: :model do
       )
     end
 
-    it 'it success' do
+    it 'expects successfully unliking post' do
       event_store = repository.unlike(
         args: { id: post.id },
         current_user_id: user.id
@@ -100,7 +100,7 @@ RSpec.describe Concepts::Posts::Repository, type: :model do
         likes: [user.id]
       )
     end
-    it 'it success' do
+    it 'expects post to got updated' do
       args = {
         id: post.id,
         insights: 'hahaha'
@@ -111,7 +111,7 @@ RSpec.describe Concepts::Posts::Repository, type: :model do
   end
 
   context 'apply_filtering method, no records' do
-    it 'checks if no user exists' do
+    it 'expects to fail, searched user does not exist exists' do
       user = User.create!(
         id: SecureRandom.uuid,
         name: Faker::Name.name,
@@ -184,7 +184,7 @@ RSpec.describe Concepts::Posts::Repository, type: :model do
       )
     end
 
-    it 'it has no filters' do
+    it 'expects to return Posts relation with no filters' do
       data = repository.apply_filtering(
         args: {
           filters: {
@@ -198,7 +198,7 @@ RSpec.describe Concepts::Posts::Repository, type: :model do
       expect(data.size).to eq(3)
     end
 
-    it 'it has feeling filters' do
+    it 'expects to return relation with feeling filter' do
       data = repository.apply_filtering(
         args: {
           filters: {
@@ -212,7 +212,7 @@ RSpec.describe Concepts::Posts::Repository, type: :model do
       expect(data.size).to eq(1)
     end
 
-    it 'it has likes filters' do
+    it 'expects return relation likes filter ' do
       data = repository.apply_filtering(
         args: {
           filters: {
@@ -229,7 +229,7 @@ RSpec.describe Concepts::Posts::Repository, type: :model do
       expect(size).to eq(3)
     end
 
-    it 'it has created_at filters' do
+    it 'expects return relation through created_at filter' do
       data = repository.apply_filtering(
         args: {
           filters: {
@@ -246,7 +246,7 @@ RSpec.describe Concepts::Posts::Repository, type: :model do
       expect(size).to eq(3)
     end
 
-    it 'it has followers filters' do
+    it 'expects return relation through follower filter' do
       followers = [extra_user.id] + user.followers
       user.update(followers:)
       user.reload

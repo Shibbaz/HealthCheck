@@ -25,18 +25,18 @@ RSpec.describe Services::Suggestions, type: :model do
         Suggestion.create(receiver_id: User.second.id, author_id: User.first.id)
     end
 
-    it 'it success' do
+    it 'expects to find suggestions for users' do
       expect(suggestion[:user][:id]).to eq(User.second.id)
       expect(suggestion[:authors].size).to eq(2)
       expect(suggestion[:authors][0][:id]).to eq(User.first.id)
       expect(suggestion[:authors][0][:occurances]).to eq(3)
     end
 
-    it 'it checks on user with no likes or comments under post' do
+    it 'expects to find no likes or comments under post' do
         expect(Services::Suggestions.suggest(user: User.fourth)[:authors].size).to eq(0)
     end
 
-    it 'it fails' do
+    it 'expects failure, user does not exist' do
         expect{Services::Suggestions.suggest(user: nil)}.to raise_error(ArgumentError)
     end
   end

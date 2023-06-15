@@ -1,6 +1,6 @@
         <<~GQL
-            mutation($text: String!, $postId: ID!, $u){
-            createComment(input: {feeling: $feeling, question: $question, likes: $likes, insigths: $insigths}){
+            mutation($text: String!, $postId: ID!){
+            createComment(input: {text: $text, postId: $postId}){
               clientMutationId
               status
             }

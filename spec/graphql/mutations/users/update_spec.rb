@@ -40,16 +40,16 @@ module Mutations
         user
       end
 
-      describe '.mutation passes' do
-        it 'returns a true' do
+      describe 'Mutation Success' do
+        it 'expects success on updating user' do
           previous_password = user.password_digest
           HealthSchema.execute(query, variables:, context: { ip: Faker::Internet.ip_v4_address, current_user: user })
           expect(user.password_digest).to_not eq previous_password
         end
       end
 
-      describe '.mutation fails' do
-        it 'returns a false' do
+      describe 'Mutation Failure' do
+        it 'expects failure on updating user with no id' do
           mutation = HealthSchema.execute(query, variables: not_valid_variables, context: { ip: Faker::Internet.ip_v4_address, current_user: user })
           expect(mutation['data']['updateUser']['status']).to eq(404)
           expect(mutation['data']['updateUser']['error']['message']).to eq('Concepts::Users::Errors::UserEmailWasIncorrectError')

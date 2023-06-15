@@ -18,7 +18,7 @@ module Resolvers
                                       object: nil)
         end
 
-        it 'returns details of user' do
+        it 'expects returns details of user found by userId' do
           result = HealthSchema.execute(query, variables: { userId: extra_user.id }, context:)
           data = result['data']['retrieveDetailsOfUser']
           expect(data['id']).to eq(extra_user.id)
@@ -27,7 +27,7 @@ module Resolvers
           expect(data['phoneNumber']).to eq(extra_user.phone_number)
         end
 
-        it 'returns details of current user' do
+        it 'expects to return details of current user' do
           result = HealthSchema.execute(current_user_query, variables: {}, context:)
           data = result['data']['retrieveDetailsOfUser']
           expect(data['id']).to eq(user.id)
@@ -36,7 +36,7 @@ module Resolvers
           expect(data['phoneNumber']).to eq(user.phone_number)
         end
 
-        it 'returns details of current user' do
+        it 'expects to not return details of current user' do
           id = SecureRandom.uuid
           result = HealthSchema.execute(query, variables: {userId: id}, context:)
           error_message = "Couldn't find User with 'id'="+id

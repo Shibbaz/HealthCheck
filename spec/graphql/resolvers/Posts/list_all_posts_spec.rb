@@ -34,7 +34,7 @@ module Resolvers
           create(:comment, user_id: user.id, post_id: posts[1].id, text: 'test')
         end
 
-        it 'returns Posts and check numbers of Comments in two posts' do
+        it 'expects to return Posts and compare numbers of Comments in two posts' do
           result = HealthSchema.execute(query, variables: {
                                           feeling: nil,
                                           created_at: nil,
@@ -47,7 +47,7 @@ module Resolvers
           expect(second_post_comment_size).to eq(1)
         end
 
-        it 'returns updated versions size' do
+        it 'expects to returs updated versions size' do
           post = Post.last
           comment = Comment.create(id: SecureRandom.uuid, user_id: user.id, post_id: post.id, text: 'test')
           post.update(text: 'Test')
@@ -93,7 +93,7 @@ module Resolvers
           expect(size).to eq(2)
         end
 
-        it 'returns Posts' do
+        it 'expects to return relation of the Posts' do
           result = HealthSchema.execute(query, variables: {
                                           feeling: nil,
                                           created_at: nil,
@@ -104,7 +104,7 @@ module Resolvers
           expect(size).to eq(4)
         end
 
-        it 'filtering by feeling' do
+        it 'expects applying filtering by feeling' do
           result = HealthSchema.execute(query, variables: {
                                           feeling: 1,
                                           created_at: nil,
@@ -115,7 +115,7 @@ module Resolvers
           expect(size).to eq(1)
         end
 
-        it 'filtering by likes' do
+        it 'expects applying filtering by likes' do
           result = HealthSchema.execute(query, variables: { filters: {
                                           likes: true,
                                           feeling: nil,
@@ -128,7 +128,7 @@ module Resolvers
           expect(size).to eq(4)
         end
 
-        it 'filtering by createdAt' do
+        it 'expects applying filtering by createdAt' do
           result = HealthSchema.execute(query, variables: { filters: {
                                           created_at: true,
                                           feeling: nil,
@@ -150,13 +150,13 @@ module Resolvers
           expect(size).to eq(3)
         end
 
-        it 'checks num DB queries if N+1 problem a true' do
+        it 'expects to check N+1 problem a true' do
           expect do
             HealthSchema.execute(query, variables: {}, context: { ip: Faker::Internet.ip_v4_address, current_user: user })
           end.not_to exceed_query_limit(7)
         end
 
-        it 'none found in filtering by posts' do
+        it 'expects none record found in filtering by posts' do
           result = HealthSchema.execute(query, variables: {
                                           feeling: 99,
                                           created_at: nil,
@@ -167,7 +167,7 @@ module Resolvers
           expect(size).to eq(0)
         end
 
-        it 'paginates the posts' do
+        it 'expects paginatation to work on the posts' do
           result = HealthSchema.execute(query, variables: {
                                           feeling: nil,
                                           created_at: nil,
@@ -180,7 +180,7 @@ module Resolvers
           expect(size).to eq(1)
         end
   
-        it 'paginates the comments' do
+        it 'expects pagination to work on the comments' do
           result = HealthSchema.execute(query, variables: {
                                           feeling: nil,
                                           created_at: nil,
@@ -204,7 +204,7 @@ module Resolvers
           expect(size).to eq(2)
         end
 
-        it 'shows vissible content' do
+        it 'expects showing vissible content' do
 
           extra_user.update(followers: [user.id])
           extra_user.reload

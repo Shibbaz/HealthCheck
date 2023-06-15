@@ -16,18 +16,14 @@ module Mutations
       let(:variables) do
         {
           text: 'XD',
-          likes: [],
-          post_id: post.id,
-          user_id: user.id
+          postId: post.id,
         }
       end
 
       let(:not_valid_variables) do
         {
           text: 'XD',
-          likes: [],
-          post_id: SecureRandom.uuid,
-          user_id: SecureRandom.uuid
+          postId: SecureRandom.uuid
         }
       end
 
@@ -47,16 +43,29 @@ module Mutations
         user ||= User.find user_id
       end
 
-      describe '.mutation passes' do
-        it 'returns a true' do
-          HealthSchema.execute(query, variables:, context: { current_user: user })
+      describe 'Mutation Success' do
+        it 'expects to create comment successfully' do
+          HealthSchema.execute(query, variables:, context: { 
+            current_user: user,
+            ip: Faker::Internet.ip_v4_address
+          })
+        end
+      end
+
+      describe 'Mutation Failure' do
+        it 'expects to not create comment' do
+          mutation = HealthSchema.execute(query, variables: not_valid_variables, context: { 
+            current_user: user,
+            ip: Faker::Internet.ip_v4_address,
+          })
+          expect(mutation['data']['createComment']['status']).to eq(404)
         end
       end
 
       def query
         <<~GQL
-            mutation($text: String!, $postId: ID!, $u){
-            createComment(input: {feeling: $feeling, question: $question, likes: $likes, insigths: $insigths}){
+            mutation($text: String!, $postId: ID!){
+            createComment(input: {text: $text, postId: $postId}){
               clientMutationId
               status
             }

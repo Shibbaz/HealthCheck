@@ -34,7 +34,7 @@ RSpec.describe Services::Versions, type: :model do
       )
     end
 
-    it 'it success' do
+    it 'expects to return versioning of the record' do
       post.update(text: 'Text')
       post.reload
       expect(Services::Versions.versions(post.log_data).size).to eq(1)
