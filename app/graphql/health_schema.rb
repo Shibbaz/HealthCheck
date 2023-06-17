@@ -7,7 +7,7 @@ class HealthSchema < GraphQL::Schema
   max_complexity 100
   tracer(GraphQlTracer.new) if ENV['RAILS_ENV'] == 'production' || ENV['RAILS_ENV'] == 'development'
   use GraphQL::Batch
-  use GraphQL::AnyCable, broadcast: true, default_broadcastable: true
+  use GraphQL::AnyCable, broadcast: true
   use GraphQL::PersistedQueries, compiled_queries: true, store: :redis, redis_client: { redis_url: ENV["REDIS_URL"] }
 
   def self.resolve_type(_abstract_type, _obj, _ctx)

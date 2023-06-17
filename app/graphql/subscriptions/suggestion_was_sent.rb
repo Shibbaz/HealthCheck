@@ -2,7 +2,7 @@
 
 module Subscriptions
   class SuggestionWasSent < Subscriptions::BaseSubscription
-    field :suggestion, Types::Concepts::SuggestionType, null: false
+    field :suggestion, Types::Concepts::SuggestionType, null: true
     argument :user_id, ID, required: true
 
     def subscribe(user_id:)

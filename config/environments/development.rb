@@ -71,6 +71,7 @@ Rails.application.configure do
 
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
+  config.cache_classes = true
 
   config.action_mailer.perform_caching = false
   config.action_mailer.delivery_method = :smtp
@@ -86,5 +87,4 @@ Rails.application.configure do
   }
   config.action_cable.url = "ws://localhost:8080/cable"
   config.action_cable.allowed_request_origins = [%r{http://*}, %r{https://*}, %r{file://*}, 'file://', nil]
-  config.action_cable.disable_request_forgery_protection = true
 end
