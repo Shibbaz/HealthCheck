@@ -72,6 +72,18 @@ GEM
       tzinfo (~> 2.0)
     aggregate_root (2.9.1)
       ruby_event_store (= 2.9.1)
+    anycable (1.3.1)
+      anycable-core (= 1.3.1)
+      grpc (~> 1.37)
+    anycable-core (1.3.1)
+      anyway_config (~> 2.2)
+      google-protobuf (>= 3.13)
+    anycable-rails (1.3.7)
+      actioncable (>= 6.0)
+      anycable (~> 1.3.0)
+      globalid
+    anyway_config (2.4.2)
+      ruby-next-core (>= 0.14.0)
     apollo_upload_server (2.1.0)
       actionpack (>= 4.2)
       graphql (>= 1.8)
@@ -1539,10 +1551,18 @@ GEM
       railties (>= 6.0.0)
     globalid (1.1.0)
       activesupport (>= 5.0)
+    google-protobuf (3.23.3-x86_64-linux)
+    googleapis-common-protos-types (1.6.0)
+      google-protobuf (~> 3.14)
     graph_attack (2.3.1)
       graphql (>= 1.7.9)
       ratelimit (>= 1.0.4)
     graphql (1.13.19)
+    graphql-anycable (1.1.5)
+      anycable (~> 1.0)
+      anyway_config (>= 1.3, < 3)
+      graphql (>= 1.11, < 3)
+      redis (>= 4.2.0)
     graphql-batch (0.5.3)
       graphql (>= 1.12.18, < 3)
       promise.rb (~> 0.7.2)
@@ -1562,6 +1582,9 @@ GEM
       bundler (>= 1.14)
       graphql (>= 1.10, < 3.0)
       thor (>= 0.19, < 2.0)
+    grpc (1.56.0-x86_64-linux)
+      google-protobuf (~> 3.23)
+      googleapis-common-protos-types (~> 1.0)
     hirb (0.7.3)
     hirb-unicode-steakknife (0.0.9)
       hirb (~> 0.5)
@@ -1798,6 +1821,7 @@ PLATFORMS
 
 DEPENDENCIES
   acidic_job
+  anycable-rails (~> 1.3)
   apollo_upload_server (= 2.1)
   appmap
   awesome_print
@@ -1818,6 +1842,7 @@ DEPENDENCIES
   fx
   graph_attack
   graphql
+  graphql-anycable (~> 1.1)
   graphql-batch
   graphql-fragment_cache
   graphql-pagination

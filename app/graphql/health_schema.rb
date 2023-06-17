@@ -1,13 +1,13 @@
 class HealthSchema < GraphQL::Schema
   use GraphQL::FragmentCache
-  use GraphqlTimeout, max_seconds: 2
+  use GraphqlTimeout, max_seconds: 100
   mutation(Types::Registry::MutationType)
   query(Types::Registry::QueryType)
   subscription(Types::Registry::SubscriptionType)
   max_complexity 100
   tracer(GraphQlTracer.new) if ENV['RAILS_ENV'] == 'production' || ENV['RAILS_ENV'] == 'development'
   use GraphQL::Batch
-  use GraphQL::Subscriptions::ActionCableSubscriptions, broadcast: true
+  use GraphQL::AnyCable, broadcast: true, default_broadcastable: true
   use GraphQL::PersistedQueries, compiled_queries: true, store: :redis, redis_client: { redis_url: ENV["REDIS_URL"] }
 
   def self.resolve_type(_abstract_type, _obj, _ctx)

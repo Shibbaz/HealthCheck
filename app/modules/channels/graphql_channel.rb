@@ -12,6 +12,7 @@ class GraphqlChannel < ApplicationCable::Channel
       # in this channel or ApplicationCable::Channel
       # current_user: current_user,
       # Make sure the channel is in the context
+      ip: ActionDispatch::Request.new(connection.env).remote_ip,
       channel: self
     }
 

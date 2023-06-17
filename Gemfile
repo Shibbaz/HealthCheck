@@ -122,3 +122,7 @@ group :development, :test do
 end
 
 gem 'factory_bot_rails'
+
+gem "anycable-rails", "~> 1.3"
+
+gem "graphql-anycable", "~> 1.1"
